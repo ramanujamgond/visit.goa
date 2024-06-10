@@ -1,0 +1,14 @@
+//style for navbar
+
+.active_nav {
+  color: #ff6535;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  &::after {
+    content: "";
+    display: block;
+    height: 2px;
+    margin-top: 2px;
+    background-color: #ff6535;
+    transition: background-color 0.3s ease, height 0.3s ease;
+  }
+}
