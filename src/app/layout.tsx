@@ -4,7 +4,6 @@ import "./globals.css";
 import styles from "./home.module.scss";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className={styles.main_wrapper}>
+        <div
+          className={`${styles.main_wrapper} bg-[linear-gradient(180deg,_#FFF_0%,_#F5F5F5_40%,_#E5E5E5_100%)]`}
+          // className={`${styles.main_wrapper}`}
+        >
           <Navbar />
           {children}
           <Footer />
