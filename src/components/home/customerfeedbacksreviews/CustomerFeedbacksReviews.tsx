@@ -18,8 +18,6 @@ const CustomerFeedbacksReviews = () => {
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
 
-  console.log("current", current);
-
   useEffect(() => {
     if (!api) {
       return;
