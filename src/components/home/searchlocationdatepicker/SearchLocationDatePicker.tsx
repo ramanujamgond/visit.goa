@@ -19,7 +19,7 @@ const SearchLocationDatePicker = () => {
             <div className="text-sm font-medium text-[#858585]">Where ?</div>
             <div className="mt-3 z-[1300] w-full">
               <Select>
-                <SelectTrigger className="w-full border-0 focus:ring-0 shadow-none">
+                <SelectTrigger className="w-full border-0 border-b rounded-none focus:ring-0 shadow-none">
                   <SelectValue placeholder="Search for a City or Hotel" />
                 </SelectTrigger>
                 <SelectContent className="z-[1300]">
@@ -37,7 +37,7 @@ const SearchLocationDatePicker = () => {
           </div>
           <HrLineSearch />
           <div className="flex-grow-2 flex-shrink basis-96">
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between w-full cursor-pointer">
               <div>
                 <div className="text-sm font-medium text-[#858585]">
                   Chcek-in
