@@ -107,6 +107,7 @@ const SearchLocationDatePicker = () => {
                   initialFocus
                   mode="range"
                   defaultMonth={date?.from}
+                  fromDate={new Date()}
                   selected={date}
                   onSelect={setDate}
                   numberOfMonths={2}
