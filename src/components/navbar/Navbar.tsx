@@ -9,7 +9,7 @@ const Navbar = () => {
   const pathName = usePathname();
   return (
     <div>
-      <div className="fixed top-0 left-0 right-0 flex items-center justify-between w-full p-4 bg-white bg-opacity-20 backdrop-blur-md border-b border-white border-opacity-30 shadow-lg z-[1200]">
+      <div className="fixed top-0 left-0 right-0 flex items-center justify-between w-full py-4 px-8 bg-white bg-opacity-20 backdrop-blur-md border-b border-white border-opacity-30 shadow-lg z-[1200]">
         <div className="relative w-[130px] h-[26px]">
           <Image
             src="/bharat_stay_logo.png"

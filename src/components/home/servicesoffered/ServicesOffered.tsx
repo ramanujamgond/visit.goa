@@ -46,30 +46,32 @@ const ServicesOffered = () => {
     },
   ];
   return (
-    <div className="mb-14">
-      <div className="text-xl font-bold mb-6">Services we Offer</div>
-      <div className="grid grid-cols-[repeat(3,_1fr)] gap-4">
-        {services_list.map((service) => (
-          <div className="p-2 w-full rounded-xl bg-white" key={service.id}>
-            <div className="w-full h-48 relative rounded-xl">
-              <Image
-                src={service.service_image}
-                alt={service.service_name}
-                fill
-                className="object-cover rounded-xl"
-              />
+    <div className="container">
+      <div className="mb-14">
+        <div className="text-xl font-bold mb-6">Services we Offer</div>
+        <div className="grid grid-cols-[repeat(3,_1fr)] gap-4">
+          {services_list.map((service) => (
+            <div className="p-2 w-full rounded-xl bg-white" key={service.id}>
+              <div className="w-full h-48 relative rounded-xl">
+                <Image
+                  src={service.service_image}
+                  alt={service.service_name}
+                  fill
+                  className="object-cover rounded-xl"
+                />
+              </div>
+              <div className="text-xl font-bold p-2 pb-0">
+                {service.service_name}
+              </div>
+              <div className="text-xs text-[#858585] p-2">
+                {service.service_text}
+                <span className="inline-block text-[#FF6535] underline ms-1 cursor-pointer">
+                  View more
+                </span>
+              </div>
             </div>
-            <div className="text-xl font-bold p-2 pb-0">
-              {service.service_name}
-            </div>
-            <div className="text-xs text-[#858585] p-2">
-              {service.service_text}
-              <span className="inline-block text-[#FF6535] underline ms-1 cursor-pointer">
-                View more
-              </span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

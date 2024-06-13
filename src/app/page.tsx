@@ -6,13 +6,15 @@ import LastMinuteSale from "@/components/home/lastminutesale/LastMinuteSale";
 import OffersList from "@/components/home/offerslist/OffersList";
 import PopularDestination from "@/components/home/populardestination/PopularDestination";
 import PopularHotels from "@/components/home/popularhotels/PopularHotels";
-import ZeroCommissionServices from "@/components/home/zerocommissionservices/ZeroCommissionServices";
+import ServicesOffered from "@/components/home/servicesoffered/ServicesOffered";
+import ZeroCommissonOta from "@/components/home/zerocommissonota/ZeroCommissonOta";
 
 export default function Home() {
   return (
     <main>
       <HeroSection />
-      <ZeroCommissionServices />
+      <ZeroCommissonOta />
+      <ServicesOffered />
       <OffersList />
       <PopularHotels />
       <PopularDestination />

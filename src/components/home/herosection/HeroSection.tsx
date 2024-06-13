@@ -16,8 +16,9 @@ const HeroSection = () => {
             experience the best of India.
           </div>
         </div>
-
-        <SearchLocationDatePicker />
+        <div className="container relative">
+          <SearchLocationDatePicker />
+        </div>
       </div>
     </div>
   );

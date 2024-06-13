@@ -15,13 +15,13 @@ import { Button } from "../ui/button";
 const HotelListingDetails = () => {
   return (
     <div className="my-12">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-14">
         <div className="text-sm font-semibold text-[#656565]">
           24 for hotel found
         </div>
         <div>
           <Select>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] focus:ring-0">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
             <SelectContent>

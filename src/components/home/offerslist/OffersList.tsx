@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const OffersList = () => {
   return (
-    <div className="bg-[#E3E2E2] p-6">
+    <div className="bg-[#E3E2E2]">
       <div className="container">
         <div className="py-8">
           <div className="text-xl font-bold mb-6">Offers For you</div>
@@ -38,7 +38,7 @@ const OffersList = () => {
             </div>
 
             <div className="flex-shrink-1 flex-grow-2 basis-7/12">
-              <div className="p-2 bg-white rounded-xl">
+              <div className="bg-white rounded-xl">
                 <div className="flex">
                   <div className="w-full h-52 relative rounded-xl">
                     <Image
@@ -83,7 +83,7 @@ const OffersList = () => {
             </div>
 
             <div className="flex-shrink-1 flex-grow-2 basis-7/12">
-              <div className="p-2 bg-white rounded-xl">
+              <div className="bg-white rounded-xl">
                 <div className="flex">
                   <div className="w-full h-52 relative rounded-xl">
                     <Image

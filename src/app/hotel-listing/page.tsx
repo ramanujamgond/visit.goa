@@ -4,15 +4,11 @@ import HotelListingDetails from "@/components/hotellisting/HotelListingDetails";
 const HotelListing = () => {
   return (
     <div>
-      <div className="my-16">
-        <div className="container">
-          <div className="relative mt-56">
-            <SearchLocationDatePicker />
-          </div>
+      <div className="container">
+        <div className="relative pt-48">
+          <SearchLocationDatePicker />
         </div>
-        <div className="container">
-          <HotelListingDetails />
-        </div>
+        <HotelListingDetails />
       </div>
     </div>
   );
