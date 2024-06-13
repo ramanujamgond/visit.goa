@@ -5,8 +5,10 @@ const HotelListing = () => {
   return (
     <div>
       <div className="my-16">
-        <div className="relative mt-56">
-          <SearchLocationDatePicker />
+        <div className="container">
+          <div className="relative mt-56">
+            <SearchLocationDatePicker />
+          </div>
         </div>
         <div className="container">
           <HotelListingDetails />
