@@ -18,6 +18,8 @@ const OffersList = () => {
                       alt="Offers 1"
                       fill
                       className="rounded-xl object-cover"
+                      sizes="auto"
+                      loading="lazy"
                     />
                   </div>
 
@@ -46,6 +48,8 @@ const OffersList = () => {
                       alt="Offers 2"
                       fill
                       className="rounded-xl object-fill"
+                      sizes="auto"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -63,6 +67,8 @@ const OffersList = () => {
                       alt="Offers 4"
                       fill
                       className="rounded-xl object-cover"
+                      sizes="auto"
+                      loading="lazy"
                     />
                   </div>
 
@@ -91,6 +97,8 @@ const OffersList = () => {
                       alt="Offers 3"
                       fill
                       className="rounded-xl object-fill"
+                      sizes="auto"
+                      loading="lazy"
                     />
                   </div>
                 </div>

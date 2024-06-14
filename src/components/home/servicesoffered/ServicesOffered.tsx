@@ -58,6 +58,8 @@ const ServicesOffered = () => {
                   alt={service.service_name}
                   fill
                   className="object-cover rounded-xl"
+                  sizes="auto"
+                  loading="lazy"
                 />
               </div>
               <div className="text-xl font-bold p-2 pb-0">

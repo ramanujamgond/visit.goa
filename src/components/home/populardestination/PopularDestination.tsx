@@ -41,6 +41,8 @@ const PopularDestination = () => {
                 alt={popularDestinations[0].alt}
                 fill
                 className="object-cover rounded-xl"
+                sizes="auto"
+                loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 h-16 bg-[linear-gradient(0deg,_#000_0%,_rgba(0,_0,_0,_0.00)_100%)] rounded-bl-xl rounded-br-xl">
                 <div className="py-3 px-5">
@@ -67,6 +69,8 @@ const PopularDestination = () => {
                     alt={destination.alt}
                     fill
                     className="object-cover rounded-xl"
+                    sizes="auto"
+                    loading="lazy"
                   />
                   <div className="absolute bottom-0 left-0 right-0 h-16 bg-[linear-gradient(0deg,_#000_0%,_rgba(0,_0,_0,_0.00)_100%)] rounded-bl-xl rounded-br-xl">
                     <div className="py-3 px-5">

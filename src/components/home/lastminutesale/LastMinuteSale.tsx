@@ -12,6 +12,8 @@ const LastMinuteSale = () => {
                 alt="Last minutes sale offer"
                 fill
                 className="object-cover object-center rounded-xl"
+                sizes="auto"
+                loading="lazy"
               />
             </div>
           </div>
@@ -25,6 +27,8 @@ const LastMinuteSale = () => {
                     alt="Last minutes offer"
                     fill
                     className="object-cover rounded-tl-xl rounded-tr-xl"
+                    sizes="auto"
+                    loading="lazy"
                   />
                 </div>
 
@@ -60,6 +64,8 @@ const LastMinuteSale = () => {
                     alt="Last minutes offer"
                     fill
                     className="object-cover rounded-tl-xl rounded-tr-xl"
+                    sizes="auto"
+                    loading="lazy"
                   />
                 </div>
 

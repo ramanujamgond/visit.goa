@@ -78,6 +78,8 @@ const CustomerFeedbacksReviews = () => {
                               alt="Guest: Mehdin Khan"
                               fill
                               className="object-cover rounded-full"
+                              sizes="auto"
+                              loading="lazy"
                             />
                           </div>
                           <div>

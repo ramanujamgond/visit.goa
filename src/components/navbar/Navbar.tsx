@@ -17,6 +17,8 @@ const Navbar = () => {
               alt="Bharat Stay Logo"
               fill
               className="object-cover"
+              sizes="auto"
+              loading="lazy"
             />
           </div>
         </Link>

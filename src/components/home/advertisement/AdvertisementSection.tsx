@@ -23,6 +23,8 @@ const AdvertisementSection = () => {
                 alt="advertisement banner"
                 fill
                 className="object-contain"
+                sizes="auto"
+                loading="lazy"
               />
             </div>
           </div>

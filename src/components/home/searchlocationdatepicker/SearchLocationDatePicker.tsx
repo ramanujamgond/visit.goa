@@ -15,7 +15,7 @@ import {
 
 // date picker
 import { addDays, differenceInDays, format } from "date-fns";
-import { DateRange } from "react-day-picker";
+import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -38,6 +38,14 @@ const SearchLocationDatePicker = () => {
     from: new Date(),
     to: addDays(new Date(), 1),
   });
+
+  // handle the issue for from date not changing on single click
+  const handleSelect: SelectRangeEventHandler = (nextRange, selectedDay) => {
+    setDate((range) => {
+      if (range?.from && range?.to) return { from: selectedDay };
+      return nextRange as DateRange;
+    });
+  };
 
   return (
     <div className="flex items-center justify-center">
@@ -81,9 +89,9 @@ const SearchLocationDatePicker = () => {
                     </div>
                   </div>
                   <div className="text-sm text-center font-semibold p-2 border-2 border-[#E5E5E5] border-solid rounded-3xl w-24">
-                    {date?.from &&
-                      date.to &&
-                      differenceInDays(date.to, date?.from)}
+                    {date?.from && date.to
+                      ? differenceInDays(date.to, date?.from)
+                      : 0}
                   </div>
                   <div className="w-24">
                     <div className="text-sm font-medium text-[#858585]">
@@ -109,7 +117,7 @@ const SearchLocationDatePicker = () => {
                   defaultMonth={date?.from}
                   fromDate={new Date()}
                   selected={date}
-                  onSelect={setDate}
+                  onSelect={handleSelect}
                   numberOfMonths={2}
                   min={2}
                   classNames={{

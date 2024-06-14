@@ -47,6 +47,8 @@ const HotelListingDetails = () => {
                 alt="Hotel Beauty Place"
                 fill
                 className="object-cover rounded-xl"
+                sizes="auto"
+                loading="lazy"
               />
             </div>
           </div>

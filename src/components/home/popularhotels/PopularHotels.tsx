@@ -54,6 +54,8 @@ const PopularHotels = () => {
                   alt="Hotel Image"
                   fill
                   className="object-cover rounded-tl-xl rounded-tr-xl"
+                  sizes="auto"
+                  loading="lazy"
                 />
               </div>
               <div className="p-2">
