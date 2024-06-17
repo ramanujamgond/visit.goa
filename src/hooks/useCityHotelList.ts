@@ -15,11 +15,14 @@ interface HotelSearch {
 }
 
 const useCityHotelList = () => {
+  // loading state
+  const [loading, setLoading] = useState(false);
   const [citySearchResult, setCitySearchResult] = useState<CitySearch[]>([]);
   const [hotelSearchResult, setHotelSearchResult] = useState<HotelSearch[]>([]);
 
   // method to fetch the city and hotel name
   const fetchCityHotelList = async (searchValue: string) => {
+    setLoading(true);
     try {
       const cityList = await bharatStay.get(
         `${apiEndpoints.get.get_cities}?q=${searchValue}`,
@@ -32,10 +35,14 @@ const useCityHotelList = () => {
       if (cityList.data.results.length > 0) {
         setCitySearchResult(cityList.data.results[0].hits);
         setHotelSearchResult(cityList.data.results[1].hits);
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
       throw new Error("Failed to fetch the city or hotel list!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,6 +56,7 @@ const useCityHotelList = () => {
     hotelSearchResult,
     resetSearchResults,
     fetchCityHotelList,
+    loading,
   };
 };
 

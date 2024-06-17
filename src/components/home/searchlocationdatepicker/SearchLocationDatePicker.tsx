@@ -11,6 +11,8 @@ import DateRangePicker from "./DateRangePicker";
 import AddGuest from "./AddGuest";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import useCityHotelList from "@/hooks/useCityHotelList";
+import Loader from "@/components/ui/loader";
 
 interface SearchValueProps {
   value: string;
@@ -35,8 +37,10 @@ const SearchLocationDatePicker = () => {
   });
 
   // states to hold the number of adult and child
-  const [adult, setAdult] = useState<number>(0);
+  const [adult, setAdult] = useState<number>(2);
   const [child, setChild] = useState<number>(0);
+
+  const { loading } = useCityHotelList();
 
   // method to navigate to the hotel-listing page and passing the searchValue, checkin and chekchout and number of guest data
   const handleSearchCityHotels = () => {
@@ -49,7 +53,16 @@ const SearchLocationDatePicker = () => {
       checkInDate &&
       checkOutDate
     ) {
-      params.set("query", `${searchValue}/${checkInDate}/${checkOutDate}`);
+      params.set("place", searchValue.value);
+
+      if (searchValue.hotelId) {
+        params.set("hotelId", `${searchValue?.hotelId}`);
+      }
+
+      params.set("checkin", `${checkInDate}`);
+      params.set("checkout", `${checkOutDate}`);
+      params.set("adults", `${adult}`);
+      params.set("childs", `${child}`);
     }
 
     // Construct the pathname with query parameters
@@ -61,6 +74,11 @@ const SearchLocationDatePicker = () => {
       router.push(`/hotel-details/?${params.toString()}`);
     }
   };
+
+  // standard loader
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex items-center justify-center">

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -6,6 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSearchParams } from "next/navigation";
 
 interface AddGuestProps {
   adult: number;
@@ -20,6 +22,9 @@ const AddGuest: React.FC<AddGuestProps> = ({
   child,
   setChild,
 }) => {
+  // extract query from the url parameters
+  const query = useSearchParams();
+
   // method to handle add adult
   const addAdultIncrement = () => {
     setAdult(adult + 1);
@@ -44,13 +49,27 @@ const AddGuest: React.FC<AddGuestProps> = ({
     }
   };
 
+  useEffect(() => {
+    if (query) {
+      const params = Object.fromEntries(query.entries());
+      if (params?.adults) {
+        setAdult(parseInt(params.adults, 10));
+      }
+      if (params?.childs) {
+        setChild(parseInt(params.childs, 10));
+      }
+    }
+  }, [query]);
+
   return (
     <div>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <div>
             <div className="text-sm font-medium text-[#858585]">Guest</div>
-            <div className="text-base font-semibold mt-3">2 Adult, 0 Child</div>
+            <div className="text-base font-semibold mt-3">
+              {adult} Adult, {child} Child
+            </div>
           </div>
         </DropdownMenuTrigger>
 

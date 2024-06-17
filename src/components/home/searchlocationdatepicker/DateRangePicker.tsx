@@ -1,5 +1,5 @@
 // date picker
-import { differenceInDays, format } from "date-fns";
+import { differenceInDays, format, parse } from "date-fns";
 import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -8,7 +8,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface DateRangePickerProps {
   date: DateRange;
@@ -18,6 +19,9 @@ interface DateRangePickerProps {
 const DateRangePicker: React.FC<DateRangePickerProps> = ({ date, setDate }) => {
   // state to close the calender when to date is selected
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
+
+  // extract query from the url parameters
+  const query = useSearchParams();
 
   // handle the issue of from date not changing on single click
   const handleSelect: SelectRangeEventHandler = (nextRange, selectedDay) => {
@@ -29,6 +33,18 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ date, setDate }) => {
       return nextRange as DateRange;
     });
   };
+
+  useEffect(() => {
+    if (query) {
+      const params = Object.fromEntries(query.entries());
+      if (params?.checkin && params?.checkout) {
+        setDate({
+          from: parse(params.checkin, "yyyy-MM-dd", new Date()),
+          to: parse(params.checkout, "yyyy-MM-dd", new Date()),
+        });
+      }
+    }
+  }, [query]);
 
   return (
     <div>

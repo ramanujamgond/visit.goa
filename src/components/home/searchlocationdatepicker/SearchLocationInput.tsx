@@ -4,6 +4,9 @@ import { Input } from "@/components/ui/input";
 import useCityHotelList from "@/hooks/useCityHotelList";
 import { CountryEmoji } from "@/lib/CountryEmoji";
 
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+
 interface SearchValueProps {
   value: string;
   hotelId?: number;
@@ -25,6 +28,9 @@ const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
     fetchCityHotelList,
   } = useCityHotelList();
 
+  // extract query from the url parameters
+  const query = useSearchParams();
+
   // fetch city and hotel list api call on handle change of the search input
   const handleCityHotelSearch = (value: string) => {
     if (value) {
@@ -32,7 +38,7 @@ const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
     } else {
       resetSearchResults();
     }
-    setSearchValue({ value: value });
+    setSearchValue({ ...searchValue, value: value });
   };
 
   // set the selcted value in the input and clear the city and hotel list state to hide the dropdown
@@ -40,6 +46,15 @@ const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
     setSearchValue({ value: value, hotelId: hotelId });
     resetSearchResults();
   };
+
+  useEffect(() => {
+    if (query) {
+      const params = Object.fromEntries(query.entries());
+      if (params?.place) {
+        setSearchValue({ value: params.place });
+      }
+    }
+  }, [query]);
 
   return (
     <div className="mt-3 z-[1300] w-full relative">
@@ -51,7 +66,7 @@ const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
         onChange={(e) => handleCityHotelSearch(e.target.value)}
       />
 
-      {searchValue.value.length > 0 && (
+      {searchValue?.value?.length > 0 && (
         <span
           className="absolute right-0 top-0 text-[#ff6535] cursor-pointer"
           onClick={() => setSearchValue({ value: "" })}

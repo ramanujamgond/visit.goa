@@ -2,15 +2,14 @@
 import { useState } from "react";
 import SearchLocationDatePicker from "@/components/home/searchlocationdatepicker/SearchLocationDatePicker";
 import HotelListingDetails from "@/components/hotellisting/HotelListingDetails";
+import Loader from "@/components/ui/loader";
 
 const HotelListing = () => {
-  // loader state
+  // loading state
   const [loading, setLoading] = useState(false);
-  // error state
-  const [error, setError] = useState(false);
 
   if (loading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
 
   return (
