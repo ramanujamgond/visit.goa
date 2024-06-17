@@ -46,7 +46,7 @@ const AddGuest: React.FC<AddGuestProps> = ({
 
   return (
     <div>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <div>
             <div className="text-sm font-medium text-[#858585]">Guest</div>
@@ -60,14 +60,16 @@ const AddGuest: React.FC<AddGuestProps> = ({
               <div className="w-full flex items-center justify-between">
                 <div>Adult</div>
                 <div className="flex items-center gap-x-2">
-                  <Button className="w-7 h-8" onClick={addAdultIncrement}>
-                    +
+                  <Button className="w-7 h-8" onClick={addAdultDecrement}>
+                    -
                   </Button>
+
                   <span className="inline-block w-5 text-base font-medium text-center">
                     {adult}
                   </span>
-                  <Button className="w-7 h-8" onClick={addAdultDecrement}>
-                    -
+
+                  <Button className="w-7 h-8" onClick={addAdultIncrement}>
+                    +
                   </Button>
                 </div>
               </div>
@@ -77,14 +79,14 @@ const AddGuest: React.FC<AddGuestProps> = ({
               <div className="w-full flex items-center justify-between">
                 <div>Child</div>
                 <div className="flex items-center gap-x-2">
-                  <Button className="w-7 h-8" onClick={addChildIncrement}>
-                    +
+                  <Button className="w-7 h-8" onClick={addChildDecrement}>
+                    -
                   </Button>
                   <span className="inline-block w-5 text-base font-medium text-center">
                     {child}
                   </span>
-                  <Button className="w-7 h-8" onClick={addChildDecrement}>
-                    -
+                  <Button className="w-7 h-8" onClick={addChildIncrement}>
+                    +
                   </Button>
                 </div>
               </div>

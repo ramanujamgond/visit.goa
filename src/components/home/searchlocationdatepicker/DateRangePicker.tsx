@@ -33,6 +33,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ date, setDate }) => {
   return (
     <div>
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+        {/* <Popover> */}
         <PopoverTrigger asChild>
           <div className="flex items-center justify-between w-full cursor-pointer">
             <div className="w-24">
