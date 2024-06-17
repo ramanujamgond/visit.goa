@@ -1,15 +1,19 @@
-"use client";
-
-import { useState } from "react";
 import { RiCloseCircleFill, RiHotelLine } from "@remixicon/react";
 import { Input } from "@/components/ui/input";
 
 import useCityHotelList from "@/hooks/useCityHotelList";
 import { CountryEmoji } from "@/lib/CountryEmoji";
 
-const SearchLocationInput = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
+interface SearchLocationInputProps {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+}
 
+const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
+  searchValue,
+  setSearchValue,
+}) => {
+  // custom hook to fetch the city and hotel list
   const {
     citySearchResult,
     hotelSearchResult,
@@ -17,6 +21,7 @@ const SearchLocationInput = () => {
     fetchCityHotelList,
   } = useCityHotelList();
 
+  // fetch city and hotel list api call on handle change of the search input
   const handleCityHotelSearch = (value: string) => {
     if (value) {
       fetchCityHotelList(value);
@@ -26,6 +31,7 @@ const SearchLocationInput = () => {
     setSearchValue(value);
   };
 
+  // set the selcted value in the input and clear the city and hotel list state to hide the dropdown
   const handleSelectedValue = (value: string) => {
     setSearchValue(value);
     resetSearchResults();

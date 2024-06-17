@@ -1,12 +1,6 @@
-"use client";
-
 // date picker
-import { addDays, differenceInDays, format } from "date-fns";
-import {
-  DateRange,
-  SelectRangeEventHandler,
-  SelectSingleEventHandler,
-} from "react-day-picker";
+import { differenceInDays, format } from "date-fns";
+import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -14,25 +8,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
 
-const DateRangePicker = () => {
+interface DateRangePickerProps {
+  date: DateRange;
+  setDate: (value: DateRange | ((prevState: DateRange) => DateRange)) => void;
+}
+
+const DateRangePicker: React.FC<DateRangePickerProps> = ({ date, setDate }) => {
+  // state to close the calender when to date is selected
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
-
-  // State to get the current date for checkin and checkout date
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 1),
-  });
 
   // handle the issue of from date not changing on single click
   const handleSelect: SelectRangeEventHandler = (nextRange, selectedDay) => {
     setDate((range) => {
       if (range?.from && range?.to) {
-        // setIsPopoverOpen(false);
         return { from: selectedDay };
       }
-
+      setIsPopoverOpen(false);
       return nextRange as DateRange;
     });
   };

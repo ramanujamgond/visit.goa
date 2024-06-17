@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,7 +7,43 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const AddGuest = () => {
+interface AddGuestProps {
+  adult: number;
+  setAdult: (value: number) => void;
+  child: number;
+  setChild: (value: number) => void;
+}
+
+const AddGuest: React.FC<AddGuestProps> = ({
+  adult,
+  setAdult,
+  child,
+  setChild,
+}) => {
+  // method to handle add adult
+  const addAdultIncrement = () => {
+    setAdult(adult + 1);
+  };
+
+  // method to handle decrement adult
+  const addAdultDecrement = () => {
+    if (adult > 0) {
+      setAdult(adult - 1);
+    }
+  };
+
+  // method to handle add child
+  const addChildIncrement = () => {
+    setChild(child + 1);
+  };
+
+  // method to handle decrement child
+  const addChildDecrement = () => {
+    if (child > 0) {
+      setChild(child - 1);
+    }
+  };
+
   return (
     <div>
       <DropdownMenu>
@@ -26,11 +60,15 @@ const AddGuest = () => {
               <div className="w-full flex items-center justify-between">
                 <div>Adult</div>
                 <div className="flex items-center gap-x-2">
-                  <Button className="w-7 h-8">+</Button>
+                  <Button className="w-7 h-8" onClick={addAdultIncrement}>
+                    +
+                  </Button>
                   <span className="inline-block w-5 text-base font-medium text-center">
-                    9
+                    {adult}
                   </span>
-                  <Button className="w-7 h-8">-</Button>
+                  <Button className="w-7 h-8" onClick={addAdultDecrement}>
+                    -
+                  </Button>
                 </div>
               </div>
             </div>
@@ -39,11 +77,15 @@ const AddGuest = () => {
               <div className="w-full flex items-center justify-between">
                 <div>Child</div>
                 <div className="flex items-center gap-x-2">
-                  <Button className="w-7 h-8">+</Button>
+                  <Button className="w-7 h-8" onClick={addChildIncrement}>
+                    +
+                  </Button>
                   <span className="inline-block w-5 text-base font-medium text-center">
-                    9
+                    {child}
                   </span>
-                  <Button className="w-7 h-8">-</Button>
+                  <Button className="w-7 h-8" onClick={addChildDecrement}>
+                    -
+                  </Button>
                 </div>
               </div>
             </div>
