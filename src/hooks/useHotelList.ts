@@ -21,11 +21,13 @@ interface Ari {
 }
 
 const useHotelList = () => {
+  // states
   const [loading, setLoading] = useState(false);
   const [noMoreResult, setNoMoreResult] = useState(false);
   const [hotelList, setHotelList] = useState<HotelListProps[]>([]);
   const [offset, setOffset] = useState(0);
 
+  // get url parmas
   const searchParams = useSearchParams();
   const place = searchParams.get("place");
   const checkin = searchParams.get("checkin");
@@ -33,6 +35,7 @@ const useHotelList = () => {
   const adults = searchParams.get("adults");
   const childs = searchParams.get("childs");
 
+  // set static values for userId, LIMIT ans showOnlyAvailableHotel
   const userId = "GUEST";
   const LIMIT = 10;
   const showOnlyAvailableHotel = 0;
@@ -43,11 +46,13 @@ const useHotelList = () => {
     setHotelList([]);
   }, [place]);
 
+  //   method to call search api
   const fetchHotelList = useCallback(async () => {
     if (!place || !checkin || !checkout || !adults || !childs) return;
 
     setLoading(true);
     try {
+      // payload
       const payload = {
         user_id: userId,
         q: place,

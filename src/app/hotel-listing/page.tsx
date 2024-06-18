@@ -19,9 +19,10 @@ const HotelListing = () => {
     fetchHotelList,
   } = useHotelList();
 
+  // call hotel list method on place, checkin, checkout, adults and childs change
   useEffect(() => {
     fetchHotelList();
-  }, [place, checkin, checkout]);
+  }, [place, checkin, checkout, adults, childs]);
 
   // standard loader
   if (loading) {
@@ -32,10 +33,12 @@ const HotelListing = () => {
     <div>
       <div className="container">
         <div className="relative pt-48">
+          {/* search input date picker and guest details */}
           <SearchLocationDatePicker />
         </div>
 
         {hotelList?.length > 0 ? (
+          // hotel listing
           <HotelListingDetails hotelList={hotelList} />
         ) : (
           place &&
