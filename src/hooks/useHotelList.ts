@@ -83,7 +83,8 @@ const useHotelList = () => {
         setOffset((prevOffset) => prevOffset + LIMIT);
       }
     } catch (error) {
-      console.error("Failed to fetch the city or hotel list!", error);
+      console.log(error);
+      throw new Error("Failed to fetch the hotel list!");
     } finally {
       setLoading(false);
     }

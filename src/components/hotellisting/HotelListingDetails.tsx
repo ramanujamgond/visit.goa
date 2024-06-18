@@ -3,7 +3,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -11,6 +10,8 @@ import { RiMapPinLine } from "@remixicon/react";
 import Image from "next/image";
 import { RiShiningFill } from "@remixicon/react";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface HotelListProps {
   "hotel_address.city_name": string;
@@ -36,8 +37,30 @@ interface HotelListingDetailsProps {
 const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
   hotelList,
 }) => {
+  // nextjs 14 routing
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // method to navigate to hotel details page
+  const handleSelectRoom = (hotelId: number, hotelName: string) => {
+    // fetch url params
+    const checkin = searchParams.get("checkin");
+    const checkout = searchParams.get("checkout");
+    const adults = searchParams.get("adults");
+    const childs = searchParams.get("childs");
+
+    // Format the hotel name to be URL-friendly
+    const formattedHotelName = hotelName.toLowerCase().replace(/\s+/g, "-");
+
+    // Construct the URL slug
+    const urlSlug = `/hotel-details/${hotelId}/${formattedHotelName}?checkin=${checkin}&checkout=${checkout}&adults=${adults}&childs=${childs}`;
+
+    // Navigate to the hotel details page
+    router.push(urlSlug);
+  };
+
   return (
-    <div className="my-12">
+    <div className="my-12 h-4/5">
       <div className="flex items-center justify-between mt-14">
         <div className="text-sm font-semibold text-[#656565]">
           {hotelList?.length} for hotel found
@@ -71,12 +94,12 @@ const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
                 <div className="flex-grow-1 flex-shrink basis-96">
                   <div className="relative w-full h-64 rounded-xl">
                     <Image
+                      priority
                       src={hotelData?.exterior_images[0]}
                       alt={hotelData?.hotel_name}
                       fill
                       className="object-cover rounded-xl"
                       sizes="auto"
-                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -139,7 +162,16 @@ const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
                         </div>
                       </div>
                       <div>
-                        <Button size="lg" className="bg-[#FF6535]">
+                        <Button
+                          size="lg"
+                          className="bg-[#FF6535]"
+                          onClick={() =>
+                            handleSelectRoom(
+                              hotelData?.hotel_id,
+                              hotelData?.hotel_name
+                            )
+                          }
+                        >
                           Select Room
                         </Button>
                       </div>
