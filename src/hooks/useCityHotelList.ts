@@ -16,7 +16,7 @@ interface HotelSearch {
 
 const useCityHotelList = () => {
   // loading state
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [citySearchResult, setCitySearchResult] = useState<CitySearch[]>([]);
   const [hotelSearchResult, setHotelSearchResult] = useState<HotelSearch[]>([]);
 

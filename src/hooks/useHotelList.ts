@@ -22,8 +22,8 @@ interface Ari {
 
 const useHotelList = () => {
   // states
-  const [loading, setLoading] = useState(false);
-  const [noMoreResult, setNoMoreResult] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [noMoreResult, setNoMoreResult] = useState<boolean>(false);
   const [hotelList, setHotelList] = useState<HotelListProps[]>([]);
   const [offset, setOffset] = useState(0);
 
@@ -75,12 +75,14 @@ const useHotelList = () => {
 
       if (hotelListResponse.data.hits.length === 0) {
         setNoMoreResult(true);
+        setLoading(false);
       } else {
         setHotelList((prevList) => [
           ...prevList,
           ...hotelListResponse.data.hits,
         ]);
         setOffset((prevOffset) => prevOffset + LIMIT);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);

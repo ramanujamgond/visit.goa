@@ -34,10 +34,8 @@ interface UseHotelDetailsProps {
 
 const useHotelDetails = ({ hotelId }: HotelId) => {
   // states
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [hotelDetails, setHotelDetils] = useState<UseHotelDetailsProps>();
-
-  console.log("hotelDetailshotelDetails", hotelDetails);
 
   // get the parms from url
   const searchParams = useSearchParams();
@@ -57,10 +55,11 @@ const useHotelDetails = ({ hotelId }: HotelId) => {
 
     try {
       const hotelDetailsResponst = await bharatStay.get(
-        `${apiEndpoints.get.hotel_details}?hotel_id=${hotelId}&user_id=${userId}&checkin_date=${checkin})}&checkout_date=${checkout}`
+        `${apiEndpoints.get.hotel_details}?hotel_id=${hotelId}&user_id=${userId}&checkin_date=${checkin}&checkout_date=${checkout}`
       );
       if (hotelDetailsResponst?.data?.status === 1) {
         setHotelDetils(hotelDetailsResponst?.data?.hotel_data);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);

@@ -42,7 +42,7 @@ const HotelAboutUsSection: React.FC<HotelAboutUsSectionProps> = ({
       </div>
 
       <div className="text-sm font-normal text-[#858585] my-6">
-        {hotel_description}
+        <div dangerouslySetInnerHTML={{ __html: hotel_description }}></div>
       </div>
 
       <div className="text-base font-semibold">Amenities</div>

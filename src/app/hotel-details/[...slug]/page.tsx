@@ -5,6 +5,7 @@ import HotelMapPolicyDetails from "@/components/hoteldetails/HotelMapPolicyDetai
 import HotelRoomType from "@/components/hoteldetails/HotelRoomType";
 import Loader from "@/components/ui/loader";
 import useHotelDetails from "@/hooks/useHotelDetails";
+import useHotelRoomTypes from "@/hooks/useHotelRoomTypes";
 import { formatString } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -40,12 +41,23 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
     hotelId,
   });
 
+  const { invLoading, roomTypeInventory, fetchRoomTypesInventory } =
+    useHotelRoomTypes({
+      hotelId,
+    });
+
+  console.log("roomTypeInventory", roomTypeInventory);
+
   useEffect(() => {
     fetchHotelDetails();
   }, []);
 
+  useEffect(() => {
+    fetchRoomTypesInventory();
+  }, []);
+
   // standard loader
-  if (loading) {
+  if (loading && invLoading) {
     return <Loader />;
   }
 

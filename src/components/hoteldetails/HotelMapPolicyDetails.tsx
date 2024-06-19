@@ -34,8 +34,8 @@ const HotelMapPolicyDetails: React.FC<HotelMapPolicyDetailsProps> = ({
 
   // Center coordinates for the map
   const center = {
-    lat: parseInt(latitude),
-    lng: parseInt(longitude),
+    lat: parseFloat(latitude),
+    lng: parseFloat(longitude),
   };
 
   // Load the Google Maps script
@@ -47,7 +47,7 @@ const HotelMapPolicyDetails: React.FC<HotelMapPolicyDetailsProps> = ({
   // Callback when the map is loaded
   const onLoad = useCallback(
     function callback(map: any) {
-      map.setZoom(16);
+      map.setZoom(10);
       map.setCenter(center);
 
       setMap(map);
