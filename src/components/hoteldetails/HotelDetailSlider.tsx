@@ -21,7 +21,7 @@ const HotelDetailSlider: React.FC<SliderImageProps> = ({ exterior_images }) => {
   const imageUrlPath = "https://d3ki85qs1zca4t.cloudfront.net/bookingEngine";
 
   return (
-    <div className="w-11/12 mx-auto py-8">
+    <div className="w-full mx-auto rounded-xl">
       <Carousel
         setApi={setApi}
         opts={{
@@ -29,37 +29,33 @@ const HotelDetailSlider: React.FC<SliderImageProps> = ({ exterior_images }) => {
         }}
         plugins={[
           Autoplay({
-            delay: 6000,
+            delay: 4000,
           }),
         ]}
-        className="w-full h-[450px]"
+        className="w-full h-[480px] rounded-xl"
       >
-        <CarouselContent className="h-[450px]">
+        <CarouselContent className="h-[480px] rounded-xl  -ml-[0.5rem]">
           {exterior_images?.map((image, index) => (
-            <CarouselItem key={index} className="h-full">
-              <div className="p-1 h-full">
-                <div className="h-full">
-                  <CardContent className="flex items-center justify-center flex-col h-full p-6">
-                    <div className="flex items-center justify-between my-3">
-                      <div className="relative w-[100%] min-w-[1080px] h-[450px] me-3">
-                        <Image
-                          src={`${imageUrlPath}/${image}`}
-                          alt={image}
-                          fill
-                          className="object-cover"
-                          sizes="auto"
-                          loading="lazy"
-                        />
-                      </div>
+            <CarouselItem key={index} className="h-full rounded-xl pl-2">
+              <div className="p-1 h-full rounded-xl">
+                <div className="h-full rounded-xl">
+                  <div className="flex items-center justify-between rounded-xl my-3">
+                    <div className="relative w-[100vw] rounded-xl h-[450px]">
+                      <Image
+                        src={`${imageUrlPath}/${image}`}
+                        alt={image}
+                        fill
+                        className="object-cover rounded-xl"
+                        sizes="auto"
+                        loading="lazy"
+                      />
                     </div>
-                  </CardContent>
+                  </div>
                 </div>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </div>
   );

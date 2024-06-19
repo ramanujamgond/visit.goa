@@ -1,5 +1,8 @@
 "use client";
+import HotelAboutUsSection from "@/components/hoteldetails/HotelAboutUsSection";
 import HotelDetailSlider from "@/components/hoteldetails/HotelDetailSlider";
+import HotelMapPolicyDetails from "@/components/hoteldetails/HotelMapPolicyDetails";
+import HotelRoomType from "@/components/hoteldetails/HotelRoomType";
 import Loader from "@/components/ui/loader";
 import useHotelDetails from "@/hooks/useHotelDetails";
 import { formatString } from "@/lib/utils";
@@ -46,10 +49,8 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
     return <Loader />;
   }
 
-  console.log("hotelDetails", hotelDetails);
-
   return (
-    <div className="my-12 h-[90vh]">
+    <div className="my-12 h-full min-h-[90vh]">
       <div className="pt-2">
         <div className="container">
           <div className="flex items-center justify-between mt-14">
@@ -67,10 +68,34 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
             </div>
             <div></div>
           </div>
-          <div className="mt-6 mb-5">
+          <div className="mt-5 mb-5">
             {hotelDetails && (
               <HotelDetailSlider
                 exterior_images={hotelDetails?.exterior_images}
+              />
+            )}
+            {hotelDetails && (
+              <HotelAboutUsSection
+                hotel_name={hotelDetails.hotel_name}
+                city_name={hotelDetails.city_name}
+                address={hotelDetails.address}
+                hotel_description={hotelDetails.hotel_description}
+                facility={hotelDetails.facility}
+                star={hotelDetails.star}
+              />
+            )}
+
+            <HotelRoomType />
+
+            {hotelDetails && (
+              <HotelMapPolicyDetails
+                hotel_policy={hotelDetails?.hotel_policy}
+                child_policy={hotelDetails?.child_policy}
+                cancellation_policy={hotelDetails?.cancel_policy}
+                latitude={hotelDetails?.latitude}
+                longitude={hotelDetails?.longitude}
+                city_name={hotelDetails.city_name}
+                address={hotelDetails.address}
               />
             )}
           </div>
