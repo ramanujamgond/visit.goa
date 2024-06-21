@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -8,17 +8,33 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { CardContent } from "../ui/card";
-import { RiShiningFill } from "@remixicon/react";
 import Image from "next/image";
 
-interface SliderImageProps {
-  exterior_images: string[];
+interface ImageSliderProps {
+  multipleImage: string[];
 }
 
-const HotelDetailSlider: React.FC<SliderImageProps> = ({ exterior_images }) => {
+const ImageSlider: React.FC<ImageSliderProps> = ({ multipleImage }) => {
+  // states used for carousel
   const [api, setApi] = useState<CarouselApi>();
-  const imageUrlPath = "https://d3ki85qs1zca4t.cloudfront.net/bookingEngine";
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  // import media base link for image urls
+  const imageUrlPath = process.env.NEXT_PUBLIC_MEDIA_URL as string;
 
   return (
     <div className="w-full mx-auto rounded-xl">
@@ -35,12 +51,12 @@ const HotelDetailSlider: React.FC<SliderImageProps> = ({ exterior_images }) => {
         className="w-full h-[480px] rounded-xl"
       >
         <CarouselContent className="h-[480px] rounded-xl  -ml-[0.5rem]">
-          {exterior_images?.map((image, index) => (
+          {multipleImage?.map((image, index) => (
             <CarouselItem key={index} className="h-full rounded-xl pl-2">
               <div className="p-1 h-full rounded-xl">
                 <div className="h-full rounded-xl">
                   <div className="flex items-center justify-between rounded-xl my-3">
-                    <div className="relative w-[100vw] rounded-xl h-[450px]">
+                    <div className="relative w-full max-w-[980px] rounded-xl h-[450px]">
                       <Image
                         src={`${imageUrlPath}/${image}`}
                         alt={image}
@@ -56,8 +72,22 @@ const HotelDetailSlider: React.FC<SliderImageProps> = ({ exterior_images }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
       </Carousel>
+
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: count }).map((_, index) => (
+          <span
+            key={index}
+            className={`block w-2.5 h-2.5 rounded-full mx-2 ${
+              index + 1 === current ? "bg-[#FF6535]" : "bg-gray-400"
+            }`}
+            onClick={() => api && api.scrollTo(index)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
-export default HotelDetailSlider;
+export default ImageSlider;

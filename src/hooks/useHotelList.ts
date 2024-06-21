@@ -47,50 +47,57 @@ const useHotelList = () => {
   }, [place]);
 
   //   method to call search api
-  const fetchHotelList = useCallback(async () => {
-    if (!place || !checkin || !checkout || !adults || !childs) return;
+  const fetchHotelList = useCallback(
+    async (sortItem?: string) => {
+      if (!place || !checkin || !checkout || !adults || !childs) return;
 
-    setLoading(true);
-    try {
-      // payload
-      const payload = {
-        user_id: userId,
-        q: place,
-        limit: LIMIT,
-        offset: offset,
-        from_date: checkin,
-        to_date: checkout,
-        check_avi: showOnlyAvailableHotel,
-      };
+      let sortItemArray = [];
+      sortItemArray.push(sortItem);
 
-      const hotelListResponse = await bharatStay.post(
-        apiEndpoints.POST.search,
-        payload,
-        {
-          headers: {
-            "Cache-Control": "no-store",
-          },
+      setLoading(true);
+      try {
+        // payload
+        let payload = {
+          user_id: userId,
+          q: place,
+          limit: LIMIT,
+          offset: offset,
+          from_date: checkin,
+          to_date: checkout,
+          check_avi: showOnlyAvailableHotel,
+          sort: sortItem !== "default" ? sortItemArray : [],
+        };
+
+        const hotelListResponse = await bharatStay.post(
+          apiEndpoints.POST.search,
+          payload,
+          {
+            headers: {
+              "Cache-Control": "no-store",
+            },
+          }
+        );
+
+        if (hotelListResponse.data.hits.length === 0) {
+          setNoMoreResult(true);
+          setLoading(false);
+        } else {
+          setHotelList((prevList) => [
+            ...prevList,
+            ...hotelListResponse.data.hits,
+          ]);
+          setOffset((prevOffset) => prevOffset + LIMIT);
+          setLoading(false);
         }
-      );
-
-      if (hotelListResponse.data.hits.length === 0) {
-        setNoMoreResult(true);
-        setLoading(false);
-      } else {
-        setHotelList((prevList) => [
-          ...prevList,
-          ...hotelListResponse.data.hits,
-        ]);
-        setOffset((prevOffset) => prevOffset + LIMIT);
+      } catch (error) {
+        console.log(error);
+        throw new Error("Failed to fetch the hotel list!");
+      } finally {
         setLoading(false);
       }
-    } catch (error) {
-      console.log(error);
-      throw new Error("Failed to fetch the hotel list!");
-    } finally {
-      setLoading(false);
-    }
-  }, [place, checkin, checkout, offset]);
+    },
+    [place, checkin, checkout, offset]
+  );
 
   return {
     loading,

@@ -1,9 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { useCallback, useState } from "react";
-import GoogleLoader from "./GoogleLoader";
+import GoogleLoader from "../googleloader/GoogleLoader";
 import { RiMapPinLine } from "@remixicon/react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 interface HotelMapPolicyDetailsProps {
   hotel_policy: string;

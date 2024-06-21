@@ -1,8 +1,8 @@
 "use client";
-import HotelAboutUsSection from "@/components/hoteldetails/HotelAboutUsSection";
-import HotelDetailSlider from "@/components/hoteldetails/HotelDetailSlider";
-import HotelMapPolicyDetails from "@/components/hoteldetails/HotelMapPolicyDetails";
-import HotelRoomType from "@/components/hoteldetails/HotelRoomType";
+import HotelAboutUsSection from "@/components/hoteldetails/hotelaboutsection/HotelAboutUsSection";
+import HotelDetailSlider from "@/components/hoteldetails/hoteldetailslider/HotelDetailSlider";
+import HotelMapPolicyDetails from "@/components/hoteldetails/hotelmappolicydetails/HotelMapPolicyDetails";
+import HotelRoomType from "@/components/hoteldetails/hotelroomtype/HotelRoomType";
 import Loader from "@/components/ui/loader";
 import useHotelDetails from "@/hooks/useHotelDetails";
 import useHotelRoomTypes from "@/hooks/useHotelRoomTypes";
@@ -97,7 +97,9 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
               />
             )}
 
-            <HotelRoomType />
+            {roomTypeInventory.length > 0 && (
+              <HotelRoomType roomTypeInventory={roomTypeInventory} />
+            )}
 
             {hotelDetails && (
               <HotelMapPolicyDetails

@@ -1,15 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import SearchLocationDatePicker from "@/components/home/searchlocationdatepicker/SearchLocationDatePicker";
-import HotelListingDetails from "@/components/hotellisting/HotelListingDetails";
+import HotelListingDetails from "@/components/hotellisting/hotellistingdetails/HotelListingDetails";
 import Loader from "@/components/ui/loader";
 import useHotelList from "@/hooks/useHotelList";
-import NoSearchResultFound from "@/components/hotellisting/NoSearchResultFound";
+import NoSearchResultFound from "@/components/hotellisting/nosearchresultfound/NoSearchResultFound";
 
 const HotelListing = () => {
   const {
     loading,
-    noMoreResult,
     place,
     checkin,
     checkout,
@@ -19,10 +18,13 @@ const HotelListing = () => {
     fetchHotelList,
   } = useHotelList();
 
+  // states defined to select the sorted value
+  const [sortItem, setSortItem] = useState<string>("default");
+
   // call hotel list method on place, checkin, checkout, adults and childs change
   useEffect(() => {
-    fetchHotelList();
-  }, [place, checkin, checkout, adults, childs]);
+    fetchHotelList(sortItem);
+  }, [place, checkin, checkout, adults, childs, sortItem]);
 
   // standard loader
   if (loading) {
@@ -39,7 +41,11 @@ const HotelListing = () => {
 
         {hotelList?.length > 0 ? (
           // hotel listing
-          <HotelListingDetails hotelList={hotelList} />
+          <HotelListingDetails
+            hotelList={hotelList}
+            sortItem={sortItem}
+            setSortItem={setSortItem}
+          />
         ) : (
           place &&
           checkin &&

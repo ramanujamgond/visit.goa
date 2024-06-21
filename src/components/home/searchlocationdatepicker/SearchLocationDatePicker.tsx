@@ -53,25 +53,29 @@ const SearchLocationDatePicker = () => {
       checkInDate &&
       checkOutDate
     ) {
+      // set url params
       params.set("place", searchValue.value);
-
-      if (searchValue.hotelId) {
-        params.set("hotelId", `${searchValue?.hotelId}`);
-      }
-
       params.set("checkin", `${checkInDate}`);
       params.set("checkout", `${checkOutDate}`);
       params.set("adults", `${adult}`);
       params.set("childs", `${child}`);
     }
 
-    // Construct the pathname with query parameters
+    // Construct the pathname with query parameters if the search value consist a city name
     if (searchValue.value) {
       router.push(`/hotel-listing/?${params.toString()}`);
     }
 
+    // Format the hotel name to be URL-friendly
+    const formattedHotelName = searchValue.value
+      .toLowerCase()
+      .replace(/\s+/g, "-");
+
+    // construct the pathname with the query parameters if the search value consist a hotel id
     if (searchValue.hotelId) {
-      router.push(`/hotel-details/?${params.toString()}`);
+      router.push(
+        `/hotel-details/${searchValue.hotelId}/${formattedHotelName}?checkin=${checkInDate}&checkout=${checkOutDate}&adults=${adult}&childs=${child}`
+      );
     }
   };
 

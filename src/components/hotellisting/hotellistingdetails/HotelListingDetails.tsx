@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -9,7 +10,7 @@ import {
 import { RiMapPinLine } from "@remixicon/react";
 import Image from "next/image";
 import { RiShiningFill } from "@remixicon/react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
@@ -32,10 +33,20 @@ interface Ari {
 
 interface HotelListingDetailsProps {
   hotelList: HotelListProps[];
+  sortItem: string;
+  setSortItem: (value: string) => void;
+}
+
+interface sortItemProps {
+  id: number;
+  name: string;
+  value: string;
 }
 
 const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
   hotelList,
+  sortItem,
+  setSortItem,
 }) => {
   // nextjs 14 routing
   const router = useRouter();
@@ -59,6 +70,39 @@ const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
     router.push(urlSlug);
   };
 
+  // sort items and states defined to fetch the hotel list based on the sort value
+  const [sortItemList, setSortItemList] = useState<sortItemProps[]>([
+    {
+      id: 1,
+      name: "Best Match",
+      value: "default",
+    },
+    {
+      id: 2,
+      name: "Price: Low to High",
+      value: "ari:asc",
+    },
+    {
+      id: 3,
+      name: "Price: High to Low",
+      value: "ari:desc",
+    },
+    {
+      id: 4,
+      name: "Raing: Low to High",
+      value: "hotel_grade:asc",
+    },
+    {
+      id: 5,
+      name: "Rating: High to Low",
+      value: "hotel_grade:desc",
+    },
+  ]);
+
+  const handleSortedValue = (sortValue: string) => {
+    setSortItem(sortValue);
+  };
+
   return (
     <div className="my-12 h-4/5">
       <div className="flex items-center justify-between mt-14">
@@ -66,18 +110,21 @@ const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
           {hotelList?.length} for hotel found
         </div>
         <div>
-          <Select>
+          <Select onValueChange={handleSortedValue}>
             <SelectTrigger className="w-[180px] focus:ring-0">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {/* <SelectLabel>Sort by:</SelectLabel> */}
-                <SelectItem value="1">Best Match</SelectItem>
-                <SelectItem value="2">Price: Low to High</SelectItem>
-                <SelectItem value="3">Price: High to Low</SelectItem>
-                <SelectItem value="4">Rating: Low to High</SelectItem>
-                <SelectItem value="5">Rating: High to Low</SelectItem>
+                {sortItemList &&
+                  sortItemList.map((sortItems, index) => (
+                    <React.Fragment key={index}>
+                      <SelectItem value={sortItems.value}>
+                        {sortItems.name}
+                      </SelectItem>
+                    </React.Fragment>
+                  ))}
               </SelectGroup>
             </SelectContent>
           </Select>

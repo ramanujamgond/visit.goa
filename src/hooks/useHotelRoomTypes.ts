@@ -27,11 +27,7 @@ const useHotelRoomTypes = ({ hotelId }: HotelId) => {
       const inventoryResponse = await bharatStay.get(
         `${apiEndpoints.get.availability}?hotel_id=${hotelId}&from_date=${checkin}&to_date=${checkout}`
       );
-      if (inventoryResponse.status === 1) {
-        console.log(
-          "inventoryResponse?.data?.data",
-          inventoryResponse?.data?.data
-        );
+      if (inventoryResponse?.data?.status === 1) {
         setRoomTypeInventory(inventoryResponse?.data?.data);
       }
     } catch (error) {
