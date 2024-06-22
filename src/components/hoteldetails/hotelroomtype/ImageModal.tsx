@@ -18,8 +18,8 @@ const ImageModal: React.FC<ImageSliderModalPops> = ({
 
   return (
     <Dialog>
-      <div className="relative w-full h-64 rounded-xl cursor-pointer">
-        <DialogTrigger asChild>
+      <DialogTrigger asChild>
+        <div className="relative w-full h-64 rounded-xl cursor-pointer">
           <Image
             src={`${imageUrlPath}/${singleImage}`}
             alt={roomTypeName}
@@ -28,8 +28,8 @@ const ImageModal: React.FC<ImageSliderModalPops> = ({
             sizes="auto"
             loading="lazy"
           />
-        </DialogTrigger>
-      </div>
+        </div>
+      </DialogTrigger>
       <DialogContent className="w-full max-w-[980px] z-[2000]">
         <ImageSlider multipleImage={multipleImage} />
       </DialogContent>

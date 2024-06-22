@@ -3,6 +3,7 @@ import HotelAboutUsSection from "@/components/hoteldetails/hotelaboutsection/Hot
 import HotelDetailSlider from "@/components/hoteldetails/hoteldetailslider/HotelDetailSlider";
 import HotelMapPolicyDetails from "@/components/hoteldetails/hotelmappolicydetails/HotelMapPolicyDetails";
 import HotelRoomType from "@/components/hoteldetails/hotelroomtype/HotelRoomType";
+import RoomCart from "@/components/hoteldetails/roomcart/RoomCart";
 import Loader from "@/components/ui/loader";
 import useHotelDetails from "@/hooks/useHotelDetails";
 import useHotelRoomTypes from "@/hooks/useHotelRoomTypes";
@@ -112,6 +113,8 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
                 address={hotelDetails.address}
               />
             )}
+
+            <RoomCart />
           </div>
         </div>
       </div>

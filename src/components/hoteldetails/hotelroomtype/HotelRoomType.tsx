@@ -195,10 +195,12 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
         </div>
       ))}
 
-      <RoomMealPlanModal
-        isOpen={isMealPlanModalOpen}
-        toggleDialog={toggleMealPlanDialog}
-      />
+      {isMealPlanModalOpen && (
+        <RoomMealPlanModal
+          isOpen={isMealPlanModalOpen}
+          toggleDialog={toggleMealPlanDialog}
+        />
+      )}
     </div>
   );
 };
