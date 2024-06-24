@@ -79,7 +79,6 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
                 {formatedHotelName}
               </span>
             </div>
-            <div></div>
           </div>
           <div className="mt-5 mb-5">
             {hotelDetails && (
