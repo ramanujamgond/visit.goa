@@ -47,8 +47,6 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
       hotelId,
     });
 
-  console.log("roomTypeInventory", roomTypeInventory);
-
   useEffect(() => {
     fetchHotelDetails();
   }, []);
