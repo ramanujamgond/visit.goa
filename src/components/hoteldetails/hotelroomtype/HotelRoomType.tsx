@@ -64,9 +64,14 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
   const [isMealPlanModalOpen, setIsMealPlanModalOpen] =
     useState<boolean>(false);
 
-  const toggleMealPlanDialog = () => {
+  // state to hold room type data
+  const [selectedRoomType, setSelectedRoomType] = useState<any>();
+
+  const toggleMealPlanDialog = (roomTypeData: any) => {
+    setSelectedRoomType(roomTypeData);
     setIsMealPlanModalOpen((prev) => !prev);
   };
+
   return (
     <div className="my-3">
       {roomTypeInventory?.roomTypeInventory?.map((roomTypeData) => (
@@ -159,7 +164,7 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
                     </div>
 
                     <div className="text-sm font-light text-[#FF6535]">
-                      Hurry! only {roomTypeData?.inv.length} rooms left
+                      Hurry! only {roomTypeData?.min_inv} rooms left
                     </div>
                   </div>
                   <div className="flex items-center justify-between my-2">
@@ -182,7 +187,7 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
                       <Button
                         size="lg"
                         className="bg-[#FF6535]"
-                        onClick={toggleMealPlanDialog}
+                        onClick={() => toggleMealPlanDialog(roomTypeData)}
                       >
                         Add Room
                       </Button>
@@ -199,6 +204,7 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
         <RoomMealPlanModal
           isOpen={isMealPlanModalOpen}
           toggleDialog={toggleMealPlanDialog}
+          roomTypeData={selectedRoomType}
         />
       )}
     </div>

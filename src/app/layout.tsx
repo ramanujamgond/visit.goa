@@ -4,6 +4,7 @@ import "./globals.css";
 import styles from "./home.module.scss";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import ReduxProvider from "@/redux/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,9 +26,11 @@ export default function RootLayout({
             className={`${styles.main_wrapper} bg-[linear-gradient(180deg,_#FFF_0%,_#F5F5F5_40%,_#E5E5E5_100%)]`}
             // className={`${styles.main_wrapper}`}
           >
-            <Navbar />
-            {children}
-            <Footer />
+            <ReduxProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </ReduxProvider>
           </div>
         </div>
       </body>
