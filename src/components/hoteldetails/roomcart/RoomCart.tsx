@@ -25,7 +25,7 @@ const RoomCart = () => {
 
   return (
     <>
-      <div className="fixed left-0 right-0 bottom-8 w-full max-w-[530px] mx-auto z-[6010]">
+      <div className="fixed left-0 right-0 bottom-8 w-full max-w-[480px] mx-auto z-[6010]">
         <div className="flex items-center gap-4">
           <div className="flex items-center w-full justify-between rounded-xl bg-[#FF6535] p-6">
             <div className="flex items-center gap-4">

@@ -1,4 +1,6 @@
 "use client";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import HotelAboutUsSection from "@/components/hoteldetails/hotelaboutsection/HotelAboutUsSection";
 import HotelDetailSlider from "@/components/hoteldetails/hoteldetailslider/HotelDetailSlider";
 import HotelMapPolicyDetails from "@/components/hoteldetails/hotelmappolicydetails/HotelMapPolicyDetails";
@@ -9,7 +11,8 @@ import useHotelDetails from "@/hooks/useHotelDetails";
 import useHotelRoomTypes from "@/hooks/useHotelRoomTypes";
 import { formatString } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { showCart } from "@/redux/reducers/cartslice";
+import { RootState } from "@/redux/store";
 
 interface Params {
   slug: string;
@@ -20,6 +23,9 @@ interface HotelDetailsProps {
 }
 
 const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
+  // access cart status from store
+  const { cartVisibleState } = useSelector((state: RootState) => state.cart);
+
   // next 14 router
   const router = useRouter();
 
@@ -110,8 +116,7 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
                 address={hotelDetails.address}
               />
             )}
-
-            <RoomCart />
+            {cartVisibleState && <RoomCart />}
           </div>
         </div>
       </div>

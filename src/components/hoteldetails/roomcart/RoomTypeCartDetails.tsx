@@ -18,7 +18,7 @@ const RoomTypeCartDetails: React.FC<RoomTypeCartDetailsProps> = ({
         <DialogTrigger asChild></DialogTrigger>
       </div>
 
-      <DialogContent className="w-full max-w-[530px] z-[2000]">
+      <DialogContent className="w-full max-w-[480px] z-[2000]">
         <div className="flex items-center justify-between">
           <div>
             <div className="text-lg font-semibold">Check In</div>

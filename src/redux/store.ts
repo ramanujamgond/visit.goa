@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -10,19 +10,31 @@ import {
   REGISTER,
 } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
-import todoReducer from "./reducers/todo-slice";
+// import todoReducer from "./reducers/todo-slice";
+import cartReducer from "./reducers/cartslice";
 
-const persistConfig = {
-  key: "root",
+// Create persist configurations for each reducer if needed
+// const todoPersistConfig = {
+//   key: "todo",
+//   storage: storageSession,
+// };
+
+const cartPersistConfig = {
+  key: "cart",
   storage: storageSession,
 };
 
-const persistedReducer = persistReducer(persistConfig, todoReducer);
+// Persist each reducer separately
+// const persistedTodoReducer = persistReducer(todoPersistConfig, todoReducer);
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
+
+// Combine reducers
+const rootReducer = combineReducers({
+  cart: persistedCartReducer,
+});
 
 export const store = configureStore({
-  reducer: {
-    todo: persistedReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

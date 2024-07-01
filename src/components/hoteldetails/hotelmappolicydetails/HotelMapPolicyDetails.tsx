@@ -151,9 +151,13 @@ const HotelMapPolicyDetails: React.FC<HotelMapPolicyDetailsProps> = ({
               <div className="flex flex-col h-[400px] justify-between">
                 <div>
                   <div className="flex items-center text-base font-normal text-[#858585]">
-                    <RiMapPinLine size={18} className="text-[#FF6535] me-1" />
-                    {city_name}
-                    {address}
+                    <div>
+                      <RiMapPinLine size={18} className="text-[#FF6535] me-1" />
+                    </div>
+                    <div>
+                      {city_name}
+                      {address}
+                    </div>
                   </div>
                 </div>
 
