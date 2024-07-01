@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
@@ -66,27 +66,94 @@ interface RoomMealPlanModalProps {
   toggleDialog: (value: boolean) => void;
   roomTypeData: HotelRoomTypeProps;
 }
+
+interface OccupancyProps {
+  roomNumber: number;
+  adult: number;
+  child: number;
+  extra_adult: number;
+  extra_child: number;
+  price: number;
+}
+
+interface SelectedRoomTypeProps {
+  roomTypeId: number;
+  selectedRatePlan: number;
+  noOfRoomSelected: number;
+  roomTypeName: string;
+  ratePlanName: string;
+  roomTypeImages: string;
+  occupancy: OccupancyProps[];
+}
+
 const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
   isOpen,
   toggleDialog,
   roomTypeData,
 }) => {
-  // states to hold the number of adult and child
+  // states defined
   const [numberOfRoomSelected, setNumberOfRoomSelected] = useState<number>(0);
   const [disableNoOfRooms, setDisableNoOfRooms] = useState<boolean>(false);
   const [selectedRoomArray, setSelectedRoomArray] = useState<number[]>([]);
+  const [selectedMealPlanId, setSelectedMealPlanId] = useState<number>(0);
+  const [selectedRoomType, setSelectedRoomType] =
+    useState<SelectedRoomTypeProps>({
+      roomTypeId: 0,
+      selectedRatePlan: 0,
+      noOfRoomSelected: 0,
+      roomTypeName: "",
+      ratePlanName: "",
+      roomTypeImages: "",
+      occupancy: [],
+    });
 
-  console.log("roomTypeData", roomTypeData);
+  // // useEffect used to define the initail object for selectedRoomType
+  // useEffect(() => {
+  //   setSelectedRoomType((prev) => ({
+  //     ...prev,
+  //     roomTypeId: roomTypeData?.room_type_id,
+  //     selectedRatePlan: selectedMealPlanId,
+  //     noOfRoomSelected: numberOfRoomSelected,
+  //     roomTypeName: roomTypeData?.room_type,
+  //     roomTypeImages: roomTypeData?.image,
+  //   }));
+  // }, [selectedMealPlanId, numberOfRoomSelected]);
+
+  // handle the selected meal plan
+  const handleSelectedMealPlan = (value: string) => {
+    setSelectedMealPlanId(parseInt(value));
+  };
 
   // method to handle add rooms
   const addNumberofRooms = () => {
     if (roomTypeData?.min_inv > numberOfRoomSelected) {
       setSelectedRoomArray((prev) => [...prev, numberOfRoomSelected]);
       setNumberOfRoomSelected((prev) => ++prev);
+
+      const newOccupancy = {
+        roomNumber: (selectedRoomType?.occupancy?.length || 0) + 1,
+        adult: 0,
+        child: 0,
+        extra_adult: 0,
+        extra_child: 0,
+        price: 0,
+      };
+
+      let updatedRoomType;
+      if (!selectedRoomType) {
+        updatedRoomType = [newOccupancy];
+      } else {
+        updatedRoomType = [...selectedRoomType.occupancy, newOccupancy];
+      }
+
+      // setSelectedRoomType({ ...selectedRoomType, occupancy: updatedRoomType });
+      setSelectedRoomType((prev) => ({ ...prev, occupancy: updatedRoomType }));
     } else {
       setDisableNoOfRooms(true);
     }
   };
+
+  console.log("selectedRoomType", selectedRoomType);
 
   // method to handle the decrement of rooms
   const decNumberofRooms = () => {
@@ -100,6 +167,17 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
     setSelectedRoomArray((prev) => prev.slice(0, -1));
   };
 
+  // method to increment the adult
+  const addRoomOccupancy = (occupant: string, index: number) => {
+    // extract the occupancy details from roomTypeData for cart operations
+    const maxOccupancy = roomTypeData?.max_occupancy;
+    const baseAdult = roomTypeData?.base_adult;
+    const baseChild = roomTypeData?.base_child;
+    const extraAdult = roomTypeData?.extra_adult;
+    const extraChild = roomTypeData?.extra_child;
+    const roomNumber = index + 1;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={toggleDialog}>
       <div className="relative w-full h-64 rounded-xl cursor-pointer">
@@ -111,7 +189,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
           e.preventDefault();
         }}
       >
-        <div className="text-xl font-semibold">Delux Room</div>
+        <div className="text-xl font-semibold">{roomTypeData?.room_type}</div>
 
         <div className="flex items-center justify-between">
           <div className="text-lg font-semibold text-[#595959]">
@@ -136,10 +214,11 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 
         <div className="text-sm font-medium">Chosse Meal Plan</div>
         <div>
-          <Select>
+          <Select onValueChange={handleSelectedMealPlan}>
             <SelectTrigger className="w-full">
               <SelectValue
-                placeholder={`${roomTypeData?.rate_plans[0]?.plan_name} (${roomTypeData?.rate_plans[0]?.price_after_discount})`}
+                // placeholder={`${roomTypeData?.rate_plans[0]?.plan_name} (${roomTypeData?.rate_plans[0]?.price_after_discount})`}
+                placeholder="Meal plan not selected"
               />
             </SelectTrigger>
             <SelectContent className="z-[2001]">
@@ -153,66 +232,69 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
             </SelectContent>
           </Select>
         </div>
-        {selectedRoomArray.length > 0 &&
-          selectedRoomArray.map((roomNumber) => (
-            <>
-              <div className="flex items-center" key={roomNumber}>
-                <div className="w-2/6">
-                  <div className="text-xl font-semibold mb-3">
-                    Room {roomNumber + 1}
-                  </div>
-                  <div className="w-[32px] h-[32px] flex items-center justify-start cursor-pointer">
-                    <RiDeleteBinLine className="text-[#FF6535] font-light" />
-                  </div>
-                </div>
 
-                <div className="flex items-center justify-between w-full">
-                  <div>
-                    <div className="text-base font-medium mb-3">Adult</div>
-                    <div className="flex items-center gap-x-2">
-                      <Button
-                        className="w-7 h-8 bg-[#FF6535]"
-                        // onClick={addChildDecrement}
-                      >
-                        -
-                      </Button>
-                      <span className="inline-block w-5 text-base font-medium text-center">
-                        0
-                      </span>
-                      <Button
-                        className="w-7 h-8 bg-[#FF6535]"
-                        // onClick={addChildIncrement}
-                      >
-                        +
-                      </Button>
+        <div className="h-auto max-h-56 overflow-y-scroll [scrollbar-width:thin]">
+          {selectedRoomArray.length > 0 &&
+            selectedRoomArray.map((roomNumber) => (
+              <React.Fragment key={roomNumber}>
+                <div className="flex items-center mb-5">
+                  <div className="w-2/6">
+                    <div className="text-xl font-semibold mb-3">
+                      Room {roomNumber + 1}
+                    </div>
+                    <div className="w-[32px] h-[32px] flex items-center justify-start cursor-pointer">
+                      <RiDeleteBinLine className="text-[#FF6535] font-light" />
                     </div>
                   </div>
 
-                  <div>
-                    <div className="text-base font-medium mb-3">Child</div>
-                    <div className="flex items-center gap-x-2">
-                      <Button
-                        className="w-7 h-8 bg-[#FF6535]"
-                        // onClick={addChildDecrement}
-                      >
-                        -
-                      </Button>
-                      <span className="inline-block w-5 text-base font-medium text-center">
-                        0
-                      </span>
-                      <Button
-                        className="w-7 h-8 bg-[#FF6535]"
-                        // onClick={addChildIncrement}
-                      >
-                        +
-                      </Button>
+                  <div className="flex items-center justify-between w-full">
+                    <div>
+                      <div className="text-base font-medium mb-3">Adult</div>
+                      <div className="flex items-center gap-x-2">
+                        <Button
+                          className="w-7 h-8 bg-[#FF6535]"
+                          // onClick={addChildDecrement}
+                        >
+                          -
+                        </Button>
+                        <span className="inline-block w-5 text-base font-medium text-center">
+                          0
+                        </span>
+                        <Button
+                          className="w-7 h-8 bg-[#FF6535]"
+                          onClick={() => addRoomOccupancy("adult", roomNumber)}
+                        >
+                          +
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-base font-medium mb-3">Child</div>
+                      <div className="flex items-center gap-x-2">
+                        <Button
+                          className="w-7 h-8 bg-[#FF6535]"
+                          // onClick={addChildDecrement}
+                        >
+                          -
+                        </Button>
+                        <span className="inline-block w-5 text-base font-medium text-center">
+                          0
+                        </span>
+                        <Button
+                          className="w-7 h-8 bg-[#FF6535]"
+                          // onClick={addChildIncrement}
+                        >
+                          +
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <Separator />
-            </>
-          ))}
+                <Separator className="mb-5" />
+              </React.Fragment>
+            ))}
+        </div>
 
         <Button size={"lg"} className="mt-2 bg-[#FF6535]">
           Save
