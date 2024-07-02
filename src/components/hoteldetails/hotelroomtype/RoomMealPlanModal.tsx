@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { RiDeleteBinLine } from "@remixicon/react";
 import { Separator } from "@/components/ui/separator";
+import RoomTypeOccupancy from "./RoomTypeOccupancy";
 
 export interface HotelRoomTypeProps {
   room_type: string;
@@ -67,7 +68,7 @@ interface RoomMealPlanModalProps {
   roomTypeData: HotelRoomTypeProps;
 }
 
-interface OccupancyProps {
+export interface OccupancyProps {
   roomNumber: number;
   adult: number;
   child: number;
@@ -76,7 +77,7 @@ interface OccupancyProps {
   price: number;
 }
 
-interface SelectedRoomTypeProps {
+export interface SelectedRoomTypeProps {
   roomTypeId: number;
   selectedRatePlan: number;
   noOfRoomSelected: number;
@@ -96,6 +97,8 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
   const [disableNoOfRooms, setDisableNoOfRooms] = useState<boolean>(false);
   const [selectedRoomArray, setSelectedRoomArray] = useState<number[]>([]);
   const [selectedMealPlanId, setSelectedMealPlanId] = useState<number>(0);
+  const [disableAddAdult, setDisableAddAdult] = useState<boolean>(false);
+  const [disableAddChild, setDisableAddChild] = useState<boolean>(false);
   const [selectedRoomType, setSelectedRoomType] =
     useState<SelectedRoomTypeProps>({
       roomTypeId: 0,
@@ -107,17 +110,12 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
       occupancy: [],
     });
 
-  // // useEffect used to define the initail object for selectedRoomType
-  // useEffect(() => {
-  //   setSelectedRoomType((prev) => ({
-  //     ...prev,
-  //     roomTypeId: roomTypeData?.room_type_id,
-  //     selectedRatePlan: selectedMealPlanId,
-  //     noOfRoomSelected: numberOfRoomSelected,
-  //     roomTypeName: roomTypeData?.room_type,
-  //     roomTypeImages: roomTypeData?.image,
-  //   }));
-  // }, [selectedMealPlanId, numberOfRoomSelected]);
+  // extract the occupancy details from roomTypeData for cart operations
+  const maxOccupancy = roomTypeData?.max_occupancy;
+  const baseAdult = roomTypeData?.base_adult;
+  const baseChild = roomTypeData?.base_child;
+  const extraAdult = roomTypeData?.extra_adult;
+  const extraChild = roomTypeData?.extra_child;
 
   // handle the selected meal plan
   const handleSelectedMealPlan = (value: string) => {
@@ -145,37 +143,115 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
       } else {
         updatedRoomType = [...selectedRoomType.occupancy, newOccupancy];
       }
-
-      // setSelectedRoomType({ ...selectedRoomType, occupancy: updatedRoomType });
       setSelectedRoomType((prev) => ({ ...prev, occupancy: updatedRoomType }));
     } else {
       setDisableNoOfRooms(true);
     }
   };
 
+  console.log("roomTypeData", roomTypeData);
   console.log("selectedRoomType", selectedRoomType);
 
   // method to handle the decrement of rooms
   const decNumberofRooms = () => {
-    setNumberOfRoomSelected((prev) => (prev > 0 ? --prev : 0));
-    setDisableNoOfRooms(false);
-    // setSelectedRoomArray((prev) => {
-    //   const updatedArray = [...prev];
-    //   updatedArray.pop();
-    //   return updatedArray;
-    // });
-    setSelectedRoomArray((prev) => prev.slice(0, -1));
+    if (numberOfRoomSelected > 0) {
+      setNumberOfRoomSelected((prev) => (prev > 0 ? --prev : 0));
+      setDisableNoOfRooms(false);
+      setSelectedRoomArray((prev) => prev.slice(0, -1));
+
+      //Remove the last element from the occupancy array
+      setSelectedRoomType((prev) => {
+        const updatedOccupancy = [...prev.occupancy];
+        updatedOccupancy.pop();
+
+        return {
+          ...prev,
+          occupancy: updatedOccupancy,
+        };
+      });
+    }
   };
 
-  // method to increment the adult
-  const addRoomOccupancy = (occupant: string, index: number) => {
-    // extract the occupancy details from roomTypeData for cart operations
-    const maxOccupancy = roomTypeData?.max_occupancy;
-    const baseAdult = roomTypeData?.base_adult;
-    const baseChild = roomTypeData?.base_child;
-    const extraAdult = roomTypeData?.extra_adult;
-    const extraChild = roomTypeData?.extra_child;
-    const roomNumber = index + 1;
+  // method to add the adult and child
+  const addRoomOccupancy = (occupant: string, roomIndex: number) => {
+    setSelectedRoomType((prevState) => {
+      const updatedOccupancy = prevState.occupancy.map((occupancy, index) => {
+        if (index === roomIndex - 1) {
+          // Clone the occupancy object to avoid direct mutation
+          let newOccupancy = { ...occupancy };
+
+          const totalOccupants =
+            newOccupancy.adult +
+            newOccupancy.child +
+            newOccupancy.extra_adult +
+            newOccupancy.extra_child;
+
+          if (occupant === "adult") {
+            if (totalOccupants < maxOccupancy) {
+              if (newOccupancy.adult < baseAdult) {
+                newOccupancy.adult++;
+              } else if (newOccupancy.extra_adult < extraAdult) {
+                newOccupancy.extra_adult++;
+              } else {
+                setDisableAddAdult(true);
+              }
+            } else {
+              setDisableAddAdult(true);
+            }
+          } else if (occupant === "child") {
+            if (totalOccupants < maxOccupancy) {
+              if (newOccupancy.child < baseChild) {
+                newOccupancy.child++;
+              } else if (newOccupancy.extra_child < extraChild) {
+                newOccupancy.extra_child++;
+              } else {
+                setDisableAddChild(true);
+              }
+            } else {
+              setDisableAddChild(true);
+            }
+          }
+
+          return newOccupancy;
+        }
+        return occupancy;
+      });
+
+      return { ...prevState, occupancy: updatedOccupancy };
+    });
+  };
+
+  // method to remove the adult and child
+  const removeRoomOccupancy = (occupant: string, roomNumber: number) => {
+    setSelectedRoomType((prevState) => {
+      const updatedOccupancy = prevState.occupancy.map((occupancy, index) => {
+        if (occupancy.roomNumber === roomNumber) {
+          let newOccupancy = { ...occupancy };
+
+          if (occupant === "adult") {
+            if (newOccupancy.adult > 1) {
+              newOccupancy.adult--;
+              setDisableAddAdult(false);
+            } else if (newOccupancy.extra_adult > 0) {
+              newOccupancy.extra_adult--;
+              setDisableAddAdult(false);
+            }
+          } else if (occupant === "child") {
+            if (newOccupancy.child > 0) {
+              newOccupancy.child--;
+              setDisableAddChild(false);
+            } else if (newOccupancy.extra_child > 0) {
+              newOccupancy.extra_child--;
+              setDisableAddChild(false);
+            }
+          }
+          return newOccupancy;
+        }
+        return occupancy;
+      });
+
+      return { ...prevState, occupancy: updatedOccupancy };
+    });
   };
 
   return (
@@ -234,65 +310,15 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
         </div>
 
         <div className="h-auto max-h-56 overflow-y-scroll [scrollbar-width:thin]">
-          {selectedRoomArray.length > 0 &&
-            selectedRoomArray.map((roomNumber) => (
-              <React.Fragment key={roomNumber}>
-                <div className="flex items-center mb-5">
-                  <div className="w-2/6">
-                    <div className="text-xl font-semibold mb-3">
-                      Room {roomNumber + 1}
-                    </div>
-                    <div className="w-[32px] h-[32px] flex items-center justify-start cursor-pointer">
-                      <RiDeleteBinLine className="text-[#FF6535] font-light" />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between w-full">
-                    <div>
-                      <div className="text-base font-medium mb-3">Adult</div>
-                      <div className="flex items-center gap-x-2">
-                        <Button
-                          className="w-7 h-8 bg-[#FF6535]"
-                          // onClick={addChildDecrement}
-                        >
-                          -
-                        </Button>
-                        <span className="inline-block w-5 text-base font-medium text-center">
-                          0
-                        </span>
-                        <Button
-                          className="w-7 h-8 bg-[#FF6535]"
-                          onClick={() => addRoomOccupancy("adult", roomNumber)}
-                        >
-                          +
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="text-base font-medium mb-3">Child</div>
-                      <div className="flex items-center gap-x-2">
-                        <Button
-                          className="w-7 h-8 bg-[#FF6535]"
-                          // onClick={addChildDecrement}
-                        >
-                          -
-                        </Button>
-                        <span className="inline-block w-5 text-base font-medium text-center">
-                          0
-                        </span>
-                        <Button
-                          className="w-7 h-8 bg-[#FF6535]"
-                          // onClick={addChildIncrement}
-                        >
-                          +
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <Separator className="mb-5" />
-              </React.Fragment>
+          {selectedRoomType?.occupancy.length > 0 &&
+            selectedRoomType?.occupancy.map((roomsData, index) => (
+              <RoomTypeOccupancy
+                roomsData={roomsData}
+                index={index}
+                selectedRoomType={selectedRoomType}
+                setSelectedRoomType={setSelectedRoomType}
+                roomTypeData={roomTypeData}
+              />
             ))}
         </div>
 
