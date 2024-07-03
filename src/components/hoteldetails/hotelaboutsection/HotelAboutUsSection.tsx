@@ -34,9 +34,6 @@ const HotelAboutUsSection: React.FC<HotelAboutUsSectionProps> = ({
               {star}
               <RiShiningFill size={16} className="ms-1" />
             </div>
-            <div className="text-sm font-medium text-[#858585]">
-              (85 reviews)
-            </div>
           </div>
         </div>
       </div>

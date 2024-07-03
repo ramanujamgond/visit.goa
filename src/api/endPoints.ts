@@ -1,5 +1,5 @@
 export const apiEndpoints = {
-  get: {
+  GET: {
     get_cities: "/search/get-cities",
     hotel_details: "/hotel/details/get",
     availability: "/availability/get",

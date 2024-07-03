@@ -93,12 +93,9 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
   roomTypeData,
 }) => {
   // states defined
-  const [numberOfRoomSelected, setNumberOfRoomSelected] = useState<number>(0);
   const [disableNoOfRooms, setDisableNoOfRooms] = useState<boolean>(false);
-  const [selectedRoomArray, setSelectedRoomArray] = useState<number[]>([]);
+  const [saveButtonStatus, setSaveButtonStatus] = useState<boolean>(false);
   const [selectedMealPlanId, setSelectedMealPlanId] = useState<number>(0);
-  const [disableAddAdult, setDisableAddAdult] = useState<boolean>(false);
-  const [disableAddChild, setDisableAddChild] = useState<boolean>(false);
   const [selectedRoomType, setSelectedRoomType] =
     useState<SelectedRoomTypeProps>({
       roomTypeId: 0,
@@ -110,13 +107,6 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
       occupancy: [],
     });
 
-  // extract the occupancy details from roomTypeData for cart operations
-  const maxOccupancy = roomTypeData?.max_occupancy;
-  const baseAdult = roomTypeData?.base_adult;
-  const baseChild = roomTypeData?.base_child;
-  const extraAdult = roomTypeData?.extra_adult;
-  const extraChild = roomTypeData?.extra_child;
-
   // handle the selected meal plan
   const handleSelectedMealPlan = (value: string) => {
     setSelectedMealPlanId(parseInt(value));
@@ -124,9 +114,11 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 
   // method to handle add rooms
   const addNumberofRooms = () => {
-    if (roomTypeData?.min_inv > numberOfRoomSelected) {
-      setSelectedRoomArray((prev) => [...prev, numberOfRoomSelected]);
-      setNumberOfRoomSelected((prev) => ++prev);
+    if (roomTypeData?.min_inv > selectedRoomType.noOfRoomSelected) {
+      setSelectedRoomType((prev) => ({
+        ...prev,
+        noOfRoomSelected: prev.noOfRoomSelected + 1,
+      }));
 
       const newOccupancy = {
         roomNumber: (selectedRoomType?.occupancy?.length || 0) + 1,
@@ -149,110 +141,79 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
     }
   };
 
-  console.log("roomTypeData", roomTypeData);
-  console.log("selectedRoomType", selectedRoomType);
-
   // method to handle the decrement of rooms
   const decNumberofRooms = () => {
-    if (numberOfRoomSelected > 0) {
-      setNumberOfRoomSelected((prev) => (prev > 0 ? --prev : 0));
+    if (selectedRoomType?.noOfRoomSelected > 0) {
       setDisableNoOfRooms(false);
-      setSelectedRoomArray((prev) => prev.slice(0, -1));
 
-      //Remove the last element from the occupancy array
+      // Remove the last room/element from the occupancy array
       setSelectedRoomType((prev) => {
-        const updatedOccupancy = [...prev.occupancy];
-        updatedOccupancy.pop();
-
+        const updatedOccupancy = prev.occupancy.slice(0, -1);
         return {
           ...prev,
+          noOfRoomSelected: prev.noOfRoomSelected - 1,
           occupancy: updatedOccupancy,
         };
       });
     }
   };
 
-  // method to add the adult and child
-  const addRoomOccupancy = (occupant: string, roomIndex: number) => {
-    setSelectedRoomType((prevState) => {
-      const updatedOccupancy = prevState.occupancy.map((occupancy, index) => {
-        if (index === roomIndex - 1) {
-          // Clone the occupancy object to avoid direct mutation
-          let newOccupancy = { ...occupancy };
+  // method to handle the cart data and store the cart data in redux store
+  const handleCartData = () => {
+    // extract the occupancy details from roomTypeData for cart operations
+    const baseAdult = roomTypeData?.base_adult;
+    const baseChild = roomTypeData?.base_child;
+    const extraAdult = roomTypeData?.extra_adult;
+    const extraChild = roomTypeData?.extra_child;
 
-          const totalOccupants =
-            newOccupancy.adult +
-            newOccupancy.child +
-            newOccupancy.extra_adult +
-            newOccupancy.extra_child;
+    const selectedMealPlan = roomTypeData?.rate_plans.find((ratePlan) => {
+      return ratePlan.rate_plan_id === selectedMealPlanId;
+    });
 
-          if (occupant === "adult") {
-            if (totalOccupants < maxOccupancy) {
-              if (newOccupancy.adult < baseAdult) {
-                newOccupancy.adult++;
-              } else if (newOccupancy.extra_adult < extraAdult) {
-                newOccupancy.extra_adult++;
-              } else {
-                setDisableAddAdult(true);
-              }
-            } else {
-              setDisableAddAdult(true);
-            }
-          } else if (occupant === "child") {
-            if (totalOccupants < maxOccupancy) {
-              if (newOccupancy.child < baseChild) {
-                newOccupancy.child++;
-              } else if (newOccupancy.extra_child < extraChild) {
-                newOccupancy.extra_child++;
-              } else {
-                setDisableAddChild(true);
-              }
-            } else {
-              setDisableAddChild(true);
-            }
-          }
+    console.log("selectedMealPlan", selectedMealPlan);
 
-          return newOccupancy;
+    setSelectedRoomType((prev: SelectedRoomTypeProps) => {
+      let updatedOccupancy = prev.occupancy.map((occupants) => {
+        let price = 0;
+
+        if (occupants.adult === baseAdult) {
+          selectedMealPlan?.rates.forEach((rates) => {
+            price += rates.price_after_discount;
+          });
+        } else if (occupants.extra_adult > 0) {
+          selectedMealPlan?.rates.forEach((rates) => {
+            price += rates.price_after_discount + rates.extra_adult_price;
+          });
+        } else if (occupants.adult < baseAdult) {
+          selectedMealPlan?.rates.forEach((rates) => {
+            price += rates.multiple_occupancy[occupants.adult - 1];
+          });
         }
-        return occupancy;
+
+        if (occupants.extra_child > 0) {
+          selectedMealPlan?.rates.forEach((rates) => {
+            price += rates.extra_child_price;
+          });
+        }
+
+        return { ...occupants, price };
       });
 
-      return { ...prevState, occupancy: updatedOccupancy };
+      return { ...prev, occupancy: updatedOccupancy };
     });
   };
 
-  // method to remove the adult and child
-  const removeRoomOccupancy = (occupant: string, roomNumber: number) => {
-    setSelectedRoomType((prevState) => {
-      const updatedOccupancy = prevState.occupancy.map((occupancy, index) => {
-        if (occupancy.roomNumber === roomNumber) {
-          let newOccupancy = { ...occupancy };
+  console.log("roomTypeData", roomTypeData);
+  console.log("selectedRoomType", selectedRoomType);
 
-          if (occupant === "adult") {
-            if (newOccupancy.adult > 1) {
-              newOccupancy.adult--;
-              setDisableAddAdult(false);
-            } else if (newOccupancy.extra_adult > 0) {
-              newOccupancy.extra_adult--;
-              setDisableAddAdult(false);
-            }
-          } else if (occupant === "child") {
-            if (newOccupancy.child > 0) {
-              newOccupancy.child--;
-              setDisableAddChild(false);
-            } else if (newOccupancy.extra_child > 0) {
-              newOccupancy.extra_child--;
-              setDisableAddChild(false);
-            }
-          }
-          return newOccupancy;
-        }
-        return occupancy;
-      });
-
-      return { ...prevState, occupancy: updatedOccupancy };
-    });
-  };
+  // enabling the save button only after selecting a room
+  useEffect(() => {
+    if (!selectedRoomType?.occupancy.length) {
+      setSaveButtonStatus(true);
+    } else {
+      setSaveButtonStatus(false);
+    }
+  }, [selectedRoomType]);
 
   return (
     <Dialog open={isOpen} onOpenChange={toggleDialog}>
@@ -276,7 +237,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
               -
             </Button>
             <span className="inline-block w-5 text-base font-medium text-center">
-              {numberOfRoomSelected}
+              {selectedRoomType?.noOfRoomSelected}
             </span>
             <Button
               className="w-7 h-8 bg-[#FF6535]"
@@ -313,6 +274,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
           {selectedRoomType?.occupancy.length > 0 &&
             selectedRoomType?.occupancy.map((roomsData, index) => (
               <RoomTypeOccupancy
+                key={index}
                 roomsData={roomsData}
                 index={index}
                 selectedRoomType={selectedRoomType}
@@ -322,7 +284,12 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
             ))}
         </div>
 
-        <Button size={"lg"} className="mt-2 bg-[#FF6535]">
+        <Button
+          size={"lg"}
+          className="mt-2 bg-[#FF6535]"
+          disabled={saveButtonStatus}
+          onClick={handleCartData}
+        >
           Save
         </Button>
       </DialogContent>

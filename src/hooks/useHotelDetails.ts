@@ -7,10 +7,13 @@ interface HotelId {
   hotelId: string;
 }
 
-interface UseHotelDetailsProps {
+interface HotelPolicy {
   hotel_policy: string;
   child_policy: string;
   cancel_policy: string;
+}
+interface UseHotelDetailsProps {
+  policies: HotelPolicy;
   terms_and_cond: string;
   hotel_id: number;
   hotel_name: string;
@@ -55,10 +58,10 @@ const useHotelDetails = ({ hotelId }: HotelId) => {
 
     try {
       const hotelDetailsResponst = await bharatStay.get(
-        `${apiEndpoints.get.hotel_details}?hotel_id=${hotelId}&user_id=${userId}&checkin_date=${checkin}&checkout_date=${checkout}`
+        `${apiEndpoints.GET.hotel_details}?hotel_id=${hotelId}&user_id=${userId}&checkin_date=${checkin}&checkout_date=${checkout}`
       );
       if (hotelDetailsResponst?.data?.status === 1) {
-        setHotelDetils(hotelDetailsResponst?.data?.hotel_data);
+        setHotelDetils(hotelDetailsResponst?.data?.data);
         setLoading(false);
       }
     } catch (error) {

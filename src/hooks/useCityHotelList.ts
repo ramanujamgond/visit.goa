@@ -25,7 +25,7 @@ const useCityHotelList = () => {
     setLoading(true);
     try {
       const cityList = await bharatStay.get(
-        `${apiEndpoints.get.get_cities}?q=${searchValue}`,
+        `${apiEndpoints.GET.get_cities}?q=${searchValue}`,
         {
           headers: {
             "Cache-Control": "no-store",

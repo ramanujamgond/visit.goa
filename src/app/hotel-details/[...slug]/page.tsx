@@ -107,9 +107,9 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
 
             {hotelDetails && (
               <HotelMapPolicyDetails
-                hotel_policy={hotelDetails?.hotel_policy}
-                child_policy={hotelDetails?.child_policy}
-                cancellation_policy={hotelDetails?.cancel_policy}
+                hotel_policy={hotelDetails?.policies?.hotel_policy}
+                child_policy={hotelDetails?.policies?.child_policy}
+                cancellation_policy={hotelDetails?.policies?.cancel_policy}
                 latitude={hotelDetails?.latitude}
                 longitude={hotelDetails?.longitude}
                 city_name={hotelDetails.city_name}

@@ -23,6 +23,7 @@ const RoomTypeOccupancy = ({
   setSelectedRoomType,
   roomTypeData,
 }: RoomTypeOccupancyProps) => {
+  // states to hold the enable and disable status of the adult and child button
   const [disableAddAdult, setDisableAddAdult] = useState<boolean>(false);
   const [disableAddChild, setDisableAddChild] = useState<boolean>(false);
 
@@ -48,11 +49,12 @@ const RoomTypeOccupancy = ({
             newOccupancy.extra_child;
 
           if (occupant === "adult") {
-            if (totalOccupants < maxOccupancy) {
-              if (newOccupancy.adult < baseAdult) {
+            if (totalOccupants <= maxOccupancy) {
+              if (newOccupancy.adult < baseAdult + extraAdult) {
                 newOccupancy.adult++;
-              } else if (newOccupancy.extra_adult < extraAdult) {
-                newOccupancy.extra_adult++;
+                if (newOccupancy.adult > baseAdult) {
+                  newOccupancy.extra_adult++;
+                }
               } else {
                 setDisableAddAdult(true);
               }
@@ -60,11 +62,12 @@ const RoomTypeOccupancy = ({
               setDisableAddAdult(true);
             }
           } else if (occupant === "child") {
-            if (totalOccupants < maxOccupancy) {
-              if (newOccupancy.child < baseChild) {
+            if (totalOccupants <= maxOccupancy) {
+              if (newOccupancy.child < baseChild + extraChild) {
                 newOccupancy.child++;
-              } else if (newOccupancy.extra_child < extraChild) {
-                newOccupancy.extra_child++;
+                if (newOccupancy.child > baseChild) {
+                  newOccupancy.extra_child++;
+                }
               } else {
                 setDisableAddChild(true);
               }
@@ -92,17 +95,25 @@ const RoomTypeOccupancy = ({
           if (occupant === "adult") {
             if (newOccupancy.adult > 1) {
               newOccupancy.adult--;
+              if (newOccupancy.adult > baseAdult) {
+                newOccupancy.extra_adult--;
+              } else {
+                newOccupancy.extra_adult = 0;
+              }
               setDisableAddAdult(false);
-            } else if (newOccupancy.extra_adult > 0) {
-              newOccupancy.extra_adult--;
+            } else {
               setDisableAddAdult(false);
             }
           } else if (occupant === "child") {
             if (newOccupancy.child > 0) {
               newOccupancy.child--;
+              if (newOccupancy.extra_child > 0) {
+                newOccupancy.extra_child--;
+              } else {
+                newOccupancy.extra_child = 0;
+              }
               setDisableAddChild(false);
-            } else if (newOccupancy.extra_child > 0) {
-              newOccupancy.extra_child--;
+            } else {
               setDisableAddChild(false);
             }
           }
@@ -115,6 +126,17 @@ const RoomTypeOccupancy = ({
     });
   };
 
+  // method to delete the room
+  const deleteRoomNumber = (roomNumber: number) => {
+    setSelectedRoomType((prevState: SelectedRoomTypeProps) => {
+      const filteredRoomNumber = prevState.occupancy.filter((occupancy) => {
+        return occupancy.roomNumber !== roomNumber;
+      });
+
+      return { ...prevState, occupancy: filteredRoomNumber };
+    });
+  };
+
   return (
     <React.Fragment key={index}>
       <div className="flex items-center mb-5">
@@ -122,7 +144,12 @@ const RoomTypeOccupancy = ({
           <div className="text-xl font-semibold mb-3">
             Room {roomsData?.roomNumber}
           </div>
-          <div className="w-[32px] h-[32px] flex items-center justify-start cursor-pointer">
+          <div
+            className="w-[32px] h-[32px] flex items-center justify-start cursor-pointer"
+            onClick={() => {
+              deleteRoomNumber(roomsData?.roomNumber);
+            }}
+          >
             <RiDeleteBinLine className="text-[#FF6535] font-light" />
           </div>
         </div>
@@ -138,9 +165,7 @@ const RoomTypeOccupancy = ({
                 -
               </Button>
               <span className="inline-block w-5 text-base font-medium text-center">
-                {roomsData?.extra_adult
-                  ? roomsData?.extra_adult + roomsData?.adult
-                  : roomsData?.adult}
+                {roomsData?.adult}
               </span>
               <Button
                 className="w-7 h-8 bg-[#FF6535]"
@@ -162,9 +187,7 @@ const RoomTypeOccupancy = ({
                 -
               </Button>
               <span className="inline-block w-5 text-base font-medium text-center">
-                {roomsData?.extra_child
-                  ? roomsData?.extra_child + roomsData?.child
-                  : roomsData?.child}
+                {roomsData?.child}
               </span>
               <Button
                 className="w-7 h-8 bg-[#FF6535]"
