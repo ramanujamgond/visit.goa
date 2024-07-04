@@ -58,12 +58,12 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ multipleImage }) => {
                   <div className="flex items-center justify-between rounded-xl my-3">
                     <div className="relative w-full max-w-[980px] rounded-xl h-[450px]">
                       <Image
+                        priority={false}
                         src={`${imageUrlPath}/${image}`}
                         alt={image}
                         fill
                         className="object-cover rounded-xl"
                         sizes="auto"
-                        loading="lazy"
                       />
                     </div>
                   </div>

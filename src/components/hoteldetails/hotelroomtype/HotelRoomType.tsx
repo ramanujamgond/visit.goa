@@ -5,6 +5,10 @@ import ImageModal from "./ImageModal";
 import { useState } from "react";
 import RoomMealPlanModal from "./RoomMealPlanModal";
 
+interface RoomAmenities {
+  amenity_id: number;
+  amenity_name: string;
+}
 export interface HotelRoomTypeProps {
   room_type: string;
   room_type_id: number;
@@ -13,12 +17,13 @@ export interface HotelRoomTypeProps {
   extra_adult: number;
   extra_child: number;
   max_occupancy: number;
+  description: string;
   room_size_value: string;
   room_size_unit: string;
   image: string;
   allImages: string[];
   min_inv: number;
-  room_amenities: string[];
+  room_amenities: RoomAmenities[];
   rate_plans: RatePlan[];
   inv: Inv[];
 }
@@ -100,12 +105,15 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
                   )}
                 </div>
 
-                <div className="text-xs font-normal text-[#858585] w-3/4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat view more
-                </div>
+                <div
+                  className="text-sm font-normal text-[#858585] w-3/4 mt-2"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      roomTypeData?.description.length > 280
+                        ? roomTypeData?.description.slice(0, 280)
+                        : roomTypeData?.description,
+                  }}
+                ></div>
 
                 <div>
                   <div className="flex items-center justify-end text-2xl font-semibold text-right">
@@ -177,7 +185,7 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
                                 key={index}
                                 className="w-fit text-xs font-normal text-[#FF6535] px-2 py-1.5 my-2 me-2 bg-[#F3F3F3] rounded-md"
                               >
-                                {amenities}
+                                {amenities?.amenity_name}
                               </div>
                             )
                         )}

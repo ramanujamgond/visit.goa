@@ -159,7 +159,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
   };
 
   // method to handle the cart data and store the cart data in redux store
-  const handleCartData = () => {
+  const handleAddRoom = () => {
     // extract the occupancy details from roomTypeData for cart operations
     const baseAdult = roomTypeData?.base_adult;
     const baseChild = roomTypeData?.base_child;
@@ -169,8 +169,6 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
     const selectedMealPlan = roomTypeData?.rate_plans.find((ratePlan) => {
       return ratePlan.rate_plan_id === selectedMealPlanId;
     });
-
-    console.log("selectedMealPlan", selectedMealPlan);
 
     setSelectedRoomType((prev: SelectedRoomTypeProps) => {
       let updatedOccupancy = prev.occupancy.map((occupants) => {
@@ -201,6 +199,11 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 
       return { ...prev, occupancy: updatedOccupancy };
     });
+
+    // room rate calculation date wise
+    // const per_night_rates = {
+    //   date:
+    // }
   };
 
   console.log("roomTypeData", roomTypeData);
@@ -208,12 +211,14 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 
   // enabling the save button only after selecting a room
   useEffect(() => {
-    if (!selectedRoomType?.occupancy.length) {
-      setSaveButtonStatus(true);
-    } else {
+    if (selectedRoomType?.occupancy.length > 0 && selectedMealPlanId > 0) {
       setSaveButtonStatus(false);
+    } else {
+      setSaveButtonStatus(true);
     }
-  }, [selectedRoomType]);
+  }, [selectedRoomType, selectedMealPlanId]);
+
+  console.log("selectedMealPlanId", selectedMealPlanId != 0);
 
   return (
     <Dialog open={isOpen} onOpenChange={toggleDialog}>
@@ -288,7 +293,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
           size={"lg"}
           className="mt-2 bg-[#FF6535]"
           disabled={saveButtonStatus}
-          onClick={handleCartData}
+          onClick={handleAddRoom}
         >
           Save
         </Button>

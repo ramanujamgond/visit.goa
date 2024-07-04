@@ -21,12 +21,12 @@ const ImageModal: React.FC<ImageSliderModalPops> = ({
       <DialogTrigger asChild>
         <div className="relative w-full h-64 rounded-xl cursor-pointer">
           <Image
+            priority={false}
             src={`${imageUrlPath}/${singleImage}`}
             alt={roomTypeName}
             fill
             className="object-cover rounded-xl"
             sizes="auto"
-            loading="lazy"
           />
         </div>
       </DialogTrigger>

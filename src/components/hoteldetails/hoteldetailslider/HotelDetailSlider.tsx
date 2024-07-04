@@ -56,12 +56,12 @@ const HotelDetailSlider: React.FC<SliderImageProps> = ({ exterior_images }) => {
                   <div className="flex items-center justify-between rounded-xl my-3">
                     <div className="relative w-[100vw] rounded-xl h-[450px]">
                       <Image
+                        priority={true}
                         src={`${imageUrlPath}/${image}`}
                         alt={image}
                         fill
                         className="object-cover rounded-xl"
                         sizes="auto"
-                        loading="lazy"
                       />
                     </div>
                   </div>

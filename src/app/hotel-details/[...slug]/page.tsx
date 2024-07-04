@@ -13,6 +13,7 @@ import { formatString } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { showCart } from "@/redux/reducers/cartslice";
 import { RootState } from "@/redux/store";
+import useLocalDetails from "@/hooks/useLocalDetails";
 
 interface Params {
   slug: string;
@@ -44,21 +45,35 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
     router.back();
   };
 
+  // custom hook call to fetch the hotel details
   const { loading, hotelDetails, fetchHotelDetails } = useHotelDetails({
     hotelId,
   });
 
+  // custom hook call to fetch the rate, room type and inventory9
   const { invLoading, roomTypeInventory, fetchRoomTypesInventory } =
     useHotelRoomTypes({
       hotelId,
     });
 
+  // custom hook call to fetch the local details
+  const { lclDetLoading, localDetails, fetchLocalDetails } = useLocalDetails({
+    hotelId,
+  });
+
+  // method call to fetch the hotel details
   useEffect(() => {
     fetchHotelDetails();
   }, []);
 
+  // method call to fetch the room, rate and inventory
   useEffect(() => {
     fetchRoomTypesInventory();
+  }, []);
+
+  // method to fetch the local details
+  useEffect(() => {
+    fetchLocalDetails();
   }, []);
 
   // standard loader

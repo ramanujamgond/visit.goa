@@ -13,12 +13,12 @@ const Navbar = () => {
         <Link href="/">
           <div className="relative w-[130px] h-[26px]">
             <Image
+              priority={true}
               src="/bharat_stay_logo.png"
               alt="Bharat Stay Logo"
               fill
               className="object-cover"
               sizes="auto"
-              loading="lazy"
             />
           </div>
         </Link>

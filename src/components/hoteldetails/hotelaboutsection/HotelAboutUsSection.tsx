@@ -1,4 +1,4 @@
-import { RiMapPinLine, RiShiningFill } from "@remixicon/react";
+import { RiMapPinLine, RiStarFill } from "@remixicon/react";
 
 interface HotelAboutUsSectionProps {
   hotel_name: string;
@@ -32,7 +32,7 @@ const HotelAboutUsSection: React.FC<HotelAboutUsSectionProps> = ({
           <div className="flex items-end flex-col justify-end">
             <div className="flex items-center justify-center text-base font-semibold">
               {star}
-              <RiShiningFill size={16} className="ms-1" />
+              <RiStarFill size={18} className="ms-1 text-[#FF6535]" />
             </div>
           </div>
         </div>
