@@ -19,3 +19,7 @@ export function formatString(inputString: string) {
   // Replace placeholder back to '&'
   return formattedString.replace(/%26/g, "&");
 }
+
+export const calculateGst = (price: number, gst: number) => {
+  return (price * gst) / 100;
+};

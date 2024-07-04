@@ -4,6 +4,7 @@ import { Button } from "../../ui/button";
 import ImageModal from "./ImageModal";
 import { useState } from "react";
 import RoomMealPlanModal from "./RoomMealPlanModal";
+import { LocalDetailsProps } from "@/hooks/useLocalDetails";
 
 interface RoomAmenities {
   amenity_id: number;
@@ -60,11 +61,13 @@ export interface Rate {
 
 interface HotelRoomTypeDetailsPageProp {
   roomTypeInventory: HotelRoomTypeProps[];
+  localDetails: LocalDetailsProps;
 }
 
-const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
-  roomTypeInventory
-) => {
+const HotelRoomType = ({
+  roomTypeInventory,
+  localDetails,
+}: HotelRoomTypeDetailsPageProp) => {
   // method and state to toggle the meal plan modal
   const [isMealPlanModalOpen, setIsMealPlanModalOpen] =
     useState<boolean>(false);
@@ -79,7 +82,7 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
 
   return (
     <div className="my-3">
-      {roomTypeInventory?.roomTypeInventory?.map((roomTypeData) => (
+      {roomTypeInventory?.map((roomTypeData) => (
         <div
           key={roomTypeData?.room_type_id}
           className="p-3 bg-white rounded-xl mt-6 mb-5 [box-shadow:0px_2px_23.2px_0px_rgba(0,_0,_0,_0.09)]"
@@ -213,6 +216,7 @@ const HotelRoomType: React.FC<HotelRoomTypeDetailsPageProp> = (
           isOpen={isMealPlanModalOpen}
           toggleDialog={toggleMealPlanDialog}
           roomTypeData={selectedRoomType}
+          localDetails={localDetails}
         />
       )}
     </div>

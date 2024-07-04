@@ -57,7 +57,7 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
     });
 
   // custom hook call to fetch the local details
-  const { lclDetLoading, localDetails, fetchLocalDetails } = useLocalDetails({
+  const { localDetails, fetchLocalDetails } = useLocalDetails({
     hotelId,
   });
 
@@ -116,8 +116,11 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
               />
             )}
 
-            {roomTypeInventory.length > 0 && (
-              <HotelRoomType roomTypeInventory={roomTypeInventory} />
+            {roomTypeInventory.length > 0 && localDetails && (
+              <HotelRoomType
+                roomTypeInventory={roomTypeInventory}
+                localDetails={localDetails}
+              />
             )}
 
             {hotelDetails && (
