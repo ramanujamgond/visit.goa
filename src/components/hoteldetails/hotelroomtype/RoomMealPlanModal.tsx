@@ -419,10 +419,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
             value={selectedMealPlanId.toString()}
           >
             <SelectTrigger className="w-full">
-              <SelectValue
-                // placeholder={`${roomTypeData?.rate_plans[0]?.plan_name} (${roomTypeData?.rate_plans[0]?.price_after_discount})`}
-                placeholder="Meal plan not selected"
-              />
+              <SelectValue placeholder="Meal plan not selected" />
             </SelectTrigger>
             <SelectContent className="z-[2001]">
               {roomTypeData?.rate_plans.map((ratePlans) => (

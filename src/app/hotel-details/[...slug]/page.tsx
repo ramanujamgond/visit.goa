@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HotelAboutUsSection from "@/components/hoteldetails/hotelaboutsection/HotelAboutUsSection";
 import HotelDetailSlider from "@/components/hoteldetails/hoteldetailslider/HotelDetailSlider";
 import HotelMapPolicyDetails from "@/components/hoteldetails/hotelmappolicydetails/HotelMapPolicyDetails";
@@ -11,7 +11,7 @@ import useHotelDetails from "@/hooks/useHotelDetails";
 import useHotelRoomTypes from "@/hooks/useHotelRoomTypes";
 import { formatString } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { showCart } from "@/redux/reducers/cartslice";
+import { showCart, deleteCartData } from "@/redux/reducers/cartslice";
 import { RootState } from "@/redux/store";
 import useLocalDetails from "@/hooks/useLocalDetails";
 
@@ -24,8 +24,14 @@ export interface HotelDetailsProps {
 }
 
 const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
+  // allows functional components to dispatch actions to the Redux store
+  const dispatch = useDispatch();
+
   // access cart status from store
   const { cartVisibleState } = useSelector((state: RootState) => state.cart);
+
+  // get the saved cart data from the store.
+  const cartData = useSelector((state: RootState) => state.cart.cartData);
 
   // next 14 router
   const router = useRouter();
@@ -75,6 +81,14 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
   useEffect(() => {
     fetchLocalDetails();
   }, []);
+
+  // hide the cart if no data is there in the cart
+  useEffect(() => {
+    if (cartData.length === 0) {
+      // Hide the cart if there is no data
+      dispatch(showCart(false));
+    }
+  }, [cartData]);
 
   // standard loader
   if (loading && invLoading) {

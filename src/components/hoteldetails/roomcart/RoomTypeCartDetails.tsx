@@ -5,6 +5,8 @@ import Image from "next/image";
 import { SelectedRoomTypeProps } from "../hotelroomtype/RoomMealPlanModal";
 import { useSearchParams } from "next/navigation";
 import { format, differenceInDays } from "date-fns";
+import { useDispatch } from "react-redux";
+import { updateCartData } from "@/redux/reducers/cartslice";
 interface RoomTypeCartDetailsProps {
   isOpen: boolean;
   toggleModal: (value: boolean) => void;
@@ -18,6 +20,9 @@ const RoomTypeCartDetails: React.FC<RoomTypeCartDetailsProps> = ({
 }) => {
   console.log("cartData", cartData);
 
+  // allows functional components to dispatch actions to the Redux store
+  const dispatch = useDispatch();
+
   // get the query parms
   const searchParams = useSearchParams();
 
@@ -27,6 +32,15 @@ const RoomTypeCartDetails: React.FC<RoomTypeCartDetailsProps> = ({
 
   // import media base link for image urls
   const imageUrlPath = process.env.NEXT_PUBLIC_MEDIA_URL as string;
+
+  // method to delete the selected room type from the cartData
+  const deleteRoomType = (roomTypeId: number) => {
+    const removeRoomType = cartData.filter(
+      (cartItem) => cartItem.roomTypeId !== roomTypeId
+    );
+
+    dispatch(updateCartData(removeRoomType));
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={toggleModal}>
@@ -113,13 +127,18 @@ const RoomTypeCartDetails: React.FC<RoomTypeCartDetailsProps> = ({
                         (acc, occupancyItem) =>
                           occupancyItem.rates.reduce(
                             (acc, rate) =>
-                              (acc += rate.total_price_including_tax),
+                              (acc += rate.total_price_excluding_tax),
                             0
                           ) + acc,
                         0
                       )}
                     </div>
-                    <div className="w-[26px] h-[26px] p-1 rounded-md bg-[#934E4E] flex items-center justify-center cursor-pointer">
+                    <div
+                      className="w-[26px] h-[26px] p-1 rounded-md bg-[#934E4E] flex items-center justify-center cursor-pointer"
+                      onClick={() => {
+                        deleteRoomType(cartItems?.roomTypeId);
+                      }}
+                    >
                       <RiDeleteBinLine size={18} className="text-white" />
                     </div>
                   </div>

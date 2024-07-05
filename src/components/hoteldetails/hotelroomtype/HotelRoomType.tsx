@@ -220,11 +220,6 @@ const HotelRoomType = ({
                         className="bg-[#FF6535]"
                         onClick={() => toggleMealPlanDialog(roomTypeData)}
                       >
-                        {/* {cartData[index]?.roomTypeId ===
-                        roomTypeData.room_type_id
-                          ? "Edit Room"
-                          : "Add Room"} */}
-
                         {editState[index] ? "Edit Room" : "Add Room"}
                       </Button>
                     </div>
