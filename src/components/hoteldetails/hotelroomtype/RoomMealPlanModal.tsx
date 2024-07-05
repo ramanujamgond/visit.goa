@@ -13,9 +13,10 @@ import {
 import RoomTypeOccupancy from "./RoomTypeOccupancy";
 import { LocalDetailsProps } from "@/hooks/useLocalDetails";
 import { calculateGst } from "@/lib/utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showCart, updateCartData } from "@/redux/reducers/cartslice";
 import { useRouter } from "next/navigation";
+import { RootState } from "@/redux/store";
 
 export interface HotelRoomTypeProps {
   room_type: string;
@@ -72,15 +73,6 @@ interface RoomMealPlanModalProps {
   localDetails: LocalDetailsProps;
 }
 
-export interface OccupancyProps {
-  roomNumber: number;
-  adult: number;
-  child: number;
-  extra_adult: number;
-  extra_child: number;
-  rates: RatesProps[];
-}
-
 export interface RatesProps {
   date: Date;
   price_before_discount: number;
@@ -93,6 +85,15 @@ export interface RatesProps {
   tax_amount: number;
   tax_percentage: number;
   total_price_including_tax: number;
+}
+
+export interface OccupancyProps {
+  roomNumber: number;
+  adult: number;
+  child: number;
+  extra_adult: number;
+  extra_child: number;
+  rates: RatesProps[];
 }
 
 export interface SelectedRoomTypeProps {
@@ -113,6 +114,9 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 }) => {
   // allows functional components to dispatch actions to the Redux store
   const dispatch = useDispatch();
+
+  // get the cartData to check for dublicate value and prefill the edited room type data
+  const cartData = useSelector((state: RootState) => state.cart.cartData);
 
   // states defined
   const [disableNoOfRooms, setDisableNoOfRooms] = useState<boolean>(false);
@@ -184,9 +188,6 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
   const handleAddRoom = () => {
     // extract the occupancy details from roomTypeData for cart operations
     const baseAdult = roomTypeData?.base_adult;
-    // const baseChild = roomTypeData?.base_child;
-    // const extraAdult = roomTypeData?.extra_adult;
-    // const extraChild = roomTypeData?.extra_child;
 
     const selectedMealPlan = roomTypeData?.rate_plans.find((ratePlan) => {
       return ratePlan.rate_plan_id === selectedMealPlanId;
@@ -196,40 +197,11 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
       return ratePlan.rate_plan_id === selectedMealPlanId;
     })?.plan_name;
 
-    // setSelectedRoomType((prev: SelectedRoomTypeProps) => {
-    //   let updatedOccupancy = prev.occupancy.map((occupants) => {
-    //     let price = 0;
-
-    //     if (occupants.adult === baseAdult) {
-    //       selectedMealPlan?.rates.forEach((rates) => {
-    //         price += rates.price_after_discount;
-    //       });
-    //     } else if (occupants.extra_adult > 0) {
-    //       selectedMealPlan?.rates.forEach((rates) => {
-    //         price += rates.price_after_discount + rates.extra_adult_price;
-    //       });
-    //     } else if (occupants.adult < baseAdult) {
-    //       selectedMealPlan?.rates.forEach((rates) => {
-    //         price += rates.multiple_occupancy[occupants.adult - 1];
-    //       });
-    //     }
-
-    //     if (occupants.extra_child > 0) {
-    //       selectedMealPlan?.rates.forEach((rates) => {
-    //         price += rates.extra_child_price;
-    //       });
-    //     }
-
-    //     return { ...occupants, price };
-    //   });
-
-    //   return { ...prev, occupancy: updatedOccupancy };
-    // });
-
     //room rate calculation date wise
     setSelectedRoomType((prev: SelectedRoomTypeProps) => {
-      let updatedOccupancy = prev.occupancy.map((occupants) => {
-        let rates: any = [];
+      let updatedOccupancy: OccupancyProps[] = [];
+      prev.occupancy.forEach((occupants) => {
+        let rates: RatesProps[] = [];
         selectedMealPlan?.rates?.forEach((rate) => {
           const per_night_rate = {
             date: rate?.stay_date,
@@ -344,16 +316,13 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
           rates.push(per_night_rate);
         });
 
-        return { ...occupants, rates };
+        updatedOccupancy.push({ ...occupants, rates });
       });
 
-      return { ...prev, occupancy: updatedOccupancy };
-    });
-
-    // update other data such as rateplanname, roomTypeId, roomTypeImages, roomTypeName and selctedRatePlanID
-    setSelectedRoomType((prev) => {
+      // update other data such as updatedOccupancy, rateplanname, roomTypeId, roomTypeImages, roomTypeName and selctedRatePlanID
       return {
         ...prev,
+        occupancy: updatedOccupancy,
         ratePlanName: selectedMealPlanName || "",
         roomTypeId: roomTypeData?.room_type_id,
         roomTypeImages: roomTypeData?.image,
@@ -361,16 +330,38 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
         selectedRatePlan: selectedMealPlanId,
       };
     });
-
-    // store the selcted room type data in redux
-    dispatch(updateCartData(selectedRoomType));
-
-    // show the cart
-    dispatch(showCart(true));
-
-    //hide the meal plan modal
-    toggleDialog(false);
   };
+
+  // useEffect used to update the store with the updated value
+  useEffect(() => {
+    if (selectedRoomType.roomTypeId) {
+      // Check if the item already exists in cartData
+      const updatedCartData = cartData.filter(
+        (item) => item.roomTypeId !== selectedRoomType.roomTypeId
+      );
+
+      dispatch(updateCartData([...updatedCartData, selectedRoomType]));
+
+      // show the cart
+      dispatch(showCart(true));
+
+      //hide the meal plan modal
+      toggleDialog(false);
+    }
+  }, [selectedRoomType]);
+
+  // prefilled the data when in edit room type
+  useEffect(() => {
+    if (isOpen) {
+      const editableRoomTypeData = cartData.find(
+        (items) => items.roomTypeId === roomTypeData.room_type_id
+      );
+      if (editableRoomTypeData) {
+        setSelectedRoomType(editableRoomTypeData);
+        setSelectedMealPlanId(editableRoomTypeData.selectedRatePlan);
+      }
+    }
+  }, [isOpen]);
 
   // enabling the save button only after selecting a room meal plan and number of adult
   useEffect(() => {
@@ -421,7 +412,10 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 
         <div className="text-sm font-medium">Chosse Meal Plan</div>
         <div>
-          <Select onValueChange={handleSelectedMealPlan}>
+          <Select
+            onValueChange={handleSelectedMealPlan}
+            value={selectedMealPlanId.toString()}
+          >
             <SelectTrigger className="w-full">
               <SelectValue
                 // placeholder={`${roomTypeData?.rate_plans[0]?.plan_name} (${roomTypeData?.rate_plans[0]?.price_after_discount})`}

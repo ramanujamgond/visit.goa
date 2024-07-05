@@ -50,11 +50,11 @@ export const cartslice = createSlice({
     showCart: (state, action: PayloadAction<boolean>) => {
       state.cartVisibleState = action.payload;
     },
-    updateCartData: (state, action: PayloadAction<CartItem>) => {
-      state.cartData.push(action.payload);
-    },
-    deleteCartData: (state, action: PayloadAction<[]>) => {
+    updateCartData: (state, action: PayloadAction<CartItem[]>) => {
       state.cartData = action.payload;
+    },
+    deleteCartData: (state) => {
+      state.cartData = [];
     },
   },
 });

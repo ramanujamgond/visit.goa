@@ -2,9 +2,11 @@ import { RiGroupLine } from "@remixicon/react";
 import { Button } from "../../ui/button";
 
 import ImageModal from "./ImageModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoomMealPlanModal from "./RoomMealPlanModal";
 import { LocalDetailsProps } from "@/hooks/useLocalDetails";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface RoomAmenities {
   amenity_id: number;
@@ -68,6 +70,9 @@ const HotelRoomType = ({
   roomTypeInventory,
   localDetails,
 }: HotelRoomTypeDetailsPageProp) => {
+  // get the cartData
+  const cartData = useSelector((state: RootState) => state.cart.cartData);
+
   // method and state to toggle the meal plan modal
   const [isMealPlanModalOpen, setIsMealPlanModalOpen] =
     useState<boolean>(false);
@@ -75,14 +80,29 @@ const HotelRoomType = ({
   // state to hold room type data
   const [selectedRoomType, setSelectedRoomType] = useState<any>();
 
+  // state to hold the truthy value for edit state of buttons
+  const [editState, setEditState] = useState<boolean[]>([]);
+
+  // method to pass the data to the meal plan model and toogle it
   const toggleMealPlanDialog = (roomTypeData: any) => {
     setSelectedRoomType(roomTypeData);
     setIsMealPlanModalOpen((prev) => !prev);
   };
 
+  // update the edit state text of button if the room type id matches with the cart room type id
+  useEffect(() => {
+    const updatedState = cartData.map((cartItem) =>
+      roomTypeInventory.some(
+        (roomTypeData) => cartItem.roomTypeId === roomTypeData.room_type_id
+      )
+    );
+
+    setEditState(updatedState);
+  }, [cartData]);
+
   return (
     <div className="my-3">
-      {roomTypeInventory?.map((roomTypeData) => (
+      {roomTypeInventory?.map((roomTypeData, index) => (
         <div
           key={roomTypeData?.room_type_id}
           className="p-3 bg-white rounded-xl mt-6 mb-5 [box-shadow:0px_2px_23.2px_0px_rgba(0,_0,_0,_0.09)]"
@@ -200,7 +220,12 @@ const HotelRoomType = ({
                         className="bg-[#FF6535]"
                         onClick={() => toggleMealPlanDialog(roomTypeData)}
                       >
-                        Add Room
+                        {/* {cartData[index]?.roomTypeId ===
+                        roomTypeData.room_type_id
+                          ? "Edit Room"
+                          : "Add Room"} */}
+
+                        {editState[index] ? "Edit Room" : "Add Room"}
                       </Button>
                     </div>
                   </div>

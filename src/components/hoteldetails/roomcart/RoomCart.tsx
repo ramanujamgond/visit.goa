@@ -44,7 +44,7 @@ const RoomCart = () => {
 
   // clear the cart data and hide the cart
   const clearCartData = () => {
-    dispatch(deleteCartData([]));
+    dispatch(deleteCartData());
     dispatch(showCart(false));
   };
 

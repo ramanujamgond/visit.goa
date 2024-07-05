@@ -5,14 +5,30 @@ import { Separator } from "@/components/ui/separator";
 import { RiDeleteBinLine, RiMoonLine } from "@remixicon/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { showCart, deleteCartData } from "@/redux/reducers/cartslice";
+import { useDispatch } from "react-redux";
 
 const Checkout = () => {
+  // allows functional components to dispatch actions to the Redux store
+  const dispatch = useDispatch();
+
   // next 14 router
   const router = useRouter();
 
   // go back[go back in the browser stack]
   const navigateBack = () => {
     router.back();
+  };
+
+  //navigate to the home
+  const navigateHome = () => {
+    router.push("/");
+
+    // show the cart
+    dispatch(showCart(true));
+
+    // clear the cart data
+    dispatch(deleteCartData());
   };
 
   return (
@@ -23,12 +39,15 @@ const Checkout = () => {
             <div className="text-base font-normal text-[#656565]">
               <span
                 className="hover:text-[#FF6535] cursor-pointer"
-                onClick={navigateBack}
+                onClick={navigateHome}
               >
                 Book Now
               </span>{" "}
               {"> "}
-              <span className="font-bold text-[#141414]">
+              <span
+                className="font-bold text-[#141414] hover:text-[#FF6535] cursor-pointer"
+                onClick={navigateBack}
+              >
                 Hotel Beauty Palace
               </span>{" "}
               {"> "}
