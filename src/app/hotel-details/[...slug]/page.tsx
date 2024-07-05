@@ -15,11 +15,11 @@ import { showCart } from "@/redux/reducers/cartslice";
 import { RootState } from "@/redux/store";
 import useLocalDetails from "@/hooks/useLocalDetails";
 
-interface Params {
+export interface Params {
   slug: string;
 }
 
-interface HotelDetailsProps {
+export interface HotelDetailsProps {
   params: Params;
 }
 

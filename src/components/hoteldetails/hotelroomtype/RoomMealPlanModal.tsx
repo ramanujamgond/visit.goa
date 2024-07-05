@@ -330,6 +330,11 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
         selectedRatePlan: selectedMealPlanId,
       };
     });
+
+    //hide the meal plan modal
+    setTimeout(() => {
+      toggleDialog(false);
+    }, 100);
   };
 
   // useEffect used to update the store with the updated value
@@ -344,9 +349,6 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 
       // show the cart
       dispatch(showCart(true));
-
-      //hide the meal plan modal
-      toggleDialog(false);
     }
   }, [selectedRoomType]);
 

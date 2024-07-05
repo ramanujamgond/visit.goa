@@ -25,7 +25,7 @@ const Checkout = () => {
     router.push("/");
 
     // show the cart
-    dispatch(showCart(true));
+    dispatch(showCart(false));
 
     // clear the cart data
     dispatch(deleteCartData());

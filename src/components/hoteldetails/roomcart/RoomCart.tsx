@@ -91,10 +91,13 @@ const RoomCart = () => {
         </div>
       </div>
 
-      <RoomTypeCartDetails
-        isOpen={isRoomTypeCartModalOpen}
-        toggleModal={toggleRoomTypeCartDetails}
-      />
+      {isRoomTypeCartModalOpen && (
+        <RoomTypeCartDetails
+          isOpen={isRoomTypeCartModalOpen}
+          toggleModal={toggleRoomTypeCartDetails}
+          cartData={cartData}
+        />
+      )}
     </>
   );
 };
