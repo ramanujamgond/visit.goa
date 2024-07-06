@@ -1,4 +1,4 @@
-import { kernelAPI } from "@/api/baseURL";
+import { bharatStay } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 import { useState } from "react";
 
@@ -43,12 +43,12 @@ const useLocalDetails = ({ hotelId }: HotelId) => {
   const fetchLocalDetails = async () => {
     setLclDetLoading(true);
     try {
-      const localDetailResponse = await kernelAPI.get(
+      const localDetailResponse = await bharatStay.get(
         `${apiEndpoints.GET.locale_details}${hotelId}`
       );
       if (localDetailResponse?.data?.status === 1) {
         setLclDetLoading(false);
-        setLocalDetails(localDetailResponse?.data?.states);
+        setLocalDetails(localDetailResponse?.data);
       }
     } catch (error) {
       setLclDetLoading(false);

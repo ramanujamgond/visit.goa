@@ -6,6 +6,6 @@ export const bharatStay = axios.create({
 });
 
 // instance of kernel
-export const kernelAPI = axios.create({
-  baseURL: "https://kernel.bookingjini.com",
-});
+// export const kernelAPI = axios.create({
+//   baseURL: "https://kernel.bookingjini.com",
+// });

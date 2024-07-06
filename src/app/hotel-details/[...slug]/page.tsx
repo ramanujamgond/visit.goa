@@ -99,6 +99,8 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
     return <Loader />;
   }
 
+  console.log("localDetails", localDetails);
+
   return (
     <div className="my-12 h-full min-h-[90vh]">
       <div className="pt-2">

@@ -73,6 +73,8 @@ const HotelRoomType = ({
   // get the cartData
   const { cartData } = useSelector((state: RootState) => state.cart);
 
+  console.log("roomTypeInventory", roomTypeInventory);
+
   // method and state to toggle the meal plan modal
   const [isMealPlanModalOpen, setIsMealPlanModalOpen] =
     useState<boolean>(false);
