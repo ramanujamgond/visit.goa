@@ -33,10 +33,10 @@ type Rate = {
   total_price_including_tax: number;
 };
 
-type CheckInCheckOutProps = {
+export interface CheckInCheckOutProps {
   checkinDate: string;
   checkoutDate: string;
-};
+}
 
 type CartState = {
   cartVisibleState: boolean;
