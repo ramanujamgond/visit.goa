@@ -33,14 +33,24 @@ type Rate = {
   total_price_including_tax: number;
 };
 
+type CheckInCheckOutProps = {
+  checkinDate: string;
+  checkoutDate: string;
+};
+
 type CartState = {
   cartVisibleState: boolean;
   cartData: SelectedRoomTypeProps[];
+  checkInCheckOut: CheckInCheckOutProps;
 };
 
 const initialState: CartState = {
   cartVisibleState: false,
   cartData: [],
+  checkInCheckOut: {
+    checkinDate: "",
+    checkoutDate: "",
+  },
 };
 
 export const cartslice = createSlice({
@@ -56,8 +66,19 @@ export const cartslice = createSlice({
     deleteCartData: (state) => {
       state.cartData = [];
     },
+    storeCheckInCheckOutDate: (
+      state,
+      action: PayloadAction<CheckInCheckOutProps>
+    ) => {
+      state.checkInCheckOut = action.payload;
+    },
   },
 });
 
-export const { showCart, updateCartData, deleteCartData } = cartslice.actions;
+export const {
+  showCart,
+  updateCartData,
+  deleteCartData,
+  storeCheckInCheckOutDate,
+} = cartslice.actions;
 export default cartslice.reducer;

@@ -10,7 +10,7 @@ import Loader from "@/components/ui/loader";
 import useHotelDetails from "@/hooks/useHotelDetails";
 import useHotelRoomTypes from "@/hooks/useHotelRoomTypes";
 import { formatString } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { showCart, deleteCartData } from "@/redux/reducers/cartslice";
 import { RootState } from "@/redux/store";
 import useLocalDetails from "@/hooks/useLocalDetails";
@@ -27,14 +27,16 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
   // allows functional components to dispatch actions to the Redux store
   const dispatch = useDispatch();
 
-  // access cart status from store
-  const { cartVisibleState } = useSelector((state: RootState) => state.cart);
-
-  // get the saved cart data from the store.
-  const cartData = useSelector((state: RootState) => state.cart.cartData);
+  // access cart status from and saved cart data from the store
+  const { cartVisibleState, cartData } = useSelector(
+    (state: RootState) => state.cart
+  );
 
   // next 14 router
   const router = useRouter();
+
+  // get adult and child from url params
+  const searchParams = useSearchParams();
 
   // get the url params
   const urlParms = params;
@@ -42,6 +44,8 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
   // extract data from the slug object of url params
   const hotelId = urlParms.slug[0];
   const hotelName = urlParms.slug[1];
+  const adults = searchParams.get("adults");
+  const childs = searchParams.get("childs");
 
   // call a utility method to fromat the string in proper readable format
   const formatedHotelName = formatString(hotelName);
@@ -148,7 +152,14 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
                 address={hotelDetails.address}
               />
             )}
-            {cartVisibleState && <RoomCart />}
+            {cartVisibleState && (
+              <RoomCart
+                hotelId={hotelId}
+                hotelName={hotelName}
+                adults={adults || ""}
+                childs={childs || ""}
+              />
+            )}
           </div>
         </div>
       </div>

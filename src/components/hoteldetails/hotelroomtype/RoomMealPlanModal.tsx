@@ -14,8 +14,12 @@ import RoomTypeOccupancy from "./RoomTypeOccupancy";
 import { LocalDetailsProps } from "@/hooks/useLocalDetails";
 import { calculateGst } from "@/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { showCart, updateCartData } from "@/redux/reducers/cartslice";
-import { useRouter } from "next/navigation";
+import {
+  showCart,
+  storeCheckInCheckOutDate,
+  updateCartData,
+} from "@/redux/reducers/cartslice";
+import { useSearchParams } from "next/navigation";
 import { RootState } from "@/redux/store";
 
 export interface HotelRoomTypeProps {
@@ -115,8 +119,15 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
   // allows functional components to dispatch actions to the Redux store
   const dispatch = useDispatch();
 
+  // get the query parms
+  const searchParams = useSearchParams();
+
   // get the cartData to check for dublicate value and prefill the edited room type data
-  const cartData = useSelector((state: RootState) => state.cart.cartData);
+  const { cartData } = useSelector((state: RootState) => state.cart);
+
+  // get the checkin and checkout dates
+  const checkInDate = searchParams.get("checkin");
+  const checkOutDate = searchParams.get("checkout");
 
   // states defined
   const [disableNoOfRooms, setDisableNoOfRooms] = useState<boolean>(false);
@@ -377,6 +388,18 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
       setSaveButtonStatus(true);
     }
   }, [selectedRoomType, selectedMealPlanId]);
+
+  // get the checkin checkout from url params and fix set it in store
+  useEffect(() => {
+    if (checkInDate && checkOutDate) {
+      dispatch(
+        storeCheckInCheckOutDate({
+          checkinDate: checkInDate,
+          checkoutDate: checkOutDate,
+        })
+      );
+    }
+  }, [checkInDate, checkOutDate]);
 
   return (
     <Dialog open={isOpen} onOpenChange={toggleDialog}>

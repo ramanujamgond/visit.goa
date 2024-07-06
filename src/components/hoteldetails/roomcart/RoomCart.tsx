@@ -10,14 +10,29 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { deleteCartData, showCart } from "@/redux/reducers/cartslice";
+export interface RoomCartProps {
+  hotelId: string;
+  hotelName: string;
+  adults: string;
+  childs: string;
+}
 
-const RoomCart = () => {
-  // get the saved cart data from the store.
-  const cartData = useSelector((state: RootState) => state.cart.cartData);
-
+const RoomCart: React.FC<RoomCartProps> = ({
+  hotelId,
+  hotelName,
+  adults,
+  childs,
+}) => {
   // allows functional components to dispatch actions to the Redux store
   const dispatch = useDispatch();
 
+  // get the saved cart data and checkin checkout data from store.
+  const {
+    cartData,
+    checkInCheckOut: { checkinDate, checkoutDate },
+  } = useSelector((state: RootState) => state.cart);
+
+  // get the total of rooms excluding tax
   let totalRoomPrice = 0;
 
   cartData.forEach((cartItem) => {
@@ -38,8 +53,11 @@ const RoomCart = () => {
     setIsRoomTypeCartModalOpen((prev) => !prev);
   };
 
+  // method to navigate to checkout page
   const handleCheckoutNav = () => {
-    router.push("/checkout");
+    router.push(
+      `/checkout/${hotelId}/${hotelName}?checkin=${checkinDate}&checkout=${checkoutDate}&adults=${adults}&childs=${childs}`
+    );
   };
 
   // clear the cart data and hide the cart
@@ -96,6 +114,8 @@ const RoomCart = () => {
           isOpen={isRoomTypeCartModalOpen}
           toggleModal={toggleRoomTypeCartDetails}
           cartData={cartData}
+          checkinDate={checkinDate}
+          checkoutDate={checkoutDate}
         />
       )}
     </>

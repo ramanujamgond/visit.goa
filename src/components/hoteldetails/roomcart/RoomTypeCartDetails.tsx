@@ -3,7 +3,6 @@ import { Separator } from "@/components/ui/separator";
 import { RiDeleteBinLine, RiMoonLine } from "@remixicon/react";
 import Image from "next/image";
 import { SelectedRoomTypeProps } from "../hotelroomtype/RoomMealPlanModal";
-import { useSearchParams } from "next/navigation";
 import { format, differenceInDays } from "date-fns";
 import { useDispatch } from "react-redux";
 import { updateCartData } from "@/redux/reducers/cartslice";
@@ -11,24 +10,19 @@ interface RoomTypeCartDetailsProps {
   isOpen: boolean;
   toggleModal: (value: boolean) => void;
   cartData: SelectedRoomTypeProps[];
+  checkinDate: string;
+  checkoutDate: string;
 }
 
 const RoomTypeCartDetails: React.FC<RoomTypeCartDetailsProps> = ({
   isOpen,
   toggleModal,
   cartData,
+  checkinDate,
+  checkoutDate,
 }) => {
-  console.log("cartData", cartData);
-
   // allows functional components to dispatch actions to the Redux store
   const dispatch = useDispatch();
-
-  // get the query parms
-  const searchParams = useSearchParams();
-
-  // get the checkin and checkout dates
-  const checkInDate = searchParams.get("checkin");
-  const checkOutDate = searchParams.get("checkout");
 
   // import media base link for image urls
   const imageUrlPath = process.env.NEXT_PUBLIC_MEDIA_URL as string;
@@ -53,21 +47,21 @@ const RoomTypeCartDetails: React.FC<RoomTypeCartDetailsProps> = ({
           <div>
             <div className="text-lg font-semibold">Check In</div>
             <div className="text-xl font-semibold">
-              {checkInDate && format(checkInDate, "dd MMM, yyyy")}
+              {checkinDate && format(checkinDate, "dd MMM, yyyy")}
             </div>
           </div>
 
           <div className="w-28 flex items-center justify-between text-lg font-bold px-3 py-2  text-white bg-[#FF6535] rounded-3xl">
             <RiMoonLine size={18} />
-            {checkInDate &&
-              checkOutDate &&
-              differenceInDays(checkOutDate, checkInDate)}
+            {checkinDate &&
+              checkoutDate &&
+              differenceInDays(checkoutDate, checkinDate)}
           </div>
 
           <div>
             <div className="text-lg font-semibold">Check Out</div>
             <div className="text-xl font-semibold">
-              {checkOutDate && format(checkOutDate, "dd MMM, yyyy")}
+              {checkoutDate && format(checkoutDate, "dd MMM, yyyy")}
             </div>
           </div>
         </div>
@@ -76,9 +70,9 @@ const RoomTypeCartDetails: React.FC<RoomTypeCartDetailsProps> = ({
 
         <div className="text-lg font-semibold">
           Price Breakup for{" "}
-          {checkInDate &&
-            checkOutDate &&
-            differenceInDays(checkOutDate, checkInDate)}{" "}
+          {checkinDate &&
+            checkoutDate &&
+            differenceInDays(checkoutDate, checkinDate)}{" "}
           Nights
         </div>
 
