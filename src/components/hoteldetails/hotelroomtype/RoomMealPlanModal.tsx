@@ -260,62 +260,29 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
           let gst = 0;
           let tax_percentage = 0;
 
-          if (tax?.is_taxable === 0) {
+          if (tax?.is_taxable === false) {
             gst = 0;
             tax_percentage = 0;
           } else {
             if (tax.tax_type === "slab") {
-              if (tax.gst_slab_name === "Bundled") {
                 tax.tax_value.forEach((tax) => {
                   if (
-                    room_price >= parseInt(tax.start_range) &&
-                    room_price <= parseInt(tax.end_range)
+                    room_price >= tax.start_range &&
+                    room_price <= tax.end_range
                   ) {
-                    tax_percentage = parseInt(tax.value);
-                    gst = calculateGst(room_price, parseInt(tax.value));
+                    tax_percentage = tax.percentage;
+                    gst = calculateGst(room_price, tax.percentage);
                     return;
                   }
                 });
-              } else if (tax.gst_slab_name === "Individual") {
-                tax.tax_value.forEach((tax) => {
-                  const price =
-                    multiple_occupancy_price > 0
-                      ? multiple_occupancy_price
-                      : rate.price_after_discount;
-
-                  if (
-                    price >= parseInt(tax.start_range) &&
-                    price <= parseInt(tax.end_range)
-                  ) {
-                    tax_percentage = parseInt(tax.value);
-                    gst = calculateGst(room_price, parseInt(tax.value));
-                    return;
-                  }
-                });
-              }
             } else if (tax.tax_type === "flat") {
-              if (tax.gst_slab_name === "Bundled") {
-                if (room_price >= parseInt(tax.tax_value[0].start_range)) {
-                  tax_percentage = parseInt(tax.tax_value[0].value);
+                if (room_price >= tax.tax_value[0].start_range) {
+                  tax_percentage = tax.tax_value[0].percentage;
                 }
                 gst = calculateGst(
                   room_price,
-                  parseInt(tax.tax_value[0].value)
+                  tax.tax_value[0].percentage
                 );
-              } else if (tax.gst_slab_name === "Individual") {
-                const price =
-                  multiple_occupancy_price > 0
-                    ? multiple_occupancy_price
-                    : rate.price_after_discount;
-
-                if (price >= parseInt(tax.tax_inc_value[0].start_range)) {
-                  tax_percentage = parseInt(tax.tax_value[0].value);
-                }
-                gst = calculateGst(
-                  room_price,
-                  parseInt(tax.tax_value[0].value)
-                );
-              }
             }
           }
 

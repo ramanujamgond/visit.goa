@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import { useCallback, useState } from "react";
 import GoogleLoader from "../googleloader/GoogleLoader";
 import { RiMapPinLine } from "@remixicon/react";
@@ -141,7 +141,7 @@ const HotelMapPolicyDetails: React.FC<HotelMapPolicyDetailsProps> = ({
                   onUnmount={onUnmount}
                 >
                   {/* Child components, such as markers, info windows, etc. */}
-                  <Marker position={center}></Marker>
+                  <MarkerF position={center}></MarkerF>
                 </GoogleMap>
               ) : (
                 <GoogleLoader />

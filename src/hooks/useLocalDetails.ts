@@ -3,31 +3,24 @@ import { apiEndpoints } from "@/api/endPoints";
 import { useState } from "react";
 
 export interface LocalDetailsProps {
-  state_id: number;
-  country_id: number;
-  state_name: string;
-  region: number;
-  time_zone: string;
-  currency_code: string;
+  hotel_id:        number;
+  country_name:    string;
+  country_id:      number;
+  state_name:      string;
+  state_id:        number;
+  currency_code:   string;
   currency_symbol: string;
-  tax_name: string;
-  tax_type: string;
-  tax_value: TaxValue[];
-  tax_inc_value: TaxValue[];
-  financial_year: string;
-  created_at: Date;
-  updated_at: Date;
-  country_name: string;
-  tax_range_type: string;
-  is_taxable: number;
-  gst_slab_id: number;
-  gst_slab_name: string;
+  time_zone:       string;
+  is_taxable:      boolean;
+  tax_name:        string;
+  tax_type:        string;
+  tax_value:       TaxValue[];
 }
 
 export interface TaxValue {
-  start_range: string;
-  end_range: string;
-  value: string;
+  start_range: number;
+  end_range:   number;
+  percentage:  number;
 }
 
 interface HotelId {

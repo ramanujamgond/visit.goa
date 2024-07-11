@@ -24,7 +24,7 @@ export interface HotelRoomTypeProps {
   room_size_value: string;
   room_size_unit: string;
   image: string;
-  allImages: string[];
+  all_images: string[];
   min_inv: number;
   room_amenities: RoomAmenities[];
   rate_plans: RatePlan[];
@@ -73,8 +73,6 @@ const HotelRoomType = ({
   // get the cartData
   const { cartData } = useSelector((state: RootState) => state.cart);
 
-  console.log("roomTypeInventory", roomTypeInventory);
-
   // method and state to toggle the meal plan modal
   const [isMealPlanModalOpen, setIsMealPlanModalOpen] =
     useState<boolean>(false);
@@ -114,7 +112,7 @@ const HotelRoomType = ({
               <ImageModal
                 roomTypeName={roomTypeData?.room_type}
                 singleImage={roomTypeData?.image}
-                multipleImage={roomTypeData?.allImages}
+                multipleImage={roomTypeData?.all_images}
               />
             </div>
             <div className="flex-grow-2 flex-shrink basis-full">
