@@ -7,5 +7,8 @@ export const apiEndpoints = {
   },
   POST: {
     search: "/search",
+    userRegistration: "/user/register",
+    otpVerificfation: "/user/verify_otp",
+    bookNow: "booking/book_now",
   },
 };

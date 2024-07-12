@@ -42,6 +42,15 @@ const Navbar = () => {
                 About
               </li>
             </Link>
+            <Link href="/business">
+              <li
+                className={`text-sm font-bold hover:text-[#ff6535] hover:[transition:color_0.3s_ease,_background-color_0.3s_ease] ${
+                  pathName === "/business" ? styles.active_nav : ""
+                }`}
+              >
+                Business
+              </li>
+            </Link>
             <Link href="/contact">
               <li
                 className={`text-sm font-bold hover:text-[#ff6535] hover:[transition:color_0.3s_ease,_background-color_0.3s_ease] ${
@@ -51,10 +60,20 @@ const Navbar = () => {
                 Contact
               </li>
             </Link>
+            <Link href="/book-now">
+              <li
+                className={`text-sm font-bold hover:text-[#ff6535] hover:[transition:color_0.3s_ease,_background-color_0.3s_ease] ${
+                  pathName === "/book-now" ? styles.active_nav : ""
+                }`}
+              >
+                Book Now
+              </li>
+            </Link>
           </ul>
         </div>
-        <div className={styles.login_wrapper}>
-          <Button>Login</Button>
+        <div className="flex gap-4">
+          <Button variant="ghost">Login</Button>
+          <Button className="bg-[#FF6535]">List your property</Button>
         </div>
       </div>
     </div>

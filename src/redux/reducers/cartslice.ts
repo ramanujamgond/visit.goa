@@ -38,10 +38,16 @@ export interface CheckInCheckOutProps {
   checkoutDate: string;
 }
 
+interface HotelDetailsProps {
+  hotelId: string;
+  hotelName: string;
+}
+
 type CartState = {
   cartVisibleState: boolean;
   cartData: SelectedRoomTypeProps[];
   checkInCheckOut: CheckInCheckOutProps;
+  hotelDetails: HotelDetailsProps;
 };
 
 const initialState: CartState = {
@@ -50,6 +56,10 @@ const initialState: CartState = {
   checkInCheckOut: {
     checkinDate: "",
     checkoutDate: "",
+  },
+  hotelDetails: {
+    hotelId: "",
+    hotelName: "",
   },
 };
 
@@ -72,6 +82,9 @@ export const cartslice = createSlice({
     ) => {
       state.checkInCheckOut = action.payload;
     },
+    storeHotelDetails: (state, action: PayloadAction<HotelDetailsProps>) => {
+      state.hotelDetails = action.payload;
+    }
   },
 });
 
@@ -80,5 +93,6 @@ export const {
   updateCartData,
   deleteCartData,
   storeCheckInCheckOutDate,
+  storeHotelDetails,
 } = cartslice.actions;
 export default cartslice.reducer;

@@ -23,3 +23,12 @@ export function formatString(inputString: string) {
 export const calculateGst = (price: number, gst: number) => {
   return (price * gst) / 100;
 };
+
+interface ClearErrorAfterTimeoutProps {
+  setError: (value: string) => void;
+}
+export const clearErrorAfterTimeout = ({ setError }: ClearErrorAfterTimeoutProps) => {
+  setTimeout(() => {
+    setError("");
+  }, 3000);
+};
