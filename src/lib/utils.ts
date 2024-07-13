@@ -27,8 +27,23 @@ export const calculateGst = (price: number, gst: number) => {
 interface ClearErrorAfterTimeoutProps {
   setError: (value: string) => void;
 }
+
 export const clearErrorAfterTimeout = ({ setError }: ClearErrorAfterTimeoutProps) => {
   setTimeout(() => {
     setError("");
   }, 3000);
 };
+
+export const loadScript = (src: any) => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}

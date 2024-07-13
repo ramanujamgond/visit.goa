@@ -22,7 +22,10 @@ import useOTPVerificaton from "@/hooks/useOTPVerificaton";
 import { storeUSERID } from "@/redux/reducers/userIDSlice";
 import { bharatStay } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
-import { clearErrorAfterTimeout } from "@/lib/utils";
+import { clearErrorAfterTimeout, loadScript } from "@/lib/utils";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
 
 interface CountryCode {
   "name": string;
@@ -31,6 +34,9 @@ interface CountryCode {
 }
 
 const CheckoutRight = () => {
+
+  // next 14 router
+  const router = useRouter();
 
   const dispatch = useDispatch();
 
@@ -82,6 +88,7 @@ const CheckoutRight = () => {
 
   // get the total amount incuding tax
   const [totalAmount, setTotalAmount] = useState<number>();
+  const [totalTaxAmount, setTotalTaxAmount] = useState<number>();
 
   useEffect(() => {
     // Calculate the total amount including tax
@@ -93,8 +100,20 @@ const CheckoutRight = () => {
       }, acc);
     }, 0);
 
+    // Calculate the total tax amount
+    const totalTax = cartData.reduce((acc, cartItem) => {
+      return cartItem.occupancy.reduce((acc, occupancyItem) => {
+        return occupancyItem.rates.reduce((acc, rate) => {
+          return acc + rate.tax_amount;
+        }, acc);
+      }, acc);
+    }, 0)
+
     // Update the totalAmount state
     setTotalAmount(total);
+
+    // Update the total tax amount
+    setTotalTaxAmount(totalTax);
   }, [cartData]);
 
   const handlePayNow = async () => {
@@ -214,7 +233,8 @@ const CheckoutRight = () => {
         "currency": "",
         "total_amount_inc_tax": totalAmount,
         "loyalty_amount": 0,
-        "pg_amount": 1.12
+        "pg_amount": totalAmount,
+        "total_tax": totalTaxAmount,
       },
       "room_details": roomData,
     };
@@ -222,12 +242,52 @@ const CheckoutRight = () => {
     try {
       const bookingResponse = await bharatStay.post(apiEndpoints.POST.bookNow, payload);
       if (bookingResponse.data.status === 1) {
-        console.log(bookingResponse.data);
+        // console.log(bookingResponse.data);
+        handlePaymentGateway(bookingResponse.data.pg_access_key);
       }
     } catch (error) {
       console.log("error")
     }
   };
+
+  // method to call payment gateway
+  const handlePaymentGateway = async (pg_access_key: string) => {
+    try {
+      const res = await loadScript(
+        "https://ebz-static.s3.ap-south-1.amazonaws.com/easecheckout/easebuzz-checkout.js"
+      );
+
+      if (!res) {
+        toast.error("Something went wrong...!", {
+          position: "top-center"
+        });
+        return;
+      }
+
+      const option_easebuzz = {
+        access_key: pg_access_key,
+        onResponse: async (response: any) => {
+          console.log(response);
+          if (response.status === "success") {
+            router.push("/thank-you");
+          }
+        },
+        theme: "#FF6535",
+      };
+
+      const easebuzzCheckout = new (window as any).EasebuzzCheckout(
+        pg_access_key,
+        "prod"
+      );
+      easebuzzCheckout.initiatePayment(option_easebuzz);
+    } catch (error) {
+      console.error("Payment gateway error:", error),
+        toast.error("Failed to initiate payment.", {
+          position: "top-center"
+        });
+    }
+  };
+
 
   const { userLoader, otpStatus, userRegistration } = useRegistration();
 
@@ -456,6 +516,7 @@ const CheckoutRight = () => {
           </div>}
         </DialogContent>
       </Dialog>
+      <ToastContainer />
     </>
   );
 };

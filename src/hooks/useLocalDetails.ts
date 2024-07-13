@@ -3,24 +3,24 @@ import { apiEndpoints } from "@/api/endPoints";
 import { useState } from "react";
 
 export interface LocalDetailsProps {
-  hotel_id:        number;
-  country_name:    string;
-  country_id:      number;
-  state_name:      string;
-  state_id:        number;
-  currency_code:   string;
+  hotel_id: number;
+  country_name: string;
+  country_id: number;
+  state_name: string;
+  state_id: number;
+  currency_code: string;
   currency_symbol: string;
-  time_zone:       string;
-  is_taxable:      boolean;
-  tax_name:        string;
-  tax_type:        string;
-  tax_value:       TaxValue[];
+  time_zone: string;
+  is_taxable: boolean;
+  tax_name: string;
+  tax_type: string;
+  tax_value: TaxValue[];
 }
 
 export interface TaxValue {
   start_range: number;
-  end_range:   number;
-  percentage:  number;
+  end_range: number;
+  percentage: number;
 }
 
 interface HotelId {
@@ -41,7 +41,7 @@ const useLocalDetails = ({ hotelId }: HotelId) => {
       );
       if (localDetailResponse?.data?.status === 1) {
         setLclDetLoading(false);
-        setLocalDetails(localDetailResponse?.data);
+        setLocalDetails(localDetailResponse?.data?.data);
       }
     } catch (error) {
       setLclDetLoading(false);

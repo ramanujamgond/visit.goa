@@ -265,24 +265,24 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
             tax_percentage = 0;
           } else {
             if (tax.tax_type === "slab") {
-                tax.tax_value.forEach((tax) => {
-                  if (
-                    room_price >= tax.start_range &&
-                    room_price <= tax.end_range
-                  ) {
-                    tax_percentage = tax.percentage;
-                    gst = calculateGst(room_price, tax.percentage);
-                    return;
-                  }
-                });
-            } else if (tax.tax_type === "flat") {
-                if (room_price >= tax.tax_value[0].start_range) {
-                  tax_percentage = tax.tax_value[0].percentage;
+              tax.tax_value.forEach((tax) => {
+                if (
+                  room_price >= tax.start_range &&
+                  room_price <= tax.end_range
+                ) {
+                  tax_percentage = tax.percentage;
+                  gst = calculateGst(room_price, tax.percentage);
+                  return;
                 }
-                gst = calculateGst(
-                  room_price,
-                  tax.tax_value[0].percentage
-                );
+              });
+            } else if (tax.tax_type === "flat") {
+              if (room_price >= tax.tax_value[0].start_range) {
+                tax_percentage = tax.tax_value[0].percentage;
+              }
+              gst = calculateGst(
+                room_price,
+                tax.tax_value[0].percentage
+              );
             }
           }
 
