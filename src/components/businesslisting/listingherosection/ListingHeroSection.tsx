@@ -18,16 +18,18 @@ const ListingHeroSection = () => {
         </div>
       </div>
       <div className="flex-shrink-1 flex-grow-1 basis-1/2">
-        <div className="w-full rounded-tl-3xl rounded-bl-3xl bg-[linear-gradient(90deg,_#FC7D54_0%,_#F1341A_100%)] p-10">
+        <div className="w-full rounded-tl-3xl rounded-bl-3xl bg-[linear-gradient(90deg,_#FC7D54_0%,_#F1341A_100%)] p-16">
           <div className="text-2xl font-semibold text-white">Earn more with consistent bookings</div>
-          <div className="flex item-center text-base text-white my-3"><RiBardFill className='me-2' /> 45% of partners get their first booking within a week</div>
-          <div className="flex item-center text-base text-white my-3"><RiBardFill className='me-2' /> More than 1.1 billion vacation rental guests since 2010</div>
-          <div className="flex item-center text-base text-white my-3"><RiBardFill className='me-2' /> Full control over your property and finances</div>
-          <div className="flex item-center text-base text-white my-3"><RiBardFill className='me-2' /> Registration is free and takes 15 minutes</div>
+          <div className="flex item-center text-base text-white my-6"><RiBardFill className='me-2' /> 45% of partners get their first booking within a week</div>
+          <div className="flex item-center text-base text-white my-6"><RiBardFill className='me-2' /> More than 1.1 billion vacation rental guests since 2010</div>
+          <div className="flex item-center text-base text-white my-6"><RiBardFill className='me-2' /> Full control over your property and finances</div>
+          <div className="flex item-center text-base text-white my-6"><RiBardFill className='me-2' /> Registration is free and takes 15 minutes</div>
 
-          <Button className="bg-white text-[#FF6535] my-3">Get Stared Now</Button>
+          <Button className="bg-white text-[#FF6535] my-6">Get Stared Now</Button>
 
           <Separator />
+
+          <div className="text-base text-white mt-6"><span className="underline">Continue registration</span> if already started</div>
         </div>
       </div>
     </div>
