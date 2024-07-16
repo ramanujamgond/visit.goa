@@ -1,57 +1,51 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import OtpInput from 'react-otp-input';
+import OtpInput from "react-otp-input";
 import { Loader } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import CountryCode from "@/lib/countrylist.json";
+import styles from "./bookingLoader.module.scss";
+
 import useRegistration from "@/hooks/useRegistration";
 import useOTPVerificaton from "@/hooks/useOTPVerificaton";
 import { storeUSERID } from "@/redux/reducers/userIDSlice";
 import { bharatStay } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 import { clearErrorAfterTimeout, loadScript } from "@/lib/utils";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 
 interface CountryCode {
-  "name": string;
-  "dial_code": string;
-  "code": string;
+  name: string;
+  dial_code: string;
+  code: string;
 }
 
 const CheckoutRight = () => {
-
   // next 14 router
   const router = useRouter();
 
   const dispatch = useDispatch();
 
   // get the data from the store
-  const { hotelDetails } = useSelector(
-    (state: RootState) => state.cart
-  );
+  const { hotelDetails } = useSelector((state: RootState) => state.cart);
 
   // get the userID from store
   const { userID } = useSelector((state: RootState) => state.userId);
 
-  // get the cart data from the store 
-  const { cartData, checkInCheckOut } = useSelector((state: RootState) => state.cart);
+  // get the cart data from the store
+  const { cartData, checkInCheckOut } = useSelector(
+    (state: RootState) => state.cart
+  );
 
   // states defined
+  const [payNowLoader, setPayNowLoader] = useState<boolean>(false);
+  const [bookingLoader, setBookingLoader] = useState<boolean>(false);
   const [bookingType, setBookingType] = useState<string>("personal");
   const [guestName, setGuestName] = useState<string>("");
   const [guestNameErrorText, setGuestNameErrorText] = useState<string>("");
@@ -83,7 +77,7 @@ const CheckoutRight = () => {
   const [otpInputStatus, setOTPInputStatus] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>("");
 
-  // state to hold the country code 
+  // state to hold the country code
   // const [countryCode, setCountryCode] = useState<string>("+91");
 
   // get the total amount incuding tax
@@ -107,7 +101,7 @@ const CheckoutRight = () => {
           return acc + rate.tax_amount;
         }, acc);
       }, acc);
-    }, 0)
+    }, 0);
 
     // Update the totalAmount state
     setTotalAmount(total);
@@ -117,7 +111,6 @@ const CheckoutRight = () => {
   }, [cartData]);
 
   const handlePayNow = async () => {
-
     if (!guestName || guestName.length === 0) {
       setGuestNameErrorText("Enter the guest name.");
       clearErrorAfterTimeout({ setError: setGuestNameErrorText });
@@ -190,63 +183,72 @@ const CheckoutRight = () => {
     const imageUrlPath = process.env.NEXT_PUBLIC_MEDIA_URL as string;
 
     roomData = cartData.map((cartItems) => ({
-      "room_type_id": cartItems.roomTypeId,
-      "rate_plan_id": cartItems.selectedRatePlan,
-      "no_of_rooms": cartItems.noOfRoomSelected,
-      "room_type_name": cartItems.roomTypeName,
-      "rate_plan_name": cartItems.ratePlanName,
-      "room_type_img_url": `${imageUrlPath}/${cartItems.roomTypeImages}`,
-      "rooms": cartItems.occupancy.map((occupants) => ({
-        "room_no": occupants.roomNumber,
-        "occupancy": {
-          "total_adult": occupants.adult,
-          "total_child": occupants.child,
-          "extra_adult": occupants.extra_adult,
-          "extra_child": occupants.extra_child,
-          "total_occupancy": occupants.adult + occupants.child + occupants.extra_adult + occupants.extra_child
-        }
-      }))
+      room_type_id: cartItems.roomTypeId,
+      rate_plan_id: cartItems.selectedRatePlan,
+      no_of_rooms: cartItems.noOfRoomSelected,
+      room_type_name: cartItems.roomTypeName,
+      rate_plan_name: cartItems.ratePlanName,
+      room_type_img_url: `${imageUrlPath}/${cartItems.roomTypeImages}`,
+      rooms: cartItems.occupancy.map((occupants) => ({
+        room_no: occupants.roomNumber,
+        occupancy: {
+          total_adult: occupants.adult,
+          total_child: occupants.child,
+          extra_adult: occupants.extra_adult,
+          extra_child: occupants.extra_child,
+          total_occupancy:
+            occupants.adult +
+            occupants.child +
+            occupants.extra_adult +
+            occupants.extra_child,
+        },
+      })),
     }));
 
-
     const payload = {
-      "hotel_id": parseInt(hotelDetails?.hotelId),
-      "hotel_name": hotelDetails?.hotelName,
-      "user_details": {
-        "user_id": userID,
-        "first_name": guestName,
-        "last_name": "",
-        "email_id": emailId,
-        "mobile": phoneNumber?.toString(),
-        "address": address,
-        "company_name": companyName,
-        "GST_IN": gstNumber,
-        "guest_note": "",
-        "arrival_time": arrivalTime
+      hotel_id: parseInt(hotelDetails?.hotelId),
+      hotel_name: hotelDetails?.hotelName,
+      user_details: {
+        user_id: userID,
+        first_name: guestName,
+        last_name: "",
+        email_id: emailId,
+        mobile: phoneNumber?.toString(),
+        address: address,
+        company_name: companyName,
+        GST_IN: gstNumber,
+        guest_note: "",
+        arrival_time: arrivalTime,
       },
-      "booking_details": {
-        "checkin_date": checkInCheckOut.checkinDate,
-        "checkout_date": checkInCheckOut.checkoutDate,
-        "booking_reference": "",
-        "source": "BharatStay",
-        "payment_mode": 0,
-        "currency": "",
-        "total_amount_inc_tax": totalAmount,
-        "loyalty_amount": 0,
-        "pg_amount": totalAmount,
-        "total_tax": totalTaxAmount,
+      booking_details: {
+        checkin_date: checkInCheckOut.checkinDate,
+        checkout_date: checkInCheckOut.checkoutDate,
+        booking_reference: "",
+        source: "BharatStay",
+        payment_mode: 0,
+        currency: "",
+        total_amount_inc_tax: totalAmount,
+        loyalty_amount: 0,
+        pg_amount: totalAmount,
+        total_tax: totalTaxAmount,
       },
-      "room_details": roomData,
+      room_details: roomData,
     };
-
+    setPayNowLoader(true);
     try {
-      const bookingResponse = await bharatStay.post(apiEndpoints.POST.bookNow, payload);
+      const bookingResponse = await bharatStay.post(
+        apiEndpoints.POST.bookNow,
+        payload
+      );
       if (bookingResponse.data.status === 1) {
         // console.log(bookingResponse.data);
+        sessionStorage.setItem("bookingId", bookingResponse.data.booking_id);
         handlePaymentGateway(bookingResponse.data.pg_access_key);
       }
     } catch (error) {
-      console.log("error")
+      console.log("error");
+    } finally {
+      setPayNowLoader(false);
     }
   };
 
@@ -259,7 +261,7 @@ const CheckoutRight = () => {
 
       if (!res) {
         toast.error("Something went wrong...!", {
-          position: "top-center"
+          position: "top-center",
         });
         return;
       }
@@ -267,9 +269,14 @@ const CheckoutRight = () => {
       const option_easebuzz = {
         access_key: pg_access_key,
         onResponse: async (response: any) => {
-          console.log(response);
+          setBookingLoader(true);
           if (response.status === "success") {
             router.push("/thank-you");
+          } else {
+            toast.error("Booking failed...!", {
+              position: "top-center",
+            });
+            setBookingLoader(false);
           }
         },
         theme: "#FF6535",
@@ -283,11 +290,10 @@ const CheckoutRight = () => {
     } catch (error) {
       console.error("Payment gateway error:", error),
         toast.error("Failed to initiate payment.", {
-          position: "top-center"
+          position: "top-center",
         });
     }
   };
-
 
   const { userLoader, otpStatus, userRegistration } = useRegistration();
 
@@ -301,176 +307,231 @@ const CheckoutRight = () => {
     if (otpStatus) {
       setOTPInputStatus(otpStatus);
     }
-  }, [otpStatus])
+  }, [otpStatus]);
 
-  const { otpVerificationLoader, registeredUserId, otpErrorMessage, verifyOtp } = useOTPVerificaton();
+  const {
+    otpVerificationLoader,
+    registeredUserId,
+    otpErrorMessage,
+    verifyOtp,
+  } = useOTPVerificaton();
 
   useEffect(() => {
     if (registeredUserId) {
-      dispatch(storeUSERID({
-        userID: registeredUserId,
-      }));
+      dispatch(
+        storeUSERID({
+          userID: registeredUserId,
+        })
+      );
       setEnableLogin(false);
     }
-  }, [registeredUserId])
+  }, [registeredUserId]);
 
   const handleOtpVerification = () => {
     verifyOtp(loginNumber, otp);
-  }
+  };
+
+  const BookingLoader = () => {
+    return (
+      <div className="fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,_0,_0,_.7)] z-[3000]">
+        <div className="flex justify-center items-center h-[80vh]">
+          <div className="flex flex-col justify-center items-center">
+            <div className={styles.loader}></div>
+            <span className="text-4xl font-semibold text-white tracking-[3.5px] mt-5">
+              Hold On!{" "}
+            </span>
+            <span className="mt-5 font-semibold text-xl text-center text-wrap text-gray-400 tracking-[1.6px]">
+              We are getting you booking status...⏳
+            </span>
+            <span className="mt-2 font-normal text-xs text-center text-gray-400">
+              Please don&apos;t close or refresh the window.
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
-      <div className="flex-grow flex-shrink basis-2/4">
-        <div className="bg-[#FFFFFF] p-4 rounded-xl shadow-lg mb-4">
-          <div className="flex items-center justify-between">
-            <div className="text-base font-medium">Details</div>
+      {bookingLoader && <BookingLoader />}
 
-            <RadioGroup defaultValue="personal" className="flex items-center justify-between gap-4" onValueChange={setBookingType}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="personal" id="personal" />
-                <Label htmlFor="personal">Personal</Label>
+      {!bookingLoader && (
+        <div className="flex-grow flex-shrink basis-2/4">
+          <div className="bg-[#FFFFFF] p-4 rounded-xl shadow-lg mb-4">
+            <div className="flex items-center justify-between">
+              <div className="text-base font-medium">Details</div>
+
+              <RadioGroup
+                defaultValue="personal"
+                className="flex items-center justify-between gap-4"
+                onValueChange={setBookingType}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="personal" id="personal" />
+                  <Label htmlFor="personal">Personal</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="business" id="business" />
+                  <Label htmlFor="business">Business</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="my-3">
+              <div className="text-sm font-normal text-[#858585] mb-2">
+                Guest Name
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="business" id="business" />
-                <Label htmlFor="business">Business</Label>
+              <div>
+                <Input
+                  value={guestName}
+                  type="text"
+                  className="bg-white focus-visible:ring-0 h-10"
+                  onChange={(e) => {
+                    setGuestName(e.target.value);
+                  }}
+                />
+                <span className="text-xs text-red-600">
+                  {guestNameErrorText}
+                </span>
               </div>
-            </RadioGroup>
+            </div>
+
+            <div className="my-3">
+              <div className="text-sm font-normal text-[#858585] mb-2">
+                Phone Number
+              </div>
+              <div>
+                <Input
+                  value={phoneNumber}
+                  type="number"
+                  className="bg-white focus-visible:ring-0 h-10"
+                  onChange={(e) => {
+                    setPhoneNumber(parseInt(e.target.value));
+                  }}
+                />
+                <span className="text-xs text-red-600">
+                  {phoneNumberErrorText}
+                </span>
+              </div>
+            </div>
+
+            <div className="my-3">
+              <div className="text-sm font-normal text-[#858585] mb-2">
+                Email ID
+              </div>
+              <div>
+                <Input
+                  value={emailId}
+                  type="email"
+                  className="bg-white focus-visible:ring-0 h-10"
+                  onChange={(e) => {
+                    setEmailId(e.target.value);
+                  }}
+                />
+                <span className="text-xs text-red-600 ">
+                  {emailIdErrorText}
+                </span>
+              </div>
+            </div>
+            {bookingType === "business" && (
+              <div className="my-3">
+                <div className="text-sm font-normal text-[#858585] mb-2">
+                  Company Name
+                </div>
+                <div>
+                  <Input
+                    value={companyName}
+                    type="text"
+                    className="bg-white focus-visible:ring-0 h-10"
+                    onChange={(e) => {
+                      setCompanyName(e.target.value);
+                    }}
+                  />
+                  <span className="text-xs text-red-600">
+                    {companyNameErrorText}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {bookingType === "business" && (
+              <div className="my-3">
+                <div className="text-sm font-normal text-[#858585] mb-2">
+                  GST
+                </div>
+                <div>
+                  <Input
+                    value={gstNumber}
+                    type="text"
+                    className="bg-white focus-visible:ring-0 h-10"
+                    onChange={(e) => {
+                      setGstNumber(e.target.value);
+                    }}
+                  />
+                  <span className="text-xs text-red-600">
+                    {gstNumberErrorText}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className="my-3">
+              <div className="text-sm font-normal text-[#858585] mb-2">
+                Address
+              </div>
+              <div>
+                <Input
+                  value={address}
+                  type="text"
+                  className="bg-white focus-visible:ring-0 h-10"
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                />
+                <span className="text-xs text-red-600 ">
+                  {addressErrorText}
+                </span>
+              </div>
+            </div>
+
+            <div className="my-3">
+              <div className="text-sm font-normal text-[#858585] mb-2">
+                Expected Arrival time
+              </div>
+              <div>
+                <Input
+                  value={arrivalTime}
+                  type="text"
+                  className="bg-white focus-visible:ring-0 h-10"
+                  onChange={(e) => {
+                    setArrivalTime(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="my-3">
-            <div className="text-sm font-normal text-[#858585] mb-2">
-              Guest Name
-            </div>
-            <div>
-              <Input
-                value={guestName}
-                type="text"
-                className="bg-white focus-visible:ring-0 h-10"
-                onChange={(e) => {
-                  setGuestName(e.target.value);
-                }}
-              />
-              <span className="text-xs text-red-600">{guestNameErrorText}</span>
-            </div>
-          </div>
-
-          <div className="my-3">
-            <div className="text-sm font-normal text-[#858585] mb-2">
-              Phone Number
-            </div>
-            <div>
-              <Input
-                value={phoneNumber}
-                type="number"
-                className="bg-white focus-visible:ring-0 h-10"
-                onChange={(e) => {
-                  setPhoneNumber(parseInt(e.target.value));
-                }}
-              />
-              <span className="text-xs text-red-600">{phoneNumberErrorText}</span>
-            </div>
-          </div>
-
-          <div className="my-3">
-            <div className="text-sm font-normal text-[#858585] mb-2">
-              Email ID
-            </div>
-            <div>
-              <Input
-                value={emailId}
-                type="email"
-                className="bg-white focus-visible:ring-0 h-10"
-                onChange={(e) => {
-                  setEmailId(e.target.value);
-                }}
-              />
-              <span className="text-xs text-red-600 ">{emailIdErrorText}</span>
-            </div>
-          </div>
-          {bookingType === "business" && <div className="my-3">
-            <div className="text-sm font-normal text-[#858585] mb-2">
-              Company Name
-            </div>
-            <div>
-              <Input
-                value={companyName}
-                type="text"
-                className="bg-white focus-visible:ring-0 h-10"
-                onChange={(e) => {
-                  setCompanyName(e.target.value);
-                }}
-              />
-              <span className="text-xs text-red-600">{companyNameErrorText}</span>
-            </div>
-          </div>}
-
-
-          {bookingType === "business" && <div className="my-3">
-            <div className="text-sm font-normal text-[#858585] mb-2">
-              GST
-            </div>
-            <div>
-              <Input
-                value={gstNumber}
-                type="text"
-                className="bg-white focus-visible:ring-0 h-10"
-                onChange={(e) => {
-                  setGstNumber(e.target.value);
-                }}
-              />
-              <span className="text-xs text-red-600">{gstNumberErrorText}</span>
-            </div>
-          </div>
-          }
-
-          <div className="my-3">
-            <div className="text-sm font-normal text-[#858585] mb-2">Address</div>
-            <div>
-              <Input
-                value={address}
-                type="text"
-                className="bg-white focus-visible:ring-0 h-10"
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-              />
-              <span className="text-xs text-red-600 ">{addressErrorText}</span>
-            </div>
-          </div>
-
-          <div className="my-3">
-            <div className="text-sm font-normal text-[#858585] mb-2">
-              Expected Arrival time
-            </div>
-            <div>
-              <Input
-                value={arrivalTime}
-                type="text"
-                className="bg-white focus-visible:ring-0 h-10"
-                onChange={(e) => {
-                  setArrivalTime(e.target.value);
-                }}
-              />
-            </div>
-          </div>
+          <Button
+            size={"lg"}
+            className="w-full bg-[#FF6535] mt-2"
+            onClick={handlePayNow}
+            disabled={payNowLoader}
+          >
+            Pay Now ₹{totalAmount}
+            {payNowLoader && <Loader className="animate-spin ms-1" />}
+          </Button>
         </div>
-
-        <Button
-          size={"lg"}
-          className="w-full bg-[#FF6535] mt-2"
-          onClick={handlePayNow}
-        >
-          Pay Now ₹{totalAmount}
-        </Button>
-      </div>
+      )}
       <Dialog open={enableLogin} onOpenChange={setEnableLogin}>
         <DialogTrigger asChild></DialogTrigger>
         <DialogContent className="w-[420px] z-[2000]">
-          {!otpInputStatus && <div>
-            <div className="font-bold">Login to continue</div>
-            <div className="flex item-center my-2 justify-between gap-4">
-              {/* disable the country code section */}
-              {/* <div>
+          {!otpInputStatus && (
+            <div>
+              <div className="font-bold">Login to continue</div>
+              <div className="flex item-center my-2 justify-between gap-4">
+                {/* disable the country code section */}
+                {/* <div>
                 <Select value={countryCode} onValueChange={setCountryCode}>
                   <SelectTrigger className="w-[83px]">
                     <SelectValue placeholder="Select Country Code" />
@@ -484,36 +545,70 @@ const CheckoutRight = () => {
                   </SelectContent>
                 </Select>
               </div> */}
-              <Input type="number" value={loginNumber} onChange={(e) => {
-                setLoginNumber(e.target.value);
-              }} placeholder="Enter your mobile number" />
+                <Input
+                  type="number"
+                  value={loginNumber}
+                  onChange={(e) => {
+                    setLoginNumber(e.target.value);
+                  }}
+                  placeholder="Enter your mobile number"
+                />
+              </div>
+              <Button
+                className="w-full bg-[#FF6535] mt-3 mb-2"
+                disabled={userLoader}
+                onClick={handleUserRegistration}
+              >
+                {userLoader && <Loader className="animate-spin mr-2" />}
+                Get OTP
+              </Button>
             </div>
-            <Button className="w-full bg-[#FF6535] mt-3 mb-2" disabled={userLoader} onClick={handleUserRegistration}>
-              {userLoader && <Loader className="animate-spin mr-2" />}
-              Get OTP</Button>
-          </div>}
+          )}
 
-          {otpInputStatus && <div>
-            <div className="font-bold">Enter OTP</div>
-            <div className="text-[#858585] text-sm my-2">An OTP has been sent to {loginNumber.toString().slice(0, -4).replace(/\d/g, '*') + loginNumber.toString().slice(-4)}<span className="ml-2 text-blue-700 cursor-pointer inline-block" onClick={() => setOTPInputStatus(false)}>Change Number</span></div>
+          {otpInputStatus && (
             <div>
-              <OtpInput
-                value={otp}
-                onChange={setOtp}
-                numInputs={4}
-                renderSeparator={<span>{" "}</span>}
-                renderInput={(props) => <input {...props} />}
-                containerStyle="item-center justify-center gap-4 my-4"
-                inputStyle="!w-12 h-12 text-xl text-center border border-gray-300 rounded-lg focus:outline-none focus:border-[#FF6535]"
-              />
+              <div className="font-bold">Enter OTP</div>
+              <div className="text-[#858585] text-sm my-2">
+                An OTP has been sent to{" "}
+                {loginNumber.toString().slice(0, -4).replace(/\d/g, "*") +
+                  loginNumber.toString().slice(-4)}
+                <span
+                  className="ml-2 text-blue-700 cursor-pointer inline-block"
+                  onClick={() => setOTPInputStatus(false)}
+                >
+                  Change Number
+                </span>
+              </div>
+              <div>
+                <OtpInput
+                  value={otp}
+                  onChange={setOtp}
+                  numInputs={4}
+                  renderSeparator={<span> </span>}
+                  renderInput={(props) => <input {...props} />}
+                  containerStyle="item-center justify-center gap-4 my-4"
+                  inputStyle="!w-12 h-12 text-xl text-center border border-gray-300 rounded-lg focus:outline-none focus:border-[#FF6535]"
+                />
+              </div>
+              <span className="text-xs text-red-600">{otpErrorMessage}</span>
+              <Button
+                className="w-full bg-[#FF6535] mt-3 mb-2"
+                onClick={handleOtpVerification}
+                disabled={otpVerificationLoader}
+              >
+                {otpVerificationLoader && (
+                  <Loader className="animate-spin mr-2" />
+                )}
+                Verify
+              </Button>
+              <div
+                className="text-sm text-[#2435CF] text-center cursor-pointer"
+                onClick={handleUserRegistration}
+              >
+                Resend OTP
+              </div>
             </div>
-            <span className="text-xs text-red-600">{otpErrorMessage}</span>
-            <Button className="w-full bg-[#FF6535] mt-3 mb-2" onClick={handleOtpVerification} disabled={otpVerificationLoader}>
-              {otpVerificationLoader && <Loader className="animate-spin mr-2" />}
-              Verify
-            </Button>
-            <div className="text-sm text-[#2435CF] text-center cursor-pointer" onClick={handleUserRegistration}>Resend OTP</div>
-          </div>}
+          )}
         </DialogContent>
       </Dialog>
       <ToastContainer />

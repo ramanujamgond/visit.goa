@@ -9,10 +9,12 @@ import { addDays, format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import DateRangePicker from "./DateRangePicker";
 import AddGuest from "./AddGuest";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import useCityHotelList from "@/hooks/useCityHotelList";
 import Loader from "@/components/ui/loader";
+import { showCart, deleteCartData } from "@/redux/reducers/cartslice";
+import { useDispatch } from "react-redux";
 
 interface SearchValueProps {
   value: string;
@@ -20,6 +22,9 @@ interface SearchValueProps {
 }
 
 const SearchLocationDatePicker = () => {
+  // allows functional components to dispatch actions to the Redux store
+  const dispatch = useDispatch();
+
   // nextjs 14 routing method
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,6 +49,10 @@ const SearchLocationDatePicker = () => {
 
   // method to navigate to the hotel-listing page and passing the searchValue, checkin and chekchout and number of guest data
   const handleSearchCityHotels = () => {
+    // clear the cart data and hide the cart
+    dispatch(deleteCartData());
+    dispatch(showCart(false));
+
     const checkInDate = date.from ? format(date?.from, "yyyy-MM-dd") : "";
     const checkOutDate = date.to ? format(date?.to, "yyyy-MM-dd") : "";
 

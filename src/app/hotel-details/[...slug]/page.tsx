@@ -11,7 +11,11 @@ import useHotelDetails from "@/hooks/useHotelDetails";
 import useHotelRoomTypes from "@/hooks/useHotelRoomTypes";
 import { formatString } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { showCart, storeHotelDetails } from "@/redux/reducers/cartslice";
+import {
+  deleteCartData,
+  showCart,
+  storeHotelDetails,
+} from "@/redux/reducers/cartslice";
 import { RootState } from "@/redux/store";
 import useLocalDetails from "@/hooks/useLocalDetails";
 
@@ -94,15 +98,17 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
     }
   }, [cartData]);
 
-  // store hotel id and hotel name in session 
+  // store hotel id and hotel name in session
   useEffect(() => {
     if (hotelId) {
-      dispatch(storeHotelDetails({
-        hotelId: hotelId,
-        hotelName: hotelName,
-      }));
+      dispatch(
+        storeHotelDetails({
+          hotelId: hotelId,
+          hotelName: hotelName,
+        })
+      );
     }
-  }, [hotelId])
+  }, [hotelId]);
 
   // standard loader
   if (loading && invLoading) {

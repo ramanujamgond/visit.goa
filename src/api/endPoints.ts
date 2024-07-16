@@ -4,6 +4,7 @@ export const apiEndpoints = {
     hotel_details: "/hotel/details/get",
     availability: "/availability/get",
     locale_details: "/hotel/locale_details/",
+    booking_details: "/booking/booking_details",
   },
   POST: {
     search: "/search",
