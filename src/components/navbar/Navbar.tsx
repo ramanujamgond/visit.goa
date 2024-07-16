@@ -63,8 +63,12 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="flex gap-4">
-          <Button variant="ghost">Login</Button>
-          <Button className="bg-[#FF6535]">List your property</Button>
+          {/* <Button variant="ghost">Login</Button> */}
+          <Button className="bg-[#FF6535]">
+            <a href="https://bookingjini.co/get-started" target="_blank">
+              List your property
+            </a>
+          </Button>
         </div>
       </div>
     </div>
