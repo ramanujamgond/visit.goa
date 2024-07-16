@@ -1,8 +1,18 @@
-import ListingHeroSection from '@/components/businesslisting/listingherosection/ListingHeroSection';
-import ZeroCommission from '@/components/businesslisting/zerocommission/ZeroCommission';
+import ListingHeroSection from "@/components/businesslisting/listingherosection/ListingHeroSection";
+import ZeroCommission from "@/components/businesslisting/zerocommission/ZeroCommission";
 import BenefitsOfOnboarding from "@/components/businesslisting/benefitsofonboarding/BenefitsOfOnboarding";
-import React from 'react'
-import SimplifyingProcurement from '@/components/businesslisting/simplifyingprocurement/SimplifyingProcurement';
+import React from "react";
+import SimplifyingProcurement from "@/components/businesslisting/simplifyingprocurement/SimplifyingProcurement";
+import ExploreMore from "@/components/businesslisting/exploremore/ExploreMore";
+import PartnerIntegration from "@/components/businesslisting/partnerintegration/PartnerIntegration";
+import OtherServices from "@/components/businesslisting/otherservices/OtherServices";
+import HrPayroll from "@/components/businesslisting/hrpayroll/HrPayroll";
+import AdNetwork from "@/components/businesslisting/adnetwork/AdNetwork";
+import JoinBharatStay from "@/components/businesslisting/joinbharatstay/JoinBharatStay";
+import CustomerFeedbacksReviews from "@/components/home/customerfeedbacksreviews/CustomerFeedbacksReviews";
+import FrequentlyAskedQuestions from "@/components/businesslisting/frequentlyaskedquestions/FrequentlyAskedQuestions";
+import GetInTouch from "@/components/businesslisting/getintouch/GetInTouch";
+import SignUpandStart from "@/components/businesslisting/signupandstart/SignUpandStart";
 
 const BusinessListing = () => {
   return (
@@ -14,8 +24,28 @@ const BusinessListing = () => {
       <BenefitsOfOnboarding />
 
       <SimplifyingProcurement />
-    </div>
-  )
-}
 
-export default BusinessListing
+      <ExploreMore />
+
+      <PartnerIntegration />
+
+      <OtherServices />
+
+      <HrPayroll />
+
+      <AdNetwork />
+
+      <JoinBharatStay />
+
+      <CustomerFeedbacksReviews />
+
+      <FrequentlyAskedQuestions />
+
+      <GetInTouch />
+
+      <SignUpandStart />
+    </div>
+  );
+};
+
+export default BusinessListing;

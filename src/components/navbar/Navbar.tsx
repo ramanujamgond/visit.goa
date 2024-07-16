@@ -60,15 +60,6 @@ const Navbar = () => {
                 Contact
               </li>
             </Link>
-            <Link href="/book-now">
-              <li
-                className={`text-sm font-bold hover:text-[#ff6535] hover:[transition:color_0.3s_ease,_background-color_0.3s_ease] ${
-                  pathName === "/book-now" ? styles.active_nav : ""
-                }`}
-              >
-                Book Now
-              </li>
-            </Link>
           </ul>
         </div>
         <div className="flex gap-4">

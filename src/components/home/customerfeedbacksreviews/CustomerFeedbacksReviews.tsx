@@ -34,7 +34,7 @@ const CustomerFeedbacksReviews = () => {
   return (
     <div className="container">
       <div className="py-8">
-        <div className="text-2xl font-bold mb-8 text-center">
+        <div className="text-2xl font-bold text-center">
           What our customers says about us
         </div>
 
