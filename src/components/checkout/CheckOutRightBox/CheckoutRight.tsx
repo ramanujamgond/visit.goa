@@ -13,7 +13,7 @@ import styles from "./bookingLoader.module.scss";
 import useRegistration from "@/hooks/useRegistration";
 import useOTPVerificaton from "@/hooks/useOTPVerificaton";
 import { storeUSERID } from "@/redux/reducers/userIDSlice";
-import { bharatStay } from "@/api/baseURL";
+import { VisitGoa } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 import { clearErrorAfterTimeout, loadScript } from "@/lib/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -224,7 +224,7 @@ const CheckoutRight = () => {
         checkin_date: checkInCheckOut.checkinDate,
         checkout_date: checkInCheckOut.checkoutDate,
         booking_reference: "",
-        source: "BharatStay",
+        source: "VisitGoa",
         payment_mode: 0,
         currency: "",
         total_amount_inc_tax: totalAmount,
@@ -236,7 +236,7 @@ const CheckoutRight = () => {
     };
     setPayNowLoader(true);
     try {
-      const bookingResponse = await bharatStay.post(
+      const bookingResponse = await VisitGoa.post(
         apiEndpoints.POST.bookNow,
         payload
       );
@@ -279,7 +279,7 @@ const CheckoutRight = () => {
             setBookingLoader(false);
           }
         },
-        theme: "#FF6535",
+        theme: "#685CF1",
       };
 
       const easebuzzCheckout = new (window as any).EasebuzzCheckout(
@@ -514,7 +514,7 @@ const CheckoutRight = () => {
 
           <Button
             size={"lg"}
-            className="w-full bg-[#FF6535] mt-2"
+            className="w-full bg-[#685CF1] mt-2"
             onClick={handlePayNow}
             disabled={payNowLoader}
           >
@@ -555,7 +555,7 @@ const CheckoutRight = () => {
                 />
               </div>
               <Button
-                className="w-full bg-[#FF6535] mt-3 mb-2"
+                className="w-full bg-[#685CF1] mt-3 mb-2"
                 disabled={userLoader}
                 onClick={handleUserRegistration}
               >
@@ -587,12 +587,12 @@ const CheckoutRight = () => {
                   renderSeparator={<span> </span>}
                   renderInput={(props) => <input {...props} />}
                   containerStyle="item-center justify-center gap-4 my-4"
-                  inputStyle="!w-12 h-12 text-xl text-center border border-gray-300 rounded-lg focus:outline-none focus:border-[#FF6535]"
+                  inputStyle="!w-12 h-12 text-xl text-center border border-gray-300 rounded-lg focus:outline-none focus:border-[#685CF1]"
                 />
               </div>
               <span className="text-xs text-red-600">{otpErrorMessage}</span>
               <Button
-                className="w-full bg-[#FF6535] mt-3 mb-2"
+                className="w-full bg-[#685CF1] mt-3 mb-2"
                 onClick={handleOtpVerification}
                 disabled={otpVerificationLoader}
               >

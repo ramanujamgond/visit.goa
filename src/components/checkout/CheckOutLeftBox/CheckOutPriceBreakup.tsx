@@ -36,7 +36,7 @@ const CheckOutPriceBreakup: React.FC<CheckOutPriceBreakupProps> = ({
         // disable the private coupon section
         <div className="flex items-center gap-4">
           <Input type="text" className="h-10 bg-white focus-visible:ring-0" />
-          <Button className="w-28 h-10 bg-[#FF6535]">Apply</Button>
+          <Button className="w-28 h-10 bg-[#685CF1]">Apply</Button>
         </div>
       </div> */}
 

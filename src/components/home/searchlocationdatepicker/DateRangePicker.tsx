@@ -54,7 +54,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ date, setDate }) => {
           <div className="flex items-center justify-between w-full cursor-pointer">
             <div className="w-24">
               <div className="text-sm font-medium text-[#858585]">Chcek-in</div>
-              <div className="text-base font-semibold mt-3">
+              <div className="text-base font-semibold mt-3 text-black">
                 {date?.from ? (
                   format(date.from, "dd LLL, yy")
                 ) : (
@@ -62,7 +62,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ date, setDate }) => {
                 )}
               </div>
             </div>
-            <div className="text-sm text-center font-semibold p-2 border-2 border-[#E5E5E5] border-solid rounded-3xl w-24">
+            <div className="text-sm text-center font-semibold p-2 border-2 border-[#E5E5E5] border-solid rounded-3xl w-24 text-black">
               {date?.from && date.to
                 ? differenceInDays(date.to, date?.from)
                 : 0}
@@ -71,7 +71,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ date, setDate }) => {
               <div className="text-sm font-medium text-[#858585]">
                 Check-out
               </div>
-              <div className="text-base font-semibold mt-3">
+              <div className="text-base font-semibold mt-3 text-black">
                 {date?.from && date.to ? (
                   format(date.to, "dd LLL, yy")
                 ) : (

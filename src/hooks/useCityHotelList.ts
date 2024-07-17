@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { bharatStay } from "@/api/baseURL";
+import { VisitGoa } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 
 // default types
@@ -24,7 +24,7 @@ const useCityHotelList = () => {
   const fetchCityHotelList = async (searchValue: string) => {
     setLoading(true);
     try {
-      const cityList = await bharatStay.get(
+      const cityList = await VisitGoa.get(
         `${apiEndpoints.GET.get_cities}?q=${searchValue}`,
         {
           headers: {

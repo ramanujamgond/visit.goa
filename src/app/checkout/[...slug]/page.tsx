@@ -46,14 +46,14 @@ const Checkout = () => {
           <div className="flex items-center justify-between mt-14">
             <div className="text-base font-normal text-[#656565]">
               <span
-                className="hover:text-[#FF6535] cursor-pointer"
+                className="hover:text-[#685CF1] cursor-pointer"
                 onClick={navigateHome}
               >
                 Book Now
               </span>{" "}
               {"> "}
               <span
-                className="font-bold text-[#141414] hover:text-[#FF6535] cursor-pointer"
+                className="font-bold text-[#141414] hover:text-[#685CF1] cursor-pointer"
                 onClick={navigateBack}
               >
                 Hotel Beauty Palace

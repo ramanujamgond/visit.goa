@@ -1,4 +1,4 @@
-import { bharatStay } from "@/api/baseURL";
+import { VisitGoa } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 import { useState } from "react";
 
@@ -93,7 +93,7 @@ const useBookingDetails = () => {
   const fetchBookingDetails = async (bookingId: string, hotelId: string) => {
     setBookingLoader(true);
     try {
-      const bookingDetailsResponse = await bharatStay.get(
+      const bookingDetailsResponse = await VisitGoa.get(
         `${apiEndpoints.GET.booking_details}?booking_id=${bookingId}&hotel_id=${hotelId}`
       );
 

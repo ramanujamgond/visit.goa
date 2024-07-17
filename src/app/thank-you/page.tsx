@@ -73,7 +73,7 @@ const ThankYou = () => {
 
                 <Button
                   size={"lg"}
-                  className="bg-[#FF6535] my-4"
+                  className="bg-[#685CF1] my-4"
                   onClick={() => {
                     router.push("/");
                   }}

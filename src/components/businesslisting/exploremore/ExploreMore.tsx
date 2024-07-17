@@ -15,7 +15,7 @@ const ExploreMore = () => {
           </div>
 
           <div>
-            <Button size={"lg"} className="min-w-52 bg-[#FF6535]">
+            <Button size={"lg"} className="min-w-52 bg-[#685CF1]">
               Explore More
             </Button>{" "}
           </div>

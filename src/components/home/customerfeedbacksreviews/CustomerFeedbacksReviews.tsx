@@ -58,15 +58,15 @@ const CustomerFeedbacksReviews = () => {
                     <div className="h-full">
                       <CardContent className="flex items-center justify-center flex-col h-full p-6">
                         <div className="flex items-center justify-between my-3">
-                          <RiShiningFill className="mx-1 text-[#FF6535]" />
-                          <RiShiningFill className="mx-1 text-[#FF6535]" />
-                          <RiShiningFill className="mx-1 text-[#FF6535]" />
-                          <RiShiningFill className="mx-1 text-[#FF6535]" />
-                          <RiShiningFill className="mx-1 text-[#FF6535]" />
+                          <RiShiningFill className="mx-1 text-[#685CF1]" />
+                          <RiShiningFill className="mx-1 text-[#685CF1]" />
+                          <RiShiningFill className="mx-1 text-[#685CF1]" />
+                          <RiShiningFill className="mx-1 text-[#685CF1]" />
+                          <RiShiningFill className="mx-1 text-[#685CF1]" />
                         </div>
 
                         <div className="text-2xl font-medium text-center my-3">
-                          Our experience with Bharatstay has been exceptional.
+                          Our experience with VisitGoa has been exceptional.
                           Their AI-based Experience Concierge has greatly
                           improved our guest satisfaction.
                         </div>
@@ -106,7 +106,7 @@ const CustomerFeedbacksReviews = () => {
               <span
                 key={index}
                 className={`block w-2.5 h-2.5 rounded-full mx-2 ${
-                  index + 1 === current ? "bg-[#FF6535]" : "bg-gray-400"
+                  index + 1 === current ? "bg-[#685CF1]" : "bg-gray-400"
                 }`}
                 onClick={() => api && api.scrollTo(index)}
               />

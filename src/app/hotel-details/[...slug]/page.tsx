@@ -122,7 +122,7 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
           <div className="flex items-center justify-between mt-14">
             <div className="text-base font-normal text-[#656565]">
               <span
-                className="hover:text-[#FF6535] cursor-pointer"
+                className="hover:text-[#685CF1] cursor-pointer"
                 onClick={navigateBack}
               >
                 Book Now

@@ -48,7 +48,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center text-sm text-white font-normal">
               <RiMailLine size={20} className="me-3" />
-              emailbharatstay.gmail.com
+              emailVisitGoa.gmail.com
             </div>
           </div>
           <div className="mt-20 mb-5">
@@ -74,7 +74,7 @@ const Footer = () => {
         </div>
 
         <div className="w-[100%] text-xs text-white text-center mt-6">
-          © {year.getFullYear()} Bharatstay, All Right Reserved
+          © {year.getFullYear()} VisitGoa, All Right Reserved
         </div>
       </div>
     </div>

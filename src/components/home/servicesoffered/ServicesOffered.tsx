@@ -67,7 +67,7 @@ const ServicesOffered = () => {
               </div>
               <div className="text-xs text-[#858585] p-2">
                 {service.service_text}
-                <span className="inline-block text-[#FF6535] underline ms-1 cursor-pointer">
+                <span className="inline-block text-[#685CF1] underline ms-1 cursor-pointer">
                   View more
                 </span>
               </div>

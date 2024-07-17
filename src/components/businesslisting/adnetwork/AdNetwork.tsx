@@ -21,8 +21,8 @@ const AdNetwork = () => {
           <div className="flex-shrink-1 flex-grow-1 basis-2/3">
             <div className="text-2xl font-bold mb-6">
               Transform Your{" "}
-              <span className="text-[#FF6535]">Hotel Marketing</span> with Our
-              Revolutionary <span className="text-[#FF6535]">AD Network</span>
+              <span className="text-[#685CF1]">Hotel Marketing</span> with Our
+              Revolutionary <span className="text-[#685CF1]">AD Network</span>
             </div>
 
             <div className="text-sm font-normal text-[#7A7A7A] mb-6 text-justify">
@@ -51,8 +51,8 @@ const AdNetwork = () => {
               </div>
             </div>
 
-            <Button size={"lg"} className="bg-[#FF6535]">
-              Join Bharatstay
+            <Button size={"lg"} className="bg-[#685CF1]">
+              Join VisitGoa
             </Button>
           </div>
         </div>

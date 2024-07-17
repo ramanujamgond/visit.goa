@@ -95,10 +95,12 @@ const SearchLocationDatePicker = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="absolute bottom-[-8%] w-full p-4 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-[1000]">
+      <div className="absolute bottom-9 w-full p-4 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-[1000]">
         <div className="flex items-center">
           <div className="flex-grow flex-shrink basis-0">
-            <div className="text-sm font-medium text-[#858585]">Where ?</div>
+            <div className="text-sm text-left font-medium text-[#858585]">
+              Where ?
+            </div>
             <SearchLocationInput
               searchValue={searchValue}
               setSearchValue={setSearchValue}

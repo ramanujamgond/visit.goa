@@ -166,7 +166,7 @@ const Contact = () => {
                 </div>
 
                 <div className="my-8">
-                  <Button size={"lg"} className="bg-[#FF6535] w-full">
+                  <Button size={"lg"} className="bg-[#685CF1] w-full">
                     Submit
                   </Button>
                 </div>

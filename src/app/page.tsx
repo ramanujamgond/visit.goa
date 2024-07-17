@@ -1,5 +1,5 @@
 import AdvertisementSection from "@/components/home/advertisement/AdvertisementSection";
-import JoinBharatstay from "@/components/home/ctajoinbharatstay/JoinBharatstay";
+import JoinVisitGoa from "@/components/home/ctajoinVisitGoa/JoinVisitGoa";
 import CustomerFeedbacksReviews from "@/components/home/customerfeedbacksreviews/CustomerFeedbacksReviews";
 import HeroSection from "@/components/home/herosection/HeroSection";
 import LastMinuteSale from "@/components/home/lastminutesale/LastMinuteSale";
@@ -21,7 +21,7 @@ export default function Home() {
       <AdvertisementSection />
       <LastMinuteSale />
       <CustomerFeedbacksReviews />
-      <JoinBharatstay />
+      <JoinVisitGoa />
     </main>
   );
 }

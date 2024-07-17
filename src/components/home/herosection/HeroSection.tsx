@@ -4,11 +4,16 @@ import styles from "./hero.module.scss";
 const HeroSection = () => {
   return (
     <div className={styles.hero_section_wrapper}>
-      <div className="container relative h-[100%]">
-        <div className="flex items-center justify-center flex-col h-[100%]">
-          <div className="text-[54px] font-bold text-[#323232] text-center">
-            Discover the wonders of <br />
-            <span className="text-[#FF6535]">Bharatstay</span> with us
+      <video autoPlay muted loop className={styles.backgroundVideo}>
+        <source
+          src="https://videos.pexels.com/video-files/15456863/15456863-hd_1920_1080_24fps.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div className={`${styles.content} container relative h-full`}>
+        <div className="flex items-center justify-center flex-col h-full">
+          <div className="text-[54px] font-bold text-white text-center">
+            Experience the Magic of <br /> Traveling with VisitGoa
           </div>
 
           <div className="text-xl font-normal text-center w-2/4">
@@ -23,4 +28,5 @@ const HeroSection = () => {
     </div>
   );
 };
+
 export default HeroSection;

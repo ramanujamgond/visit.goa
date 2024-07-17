@@ -24,7 +24,7 @@ const OffersList = () => {
                   </div>
 
                   <div className="p-2">
-                    <div className="text-[44px] text-[#FF6535] font-extrabold text-center">
+                    <div className="text-[44px] text-[#685CF1] font-extrabold text-center">
                       20% OFF
                     </div>
 
@@ -33,7 +33,7 @@ const OffersList = () => {
                       Donec eleifend molestie metus
                     </div>
 
-                    <Button className="bg-[#FF6535] w-full">Book Now</Button>
+                    <Button className="bg-[#685CF1] w-full">Book Now</Button>
                   </div>
                 </div>
               </div>

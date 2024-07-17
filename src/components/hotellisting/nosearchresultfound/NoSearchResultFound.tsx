@@ -27,19 +27,19 @@ const NoSearchResultFound: React.FC<NoSearchResultFoundProps> = ({
                 loading="lazy"
               />
             </div>
-            <div className="text-4xl font-bold text-center text-[#FF6535]">
+            <div className="text-4xl font-bold text-center text-[#685CF1]">
               No Hotels Found !
             </div>
             <div className="text-sm pt-2 mb-8">
               We couldn't find any hotels you are searching in{" "}
-              <span className="text-sm font-medium text-[#FF6535]">
+              <span className="text-sm font-medium text-[#685CF1]">
                 {place}
               </span>{" "}
               for{" "}
-              <span className="text-sm font-medium text-[#FF6535]">
+              <span className="text-sm font-medium text-[#685CF1]">
                 {format(checkin, "dd MMM yyyy")} to{" "}
               </span>
-              <span className="text-sm font-medium text-[#FF6535]">
+              <span className="text-sm font-medium text-[#685CF1]">
                 {format(checkout, "dd MMM yyyy")}
               </span>
               . Try searching with different dates or city name.

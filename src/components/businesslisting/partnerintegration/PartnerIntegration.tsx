@@ -15,19 +15,19 @@ const PartnerIntegration = () => {
         <TabsList className="bg-muted-[none]">
           <TabsTrigger
             value="preferred_integration"
-            className="min-w-[256px] flex-col text-base font-medium px-7 py-1.5 data-[state=active]:shadow-none rounded-none data-[state=active]:bg-muted-[none] after:content-[''] after:w-[200px] after:h-[3px] after:bg-muted-[none] after:rounded-[20px] after:mt-2 data-[state=active]:after:content-[''] data-[state=active]:after:w-[100px] data-[state=active]:after:h-[3px] data-[state=active]:after:bg-[#FF6535] data-[state=active]:after:rounded-[20px] data-[state=active]:after:mt-2"
+            className="min-w-[256px] flex-col text-base font-medium px-7 py-1.5 data-[state=active]:shadow-none rounded-none data-[state=active]:bg-muted-[none] after:content-[''] after:w-[200px] after:h-[3px] after:bg-muted-[none] after:rounded-[20px] after:mt-2 data-[state=active]:after:content-[''] data-[state=active]:after:w-[100px] data-[state=active]:after:h-[3px] data-[state=active]:after:bg-[#685CF1] data-[state=active]:after:rounded-[20px] data-[state=active]:after:mt-2"
           >
             Preferred Integration
           </TabsTrigger>
           <TabsTrigger
             value="door_lock_intrigation"
-            className="min-w-[256px] flex-col text-base font-medium px-7 py-1.5 data-[state=active]:shadow-none rounded-none data-[state=active]:bg-muted-[none] after:content-[''] after:w-[200px] after:h-[3px] after:bg-muted-[none] after:rounded-[20px] after:mt-2 data-[state=active]:after:content-[''] data-[state=active]:after:w-[100px] data-[state=active]:after:h-[3px] data-[state=active]:after:bg-[#FF6535] data-[state=active]:after:rounded-[20px] data-[state=active]:after:mt-2"
+            className="min-w-[256px] flex-col text-base font-medium px-7 py-1.5 data-[state=active]:shadow-none rounded-none data-[state=active]:bg-muted-[none] after:content-[''] after:w-[200px] after:h-[3px] after:bg-muted-[none] after:rounded-[20px] after:mt-2 data-[state=active]:after:content-[''] data-[state=active]:after:w-[100px] data-[state=active]:after:h-[3px] data-[state=active]:after:bg-[#685CF1] data-[state=active]:after:rounded-[20px] data-[state=active]:after:mt-2"
           >
             Door Lock Intrigation
           </TabsTrigger>
           <TabsTrigger
             value="electronic_sign_pad"
-            className="min-w-[256px] flex-col text-base font-medium px-7 py-1.5 data-[state=active]:shadow-none rounded-none data-[state=active]:bg-muted-[none] after:content-[''] after:w-[200px] after:h-[3px] after:bg-muted-[none] after:rounded-[20px] after:mt-2 data-[state=active]:after:content-[''] data-[state=active]:after:w-[100px] data-[state=active]:after:h-[3px] data-[state=active]:after:bg-[#FF6535] data-[state=active]:after:rounded-[20px] data-[state=active]:after:mt-2"
+            className="min-w-[256px] flex-col text-base font-medium px-7 py-1.5 data-[state=active]:shadow-none rounded-none data-[state=active]:bg-muted-[none] after:content-[''] after:w-[200px] after:h-[3px] after:bg-muted-[none] after:rounded-[20px] after:mt-2 data-[state=active]:after:content-[''] data-[state=active]:after:w-[100px] data-[state=active]:after:h-[3px] data-[state=active]:after:bg-[#685CF1] data-[state=active]:after:rounded-[20px] data-[state=active]:after:mt-2"
           >
             Electronic Sign Pad
           </TabsTrigger>
@@ -60,14 +60,14 @@ const PartnerIntegration = () => {
 
                 <div className="flex items-center justify-center gap-4 my-2">
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiGlobalLine className="text-[#FF6535]" />
+                    <RiGlobalLine className="text-[#685CF1]" />
                   </div>
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiPuzzle2Line className="text-[#FF6535]" />
+                    <RiPuzzle2Line className="text-[#685CF1]" />
                   </div>
                 </div>
 
-                <Button className="text-white bg-[#FF6535] w-full my-2">
+                <Button className="text-white bg-[#685CF1] w-full my-2">
                   Contact Us
                 </Button>
 
@@ -100,14 +100,14 @@ const PartnerIntegration = () => {
 
                 <div className="flex items-center justify-center gap-4 my-2">
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiGlobalLine className="text-[#FF6535]" />
+                    <RiGlobalLine className="text-[#685CF1]" />
                   </div>
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiPuzzle2Line className="text-[#FF6535]" />
+                    <RiPuzzle2Line className="text-[#685CF1]" />
                   </div>
                 </div>
 
-                <Button className="text-white bg-[#FF6535] w-full my-2">
+                <Button className="text-white bg-[#685CF1] w-full my-2">
                   Contact Us
                 </Button>
 
@@ -140,14 +140,14 @@ const PartnerIntegration = () => {
 
                 <div className="flex items-center justify-center gap-4 my-2">
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiGlobalLine className="text-[#FF6535]" />
+                    <RiGlobalLine className="text-[#685CF1]" />
                   </div>
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiPuzzle2Line className="text-[#FF6535]" />
+                    <RiPuzzle2Line className="text-[#685CF1]" />
                   </div>
                 </div>
 
-                <Button className="text-white bg-[#FF6535] w-full my-2">
+                <Button className="text-white bg-[#685CF1] w-full my-2">
                   Contact Us
                 </Button>
 
@@ -180,14 +180,14 @@ const PartnerIntegration = () => {
 
                 <div className="flex items-center justify-center gap-4 my-2">
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiGlobalLine className="text-[#FF6535]" />
+                    <RiGlobalLine className="text-[#685CF1]" />
                   </div>
                   <div className="bg-[#FFEAE4] rounded p-1">
-                    <RiPuzzle2Line className="text-[#FF6535]" />
+                    <RiPuzzle2Line className="text-[#685CF1]" />
                   </div>
                 </div>
 
-                <Button className="text-white bg-[#FF6535] w-full my-2">
+                <Button className="text-white bg-[#685CF1] w-full my-2">
                   Contact Us
                 </Button>
 

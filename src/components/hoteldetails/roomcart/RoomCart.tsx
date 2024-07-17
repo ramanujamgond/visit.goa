@@ -70,7 +70,7 @@ const RoomCart: React.FC<RoomCartProps> = ({
     <>
       <div className="fixed left-0 right-0 bottom-8 w-full max-w-[480px] mx-auto z-[6010]">
         <div className="flex items-center gap-4 z-[6010]">
-          <div className="flex items-center w-full justify-between rounded-xl bg-[#FF6535] p-6">
+          <div className="flex items-center w-full justify-between rounded-xl bg-[#685CF1] p-6">
             <div className="flex items-center gap-4">
               <div>
                 <RiShoppingCart2Fill size={40} className="text-white" />
@@ -92,7 +92,7 @@ const RoomCart: React.FC<RoomCartProps> = ({
             </Button>
           </div>
 
-          <div className="flex items-center justify-between flex-col h-[104px] rounded-xl bg-[#FF6535] px-4 py-3">
+          <div className="flex items-center justify-between flex-col h-[104px] rounded-xl bg-[#685CF1] px-4 py-3">
             <div
               className="w-[34px] h-[34px] hover:bg-[#C7522E] flex items-center justify-center rounded-lg cursor-pointer"
               onClick={toggleRoomTypeCartDetails}

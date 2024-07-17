@@ -21,7 +21,7 @@ const CheckOutDate: React.FC<CheckOutDateProps> = ({
           </div>
         </div>
 
-        <div className="w-28 flex items-center justify-between text-lg font-bold px-3 py-2  text-white bg-[#FF6535] rounded-3xl">
+        <div className="w-28 flex items-center justify-between text-lg font-bold px-3 py-2  text-white bg-[#685CF1] rounded-3xl">
           <RiMoonLine size={18} />{" "}
           {checkinDate &&
             checkoutDate &&

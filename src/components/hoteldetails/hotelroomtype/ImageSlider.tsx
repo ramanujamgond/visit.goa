@@ -81,7 +81,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ multipleImage }) => {
           <span
             key={index}
             className={`block w-2.5 h-2.5 rounded-full mx-2 ${
-              index + 1 === current ? "bg-[#FF6535]" : "bg-gray-400"
+              index + 1 === current ? "bg-[#685CF1]" : "bg-gray-400"
             }`}
             onClick={() => api && api.scrollTo(index)}
           />

@@ -1,4 +1,4 @@
-import { bharatStay } from "@/api/baseURL";
+import { VisitGoa } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 import { useSearchParams } from "next/navigation";
 import { useState, useCallback, useEffect } from "react";
@@ -68,7 +68,7 @@ const useHotelList = () => {
           sort: sortItem !== "default" ? sortItemArray : [],
         };
 
-        const hotelListResponse = await bharatStay.post(
+        const hotelListResponse = await VisitGoa.post(
           apiEndpoints.POST.search,
           payload,
           {

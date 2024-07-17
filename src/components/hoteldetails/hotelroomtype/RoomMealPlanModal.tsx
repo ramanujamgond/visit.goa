@@ -279,10 +279,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
               if (room_price >= tax.tax_value[0].start_range) {
                 tax_percentage = tax.tax_value[0].percentage;
               }
-              gst = calculateGst(
-                room_price,
-                tax.tax_value[0].percentage
-              );
+              gst = calculateGst(room_price, tax.tax_value[0].percentage);
             }
           }
 
@@ -386,14 +383,14 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
             No. of Rooms
           </div>
           <div className="flex items-center gap-x-2">
-            <Button className="w-7 h-8 bg-[#FF6535]" onClick={decNumberofRooms}>
+            <Button className="w-7 h-8 bg-[#685CF1]" onClick={decNumberofRooms}>
               -
             </Button>
             <span className="inline-block w-5 text-base font-medium text-center">
               {selectedRoomType?.noOfRoomSelected}
             </span>
             <Button
-              className="w-7 h-8 bg-[#FF6535]"
+              className="w-7 h-8 bg-[#685CF1]"
               disabled={disableNoOfRooms}
               onClick={addNumberofRooms}
             >
@@ -439,7 +436,7 @@ const RoomMealPlanModal: React.FC<RoomMealPlanModalProps> = ({
 
         <Button
           size={"lg"}
-          className="mt-2 bg-[#FF6535]"
+          className="mt-2 bg-[#685CF1]"
           disabled={saveButtonStatus}
           onClick={handleAddRoom}
         >

@@ -8,7 +8,7 @@ import PartnerIntegration from "@/components/businesslisting/partnerintegration/
 import OtherServices from "@/components/businesslisting/otherservices/OtherServices";
 import HrPayroll from "@/components/businesslisting/hrpayroll/HrPayroll";
 import AdNetwork from "@/components/businesslisting/adnetwork/AdNetwork";
-import JoinBharatStay from "@/components/businesslisting/joinbharatstay/JoinBharatStay";
+import JoinVisitGoa from "@/components/businesslisting/joinVisitGoa/JoinVisitGoa";
 import CustomerFeedbacksReviews from "@/components/home/customerfeedbacksreviews/CustomerFeedbacksReviews";
 import FrequentlyAskedQuestions from "@/components/businesslisting/frequentlyaskedquestions/FrequentlyAskedQuestions";
 import GetInTouch from "@/components/businesslisting/getintouch/GetInTouch";
@@ -35,7 +35,7 @@ const BusinessListing = () => {
 
       <AdNetwork />
 
-      <JoinBharatStay />
+      <JoinVisitGoa />
 
       <CustomerFeedbacksReviews />
 

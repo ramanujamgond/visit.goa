@@ -61,14 +61,14 @@ const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
       <Input
         type="text"
         value={searchValue.value}
-        className="h-6 text-base font-semibold mt-3 border-0 border-b rounded-none shadow-none focus-visible:ring-0 placeholder:text-sm placeholder:font-normal"
+        className="h-6 text-base font-semibold mt-3 border-0 border-b rounded-none shadow-none text-black focus-visible:ring-0 placeholder:text-sm placeholder:font-normal"
         placeholder="Search for a City or Hotel"
         onChange={(e) => handleCityHotelSearch(e.target.value)}
       />
 
       {searchValue?.value?.length > 0 && (
         <span
-          className="absolute right-0 top-0 text-[#ff6535] cursor-pointer"
+          className="absolute right-0 top-0 text-[#685CF1] cursor-pointer"
           onClick={() => setSearchValue({ value: "" })}
         >
           <RiCloseCircleFill size={20} />
@@ -82,7 +82,7 @@ const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
             {citySearchResult.map((cityData, index: number) => (
               <li
                 key={index}
-                className="text-sm font-normal px-2 py-1 my-2 rounded-md cursor-pointer hover:bg-[#f7f7f7]"
+                className="text-sm font-normal px-2 py-1 my-2 rounded-md cursor-pointer text-black text-left hover:bg-[#f7f7f7]"
                 onClick={() => handleSelectedValue(cityData?.city_name)}
               >
                 {cityData?.city_name}
@@ -109,8 +109,8 @@ const SearchLocationInput: React.FC<SearchLocationInputProps> = ({
                 }
               >
                 <span className="flex items-center gap-1">
-                  <RiHotelLine size={16} className="text-[#ff6535]" />
-                  <span className="text-sm font-normal">
+                  <RiHotelLine size={16} className="text-[#685CF1]" />
+                  <span className="text-sm font-normal text-black">
                     {hotelName?.hotel_name}
                   </span>
                 </span>

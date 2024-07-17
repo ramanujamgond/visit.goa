@@ -11,19 +11,19 @@ const GetInTouch = () => {
 
       <div className="grid grid-cols-[repeat(3,_1fr)] gap-4">
         <div>
-          <RiBardFill size={28} className="text-[#FF6535] my-2" />
+          <RiBardFill size={28} className="text-[#685CF1] my-2" />
           <div className="text-base font-semibold my-2">Email</div>
           <div className="text-sm font-normal text-[#7A7A7A] my-2">
             Send us an email at
           </div>
 
           <div className="text-sm text-[#0C3FC2] font-normal">
-            hello@bharatstay.com
+            hello@VisitGoa.com
           </div>
         </div>
 
         <div>
-          <RiBardFill size={28} className="text-[#FF6535] my-2" />
+          <RiBardFill size={28} className="text-[#685CF1] my-2" />
           <div className="text-base font-semibold my-2">Phone</div>
           <div className="text-sm font-normal text-[#7A7A7A] my-2">
             Give us a call at
@@ -35,7 +35,7 @@ const GetInTouch = () => {
         </div>
 
         <div>
-          <RiBardFill size={28} className="text-[#FF6535] my-2" />
+          <RiBardFill size={28} className="text-[#685CF1] my-2" />
           <div className="text-base font-semibold my-2">Office</div>
           <div className="text-sm font-normal text-[#7A7A7A] my-2">
             Meet us at

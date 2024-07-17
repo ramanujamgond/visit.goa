@@ -152,7 +152,7 @@ const HotelMapPolicyDetails: React.FC<HotelMapPolicyDetailsProps> = ({
                 <div>
                   <div className="flex items-center text-base font-normal text-[#858585]">
                     <div>
-                      <RiMapPinLine size={18} className="text-[#FF6535] me-1" />
+                      <RiMapPinLine size={18} className="text-[#685CF1] me-1" />
                     </div>
                     <div>
                       {city_name}
@@ -164,7 +164,7 @@ const HotelMapPolicyDetails: React.FC<HotelMapPolicyDetailsProps> = ({
                 <div>
                   <Button
                     size="lg"
-                    className="w-full bg-[#FF6535]"
+                    className="w-full bg-[#685CF1]"
                     onClick={handleOpenDirections}
                   >
                     <RiMapPinLine size={18} className="text-white me-1" />

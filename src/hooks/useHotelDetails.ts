@@ -1,4 +1,4 @@
-import { bharatStay } from "@/api/baseURL";
+import { VisitGoa } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -57,7 +57,7 @@ const useHotelDetails = ({ hotelId }: HotelId) => {
     setLoading(true);
 
     try {
-      const hotelDetailsResponst = await bharatStay.get(
+      const hotelDetailsResponst = await VisitGoa.get(
         `${apiEndpoints.GET.hotel_details}?hotel_id=${hotelId}&user_id=${userId}&checkin_date=${checkin}&checkout_date=${checkout}`
       );
       if (hotelDetailsResponst?.data?.status === 1) {

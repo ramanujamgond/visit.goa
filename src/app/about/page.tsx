@@ -13,23 +13,22 @@ const About = () => {
       <div className="text-xl font-bold mt-10">For Travelers</div>
 
       <div className="text-base text-[#7A7A7A] my-3 text-justify">
-        At BharatStay, we strive to make your travel planning effortless and
+        At VisitGoa, we strive to make your travel planning effortless and
         enjoyable. Our platform allows you to book hotels at competitive rates
-        with zero commission fees, ensuring you get the best value for your
-        money. Whether you're traveling for leisure or business, we provide a
-        wide range of accommodations to suit your needs. Enjoy exclusive rewards
-        through our loyalty program, and make the most of your travels with
-        personalized recommendations and easy booking processes.
+        with fees, ensuring you get the best value for your money. Whether
+        you're traveling for leisure or business, we provide a wide range of
+        accommodations to suit your needs. Enjoy exclusive rewards through our
+        loyalty program, and make the most of your travels with personalized
+        recommendations and easy booking processes.
       </div>
 
       <div className="text-xl font-bold mt-10">For Hoteliers</div>
 
       <div className="text-base text-[#7A7A7A] my-3 text-justify">
         We understand the challenges faced by hoteliers, and we are here to help
-        you succeed. BharatStay offers a comprehensive suite of services
-        designed to enhance your property's performance and guest satisfaction.
-        List your property with us at zero commission and benefit from the
-        following services:
+        you succeed. VisitGoa offers a comprehensive suite of services designed
+        to enhance your property's performance and guest satisfaction. List your
+        property with us at and benefit from the following services:
       </div>
 
       <div className="text-base font-bold my-10">
@@ -82,8 +81,8 @@ const About = () => {
         your property's visibility and profitability.
       </div>
 
-      <Button size={"lg"} className="text-white bg-[#FF6535]">
-        Join Bharatstay
+      <Button size={"lg"} className="text-white bg-[#685CF1]">
+        Join VisitGoa
       </Button>
     </div>
   );

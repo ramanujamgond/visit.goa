@@ -160,7 +160,7 @@ const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
                         <div className="flex items-center text-base font-normal text-[#858585]">
                           <RiMapPinLine
                             size={18}
-                            className="text-[#FF6535] me-1"
+                            className="text-[#685CF1] me-1"
                           />
                           {hotelData?.["hotel_address.city_name"]}
                           {hotelData?.location}
@@ -211,7 +211,7 @@ const HotelListingDetails: React.FC<HotelListingDetailsProps> = ({
                       <div>
                         <Button
                           size="lg"
-                          className="bg-[#FF6535]"
+                          className="bg-[#685CF1]"
                           onClick={() =>
                             handleSelectRoom(
                               hotelData?.hotel_id,

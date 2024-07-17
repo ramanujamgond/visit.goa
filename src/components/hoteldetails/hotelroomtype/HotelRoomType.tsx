@@ -163,7 +163,7 @@ const HotelRoomType = ({
                       <div className="text-sm font-medium flex items-center me-4">
                         <RiGroupLine
                           size={15}
-                          className="text-[#FF6535] me-1"
+                          className="text-[#685CF1] me-1"
                         />{" "}
                         {roomTypeData?.base_adult} Adult
                       </div>
@@ -171,7 +171,7 @@ const HotelRoomType = ({
                       <div className="text-sm font-medium flex items-center me-4">
                         <RiGroupLine
                           size={15}
-                          className="text-[#FF6535] me-1"
+                          className="text-[#685CF1] me-1"
                         />{" "}
                         {roomTypeData?.base_child} Child
                       </div>
@@ -179,7 +179,7 @@ const HotelRoomType = ({
                       <div className="text-sm font-medium flex items-center me-4">
                         <RiGroupLine
                           size={15}
-                          className="text-[#FF6535] me-1"
+                          className="text-[#685CF1] me-1"
                         />{" "}
                         {roomTypeData?.room_size_value}{" "}
                         {roomTypeData?.room_size_unit}
@@ -188,13 +188,13 @@ const HotelRoomType = ({
                       <div className="text-sm font-medium flex items-center me-4">
                         <RiGroupLine
                           size={15}
-                          className="text-[#FF6535] me-1"
+                          className="text-[#685CF1] me-1"
                         />{" "}
                         King Size Bed
                       </div>
                     </div>
 
-                    <div className="text-sm font-light text-[#FF6535]">
+                    <div className="text-sm font-light text-[#685CF1]">
                       Hurry! only {roomTypeData?.min_inv} rooms left
                     </div>
                   </div>
@@ -206,7 +206,7 @@ const HotelRoomType = ({
                             amenities && (
                               <div
                                 key={index}
-                                className="w-fit text-xs font-normal text-[#FF6535] px-2 py-1.5 my-2 me-2 bg-[#F3F3F3] rounded-md"
+                                className="w-fit text-xs font-normal text-[#685CF1] px-2 py-1.5 my-2 me-2 bg-[#F3F3F3] rounded-md"
                               >
                                 {amenities?.amenity_name}
                               </div>
@@ -217,7 +217,7 @@ const HotelRoomType = ({
                     <div>
                       <Button
                         size="lg"
-                        className="bg-[#FF6535]"
+                        className="bg-[#685CF1]"
                         onClick={() => toggleMealPlanDialog(roomTypeData)}
                       >
                         {editState[index] ? "Edit Room" : "Add Room"}

@@ -23,7 +23,7 @@ const HotelAboutUsSection: React.FC<HotelAboutUsSectionProps> = ({
         <div>
           <div className="text-[32px] font-semibold">{hotel_name}</div>
           <div className="flex items-center text-base font-normal text-[#858585]">
-            <RiMapPinLine size={18} className="text-[#FF6535] me-1" />
+            <RiMapPinLine size={18} className="text-[#685CF1] me-1" />
             {city_name}, {address}
           </div>
         </div>
@@ -32,7 +32,7 @@ const HotelAboutUsSection: React.FC<HotelAboutUsSectionProps> = ({
           <div className="flex items-end flex-col justify-end">
             <div className="flex items-center justify-center text-base font-semibold">
               {star}
-              <RiStarFill size={18} className="ms-1 text-[#FF6535]" />
+              <RiStarFill size={18} className="ms-1 text-[#685CF1]" />
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@ const HotelAboutUsSection: React.FC<HotelAboutUsSectionProps> = ({
         {facility.map((items, index) => (
           <div
             key={index}
-            className="w-fit text-xs font-normal text-[#FF6535] px-2 py-1.5 my-2 me-2 bg-[#E2E2E2] rounded-md"
+            className="w-fit text-xs font-normal text-[#685CF1] px-2 py-1.5 my-2 me-2 bg-[#E2E2E2] rounded-md"
           >
             {items}
           </div>

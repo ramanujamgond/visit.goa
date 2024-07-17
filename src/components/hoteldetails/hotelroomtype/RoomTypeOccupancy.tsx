@@ -150,7 +150,7 @@ const RoomTypeOccupancy = ({
               deleteRoomNumber(roomsData?.roomNumber);
             }}
           >
-            <RiDeleteBinLine className="text-[#FF6535] font-light" />
+            <RiDeleteBinLine className="text-[#685CF1] font-light" />
           </div>
         </div>
 
@@ -159,7 +159,7 @@ const RoomTypeOccupancy = ({
             <div className="text-base font-medium mb-3">Adult</div>
             <div className="flex items-center gap-x-2">
               <Button
-                className="w-7 h-8 bg-[#FF6535]"
+                className="w-7 h-8 bg-[#685CF1]"
                 onClick={() => removeRoomOccupancy("adult", index + 1)}
               >
                 -
@@ -168,7 +168,7 @@ const RoomTypeOccupancy = ({
                 {roomsData?.adult}
               </span>
               <Button
-                className="w-7 h-8 bg-[#FF6535]"
+                className="w-7 h-8 bg-[#685CF1]"
                 disabled={disableAddAdult}
                 onClick={() => addRoomOccupancy("adult", index + 1)}
               >
@@ -181,7 +181,7 @@ const RoomTypeOccupancy = ({
             <div className="text-base font-medium mb-3">Child</div>
             <div className="flex items-center gap-x-2">
               <Button
-                className="w-7 h-8 bg-[#FF6535]"
+                className="w-7 h-8 bg-[#685CF1]"
                 onClick={() => removeRoomOccupancy("child", index + 1)}
               >
                 -
@@ -190,7 +190,7 @@ const RoomTypeOccupancy = ({
                 {roomsData?.child}
               </span>
               <Button
-                className="w-7 h-8 bg-[#FF6535]"
+                className="w-7 h-8 bg-[#685CF1]"
                 disabled={disableAddChild}
                 onClick={() => addRoomOccupancy("child", index + 1)}
               >

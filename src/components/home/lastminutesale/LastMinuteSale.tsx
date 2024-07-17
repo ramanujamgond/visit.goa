@@ -46,7 +46,7 @@ const LastMinuteSale = () => {
                       <div className="text-xs font-medium decorat line-through">
                         ₹1200
                       </div>
-                      <div className="text-lg font-semibold text-[#FF6535]">
+                      <div className="text-lg font-semibold text-[#685CF1]">
                         ₹800
                       </div>
                       <div className="text-xs font-medium">
@@ -83,7 +83,7 @@ const LastMinuteSale = () => {
                       <div className="text-xs font-medium decorat line-through">
                         ₹1200
                       </div>
-                      <div className="text-lg font-semibold text-[#FF6535]">
+                      <div className="text-lg font-semibold text-[#685CF1]">
                         ₹800
                       </div>
                       <div className="text-xs font-medium">

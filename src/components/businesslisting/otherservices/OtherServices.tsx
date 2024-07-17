@@ -5,7 +5,7 @@ const OtherServices = () => {
     <div className="container py-8">
       <div className="text-4xl font-bold text-center mt-8">
         We also provide a wide range of{" "}
-        <span className="text-[#FF6535]">Services</span>
+        <span className="text-[#685CF1]">Services</span>
       </div>
 
       <div className="grid grid-cols-[repeat(3,_1fr)] gap-4 my-10">

@@ -16,10 +16,10 @@ const FrequentlyAskedQuestions = () => {
           <div className="text-2xl font-bold">Frequently Asked Questions</div>
           <div className="text-sm font-normal text-[#7A7A7A] mb-6">
             Find answers to common questions hoteliers have about joining
-            Bharatstay.
+            VisitGoa.
           </div>
 
-          <Button size={"lg"} className="bg-[#FF6535]">
+          <Button size={"lg"} className="bg-[#685CF1]">
             Contact Us
           </Button>
         </div>
@@ -27,10 +27,10 @@ const FrequentlyAskedQuestions = () => {
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-base">
-                How to join Bharatstay?
+                How to join VisitGoa?
               </AccordionTrigger>
               <AccordionContent className="text-sm font-normal text-[#727272]">
-                To join Bharatstay, simply visit our website and click on the
+                To join VisitGoa, simply visit our website and click on the
                 'Sign Up' button. Fill in the required information and our team
                 will get in touch with you.
               </AccordionContent>
@@ -43,8 +43,8 @@ const FrequentlyAskedQuestions = () => {
                 What are the benefits?
               </AccordionTrigger>
               <AccordionContent className="text-sm font-normal text-[#727272]">
-                By joining Bharatstay, you can enjoy the benefits of our
-                AI-based Experience Concierge, JINI Marketplace, HR and Payroll
+                By joining VisitGoa, you can enjoy the benefits of our AI-based
+                Experience Concierge, JINI Marketplace, HR and Payroll
                 Outsourcing, JINI Smart Hotel, AD Network, and more.
               </AccordionContent>
             </AccordionItem>
@@ -56,7 +56,7 @@ const FrequentlyAskedQuestions = () => {
                 How does it work?
               </AccordionTrigger>
               <AccordionContent className="text-sm font-normal text-[#727272]">
-                Bharatstay works by connecting hoteliers with travelers through
+                VisitGoa works by connecting hoteliers with travelers through
                 our platform. We provide a seamless booking experience and help
                 you reach a wider audience.
               </AccordionContent>
@@ -69,7 +69,7 @@ const FrequentlyAskedQuestions = () => {
                 What is the cost?
               </AccordionTrigger>
               <AccordionContent className="text-sm font-normal text-[#727272]">
-                Joining Bharatstay is completely free. We operate on a zero
+                Joining VisitGoa is completely free. We operate on a zero
                 commission model, allowing you to maximize your earnings.
               </AccordionContent>
             </AccordionItem>

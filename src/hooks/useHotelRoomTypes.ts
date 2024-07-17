@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { bharatStay } from "@/api/baseURL";
+import { VisitGoa } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 
 interface HotelId {
@@ -24,7 +24,7 @@ const useHotelRoomTypes = ({ hotelId }: HotelId) => {
 
     setInvLoading(true);
     try {
-      const inventoryResponse = await bharatStay.get(
+      const inventoryResponse = await VisitGoa.get(
         `${apiEndpoints.GET.availability}?hotel_id=${hotelId}&checkin_date=${checkin}&checkout_date=${checkout}`
       );
       if (inventoryResponse?.data?.status === 1) {

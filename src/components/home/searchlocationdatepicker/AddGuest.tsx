@@ -67,7 +67,7 @@ const AddGuest: React.FC<AddGuestProps> = ({
         <DropdownMenuTrigger asChild>
           <div>
             <div className="text-sm font-medium text-[#858585]">Guest</div>
-            <div className="text-base font-semibold mt-3">
+            <div className="text-base font-semibold mt-3 text-black">
               {adult} Adult, {child} Child
             </div>
           </div>

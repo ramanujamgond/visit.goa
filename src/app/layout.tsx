@@ -8,7 +8,7 @@ import ReduxProvider from "@/redux/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BharatStay | Discover the wonders of BharatStay with us",
+  title: "VisitGoa | Discover the wonders of VisitGoa with us",
   description:
     "Plan your dream vacation with our AI-enabled travel companion and experience the best of India.",
 };
