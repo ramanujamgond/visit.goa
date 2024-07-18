@@ -2,7 +2,7 @@ import { VisitGoa } from "@/api/baseURL";
 import { apiEndpoints } from "@/api/endPoints";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-
+import { toast } from "react-toastify";
 interface HotelId {
   hotelId: string;
 }
@@ -63,10 +63,14 @@ const useHotelDetails = ({ hotelId }: HotelId) => {
       if (hotelDetailsResponst?.data?.status === 1) {
         setHotelDetils(hotelDetailsResponst?.data?.data);
         setLoading(false);
+      } else {
+        toast.error(`${hotelDetailsResponst?.data?.message}`, {
+          position: "top-center",
+        });
       }
     } catch (error) {
       console.log(error);
-      throw new Error("Failed to fetch the hotel details!");
+      // throw new Error("Failed to fetch the hotel details!");
     } finally {
       setLoading(false);
     }

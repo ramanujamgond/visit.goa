@@ -18,6 +18,9 @@ import {
 } from "@/redux/reducers/cartslice";
 import { RootState } from "@/redux/store";
 import useLocalDetails from "@/hooks/useLocalDetails";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import NoHotelDataFound from "@/components/hotellisting/nosearchresultfound/NoHotelDataFound";
 
 export interface Params {
   slug: string;
@@ -87,8 +90,10 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
 
   // method to fetch the local details
   useEffect(() => {
-    fetchLocalDetails();
-  }, []);
+    if (hotelDetails && roomTypeInventory) {
+      fetchLocalDetails();
+    }
+  }, [hotelDetails, roomTypeInventory]);
 
   // hide the cart if no data is there in the cart
   useEffect(() => {
@@ -116,70 +121,77 @@ const HotelDetailsPage: React.FC<HotelDetailsProps> = ({ params }) => {
   }
 
   return (
-    <div className="my-12 h-full min-h-[90vh]">
-      <div className="pt-2">
-        <div className="container">
-          <div className="flex items-center justify-between mt-14">
-            <div className="text-base font-normal text-[#656565]">
-              <span
-                className="hover:text-[#685CF1] cursor-pointer"
-                onClick={navigateBack}
-              >
-                Book Now
-              </span>{" "}
-              {"> "}
-              <span className="font-bold text-[#141414]">
-                {formatedHotelName}
-              </span>
+    <>
+      <div className="my-12 h-full min-h-[90vh]">
+        <div className="pt-2">
+          <div className="container">
+            <div className="flex items-center justify-between mt-14">
+              <div className="text-base font-normal text-[#656565]">
+                <span
+                  className="hover:text-[#685CF1] cursor-pointer"
+                  onClick={navigateBack}
+                >
+                  Book Now
+                </span>{" "}
+                {"> "}
+                <span className="font-bold text-[#141414]">
+                  {formatedHotelName}
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="mt-5 mb-5">
-            {hotelDetails && (
-              <HotelDetailSlider
-                exterior_images={hotelDetails?.exterior_images}
-              />
-            )}
-            {hotelDetails && (
-              <HotelAboutUsSection
-                hotel_name={hotelDetails.hotel_name}
-                city_name={hotelDetails.city_name}
-                address={hotelDetails.address}
-                hotel_description={hotelDetails.hotel_description}
-                facility={hotelDetails.facility}
-                star={hotelDetails.star}
-              />
-            )}
+            {!hotelDetails ? (
+              <NoHotelDataFound />
+            ) : (
+              <div className="mt-5 mb-5">
+                {hotelDetails && (
+                  <HotelDetailSlider
+                    exterior_images={hotelDetails?.exterior_images}
+                  />
+                )}
+                {hotelDetails && (
+                  <HotelAboutUsSection
+                    hotel_name={hotelDetails.hotel_name}
+                    city_name={hotelDetails.city_name}
+                    address={hotelDetails.address}
+                    hotel_description={hotelDetails.hotel_description}
+                    facility={hotelDetails.facility}
+                    star={hotelDetails.star}
+                  />
+                )}
 
-            {roomTypeInventory.length > 0 && localDetails && (
-              <HotelRoomType
-                roomTypeInventory={roomTypeInventory}
-                localDetails={localDetails}
-              />
-            )}
+                {roomTypeInventory.length > 0 && localDetails && (
+                  <HotelRoomType
+                    roomTypeInventory={roomTypeInventory}
+                    localDetails={localDetails}
+                  />
+                )}
 
-            {hotelDetails && (
-              <HotelMapPolicyDetails
-                hotel_policy={hotelDetails?.policies?.hotel_policy}
-                child_policy={hotelDetails?.policies?.child_policy}
-                cancellation_policy={hotelDetails?.policies?.cancel_policy}
-                latitude={hotelDetails?.latitude}
-                longitude={hotelDetails?.longitude}
-                city_name={hotelDetails.city_name}
-                address={hotelDetails.address}
-              />
-            )}
-            {cartVisibleState && (
-              <RoomCart
-                hotelId={hotelId}
-                hotelName={hotelName}
-                adults={adults || ""}
-                childs={childs || ""}
-              />
+                {hotelDetails && (
+                  <HotelMapPolicyDetails
+                    hotel_policy={hotelDetails?.policies?.hotel_policy}
+                    child_policy={hotelDetails?.policies?.child_policy}
+                    cancellation_policy={hotelDetails?.policies?.cancel_policy}
+                    latitude={hotelDetails?.latitude}
+                    longitude={hotelDetails?.longitude}
+                    city_name={hotelDetails.city_name}
+                    address={hotelDetails.address}
+                  />
+                )}
+                {cartVisibleState && (
+                  <RoomCart
+                    hotelId={hotelId}
+                    hotelName={hotelName}
+                    adults={adults || ""}
+                    childs={childs || ""}
+                  />
+                )}
+              </div>
             )}
           </div>
         </div>
       </div>
-    </div>
+      <ToastContainer />
+    </>
   );
 };
 
