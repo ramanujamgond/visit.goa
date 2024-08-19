@@ -78,7 +78,7 @@ const RoomCart: React.FC<RoomCartProps> = ({
               <div>
                 <div className="text-xl font-bold text-white">Total:</div>
                 <div className="text-xl font-bold text-white">
-                  ₹{totalRoomPrice}
+                  ₹{totalRoomPrice.toFixed(2)}
                 </div>
               </div>
             </div>
